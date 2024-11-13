@@ -4,9 +4,11 @@ import NavBar from "../../components/NavBar/NavBar";
 const Main = () => {
   return (
     <>
-      <div className="max-w-screen-xl mx-auto">
+      <div>
         <NavBar></NavBar>
-        <Outlet></Outlet>
+        <div className="max-w-screen-xl mx-auto">
+          <Outlet></Outlet>
+        </div>
       </div>
     </>
   );

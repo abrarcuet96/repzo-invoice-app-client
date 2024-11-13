@@ -23,13 +23,24 @@ const Register = () => {
     reset();
   };
   return (
-    <div className="hero bg-base-200 min-h-screen">
-      <div className="hero-content flex-col">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Register</h1>
+    <div className="hero min-h-[800px] flex flex-col">
+      <div className="flex bg-[#055c9d] w-full min-h-[200px] justify-center items-center">
+        <h1 className="text-4xl font-semibold text-white">Create an account</h1>
+      </div>
+      <div className="flex flex-row justify-center items-center h-[700px] w-full">
+        <div className=" w-1/2 h-full bg-opacity-30 flex flex-col justify-center items-center p-10">
+          <h1 className="text-5xl font-semibold text-center">
+            Your invoicing is about to get a{" "}
+            <span className="text-[#0e86d4] font-bold">whole lot easier</span>
+          </h1>
+          <p className="my-8 text-center">
+            Join our platform to simplify your invoicing. Quickly create, track,
+            and organize invoices—all in one place. Sign up today and take
+            control of your finances with ease!
+          </p>
         </div>
-        <div className="card bg-base-100 w-[500px] shadow-2xl">
-          <form className="card-body" onSubmit={handleSubmit(onSubmit)}>
+        <div className="card w-1/2 flex justify-center items-center">
+          <form className="card-body w-3/4" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Name</span>
@@ -82,14 +93,17 @@ const Register = () => {
 
             <div className="form-control mt-6">
               <input
-                className="btn btn-primary"
+                className="btn bg-[#003060] text-white text-xl rounded-md"
                 type="submit"
                 value="Register"
               />
               <Toaster />
             </div>
-            <p>
-              Already have an account? <Link to="/login">Login</Link>
+            <p className="text-center">
+              Already have an account?{" "}
+              <Link className="font-bold" to="/login">
+                <span className="text-[#055c9d]">Login</span>
+              </Link>
             </p>
           </form>
         </div>
