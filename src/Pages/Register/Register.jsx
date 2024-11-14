@@ -25,7 +25,7 @@ const Register = () => {
   return (
     <div className="hero min-h-[800px] flex flex-col">
       <div className="flex bg-[#055c9d] w-full min-h-[200px] justify-center items-center">
-        <h1 className="text-4xl font-semibold text-white">Create an account</h1>
+        <h1 className="text-5xl font-semibold text-white">Create an account</h1>
       </div>
       <div className="flex flex-row justify-center items-center h-[700px] w-full">
         <div className=" w-1/2 h-full bg-opacity-30 flex flex-col justify-center items-center p-10">

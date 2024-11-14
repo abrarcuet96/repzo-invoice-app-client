@@ -28,7 +28,7 @@ const Login = () => {
   return (
     <div className="hero min-h-[800px] flex flex-col">
       <div className="flex bg-[#055c9d] w-full min-h-[200px] justify-center items-center">
-        <h1 className="text-4xl font-semibold text-white">
+        <h1 className="text-5xl font-semibold text-white">
           Login to your account
         </h1>
       </div>

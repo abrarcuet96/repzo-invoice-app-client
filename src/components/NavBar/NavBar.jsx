@@ -18,7 +18,11 @@ const NavBar = () => {
         <NavLink
           to="/"
           className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "text-[#0e86d4]  font-bold" : ""
+            isPending
+              ? "pending"
+              : isActive
+              ? "text-[#0e86d4] text-xl"
+              : "text-xl"
           }
         >
           Home
@@ -29,7 +33,11 @@ const NavBar = () => {
         <NavLink
           to="/signup"
           className={({ isActive, isPending }) =>
-            isPending ? "pending" : isActive ? "text-[#0e86d4]  font-bold" : ""
+            isPending
+              ? "pending"
+              : isActive
+              ? "text-[#0e86d4] text-xl"
+              : "text-xl"
           }
         >
           Register
@@ -65,13 +73,13 @@ const NavBar = () => {
               {navLink}
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">RepZo</a>
+          <a className="btn btn-ghost text-2xl">RepZo</a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu-horizontal px-1 gap-4">{navLink}</ul>
+          <ul className="menu-horizontal px-1 gap-6">{navLink}</ul>
         </div>
         <div className="navbar-end">
-          <ul className="menu-horizontal px-1">
+          <ul className="menu-horizontal px-2">
             {user ? (
               <>
                 <li>
@@ -81,8 +89,8 @@ const NavBar = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#0e86d4] font-bold"
-                        : ""
+                        ? "text-[#0e86d4] text-xl"
+                        : "text-xl"
                     }
                     onClick={handleLogOut}
                   >
@@ -98,8 +106,8 @@ const NavBar = () => {
                     isPending
                       ? "pending"
                       : isActive
-                      ? "text-[#0e86d4] font-bold"
-                      : ""
+                      ? "text-[#0e86d4] text-xl"
+                      : "text-xl"
                   }
                 >
                   Login
