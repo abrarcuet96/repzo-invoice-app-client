@@ -1,0 +1,14 @@
+.container {
+  overflow: hidden;
+}
+
+.image {
+  transform: translateX(-100%) rotate(-15deg);
+  opacity: 0;
+  transition: transform 1s ease-out;
+}
+
+.container.appear .image {
+  transform: translateX(0) rotate(0deg);
+  opacity: 1;
+}

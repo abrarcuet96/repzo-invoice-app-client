@@ -1,31 +1,28 @@
 import { useEffect, useState } from "react";
-import recieve from "./../../assets/banner2.png";
-import create from "./../../assets/banner3.png";
-import send from "./../../assets/banner4.png";
-import "./AutoSwitchingTabs.css"; // Importing CSS for styling
+import "./AutoSwitchingTabs.css";
 const tabs = [
   {
     name: "Create",
     content:
       "Choose an invoice template, modify it, and add your business logo.",
-    image: `${create}`,
+    image: `${"https://i.ibb.co.com/SRHbqcy/4.png"}`,
   },
   {
     name: "Send",
     content:
       "Send your invoice to customers via email, link, or messaging apps.",
-    image: `${send}`,
+    image: `${"https://i.ibb.co.com/Tm8vBL3/5.png"}`,
   },
   {
     name: "Receive",
     content: "Customers can pay via credit cards, bank transfers, or cash.",
-    image: `${recieve}`,
+    image: `${"https://i.ibb.co.com/NWC92tH/3.png"}`,
   },
 ];
 
 const AutoSwitchingTabs = () => {
   const [currentTabIndex, setCurrentTabIndex] = useState(0);
-  const delay = 3000; // 3 seconds
+  const delay = 3000;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -37,23 +34,22 @@ const AutoSwitchingTabs = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const { name, content, image } = tabs[currentTabIndex];
-  console.log(name, content);
+  const { image } = tabs[currentTabIndex];
 
   return (
     <div
       style={{
         backgroundImage: `url(${image})`,
       }}
-      className="max-w-screen-xl mx-auto bg-cover bg-center h-[600px] flex flex-col justify-start items-start mt-48 px-8"
+      className="max-w-screen-xl mx-auto bg-cover bg-center h-[700px] flex flex-col justify-start items-start mt-56"
     >
-      <h1 className="text-4xl w-[450px]">
+      <h1 className="text-5xl w-[500px]">
         <span className="text-[#0e86d4] font-medium">
           Invoice and get paid.
         </span>{" "}
         It's as simple as that.
       </h1>
-      <div className="divider w-[450px]"></div>
+      <div className="divider w-[500px]"></div>
       <div className="tab-header">
         {tabs.map((tab, index) => (
           <>
@@ -65,8 +61,8 @@ const AutoSwitchingTabs = () => {
             >
               {tab.name}
             </button>
-            <p>{tab.content}</p>
-            <div className="divider w-[450px]"></div>
+            <p className="text-xl">{tab.content}</p>
+            <div className="divider w-[500px]"></div>
           </>
         ))}
       </div>

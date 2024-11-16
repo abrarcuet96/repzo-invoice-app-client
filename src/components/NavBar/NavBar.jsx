@@ -21,8 +21,8 @@ const NavBar = () => {
             isPending
               ? "pending"
               : isActive
-              ? "text-[#0e86d4] text-xl"
-              : "text-xl"
+              ? "text-[#0e86d4] text-lg"
+              : "text-lg"
           }
         >
           Home
@@ -36,8 +36,8 @@ const NavBar = () => {
             isPending
               ? "pending"
               : isActive
-              ? "text-[#0e86d4] text-xl"
-              : "text-xl"
+              ? "text-[#0e86d4] text-lg"
+              : "text-lg"
           }
         >
           Register
@@ -73,7 +73,7 @@ const NavBar = () => {
               {navLink}
             </ul>
           </div>
-          <a className="btn btn-ghost text-2xl">RepZo</a>
+          <h1 className="text-2xl">RepZo</h1>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu-horizontal px-1 gap-6">{navLink}</ul>
@@ -89,8 +89,8 @@ const NavBar = () => {
                       isPending
                         ? "pending"
                         : isActive
-                        ? "text-[#0e86d4] text-xl"
-                        : "text-xl"
+                        ? "text-[#0e86d4] text-lg"
+                        : "text-lg"
                     }
                     onClick={handleLogOut}
                   >
@@ -106,8 +106,8 @@ const NavBar = () => {
                     isPending
                       ? "pending"
                       : isActive
-                      ? "text-[#0e86d4] text-xl"
-                      : "text-xl"
+                      ? "text-[#0e86d4] text-lg"
+                      : "text-lg"
                   }
                 >
                   Login

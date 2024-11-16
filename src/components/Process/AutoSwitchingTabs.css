@@ -6,7 +6,6 @@
   flex-direction: column;
   margin-bottom: 15px;
 }
-/* Tab button styling */
 .tab-button {
   flex: 1;
   padding: 15px 0;
@@ -18,8 +17,6 @@
   position: relative;
   font-size: 1.5em;
 }
-
-/* Animation for active tab */
 .tab-button.active::after {
   content: "";
   position: absolute;
@@ -30,8 +27,6 @@
   background-color: #0e86d4;
   animation: progressAnimation 3s linear infinite;
 }
-
-/* Vertical line between buttons */
 .tab-button + .tab-button::before {
   content: "";
   position: absolute;
@@ -41,8 +36,6 @@
   height: 100%;
   background-color: #e0e0e0;
 }
-
-/* Keyframes for the border animation */
 @keyframes progressAnimation {
   0% {
     width: 0;

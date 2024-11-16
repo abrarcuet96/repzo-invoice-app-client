@@ -1,4 +1,5 @@
 import Banner from "../../components/Banner/Banner";
+import CarryPhone from "../../components/CarryPhone/CarryPhone";
 import AutoSwitchingTabs from "../../components/Process/AutoSwitchingTabs";
 
 const Home = () => {
@@ -6,6 +7,7 @@ const Home = () => {
     <>
       <Banner></Banner>
       <AutoSwitchingTabs></AutoSwitchingTabs>
+      <CarryPhone></CarryPhone>
     </>
   );
 };
