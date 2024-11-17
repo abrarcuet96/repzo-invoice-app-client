@@ -12,7 +12,7 @@ const Main = () => {
         {noBanner || (
           <div
             style={{
-              backgroundImage: `url('https://i.ibb.co.com/XWDTqSP/home-banner.png')`,
+              backgroundImage: `url('https://i.ibb.co.com/YQy5mzr/home-banner-2.png')`,
             }}
             className="bg-cover bg-center h-[700px] w-full"
           ></div>

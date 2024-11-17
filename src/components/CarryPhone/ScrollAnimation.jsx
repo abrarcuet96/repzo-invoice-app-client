@@ -25,14 +25,7 @@ const ScrollAnimation = () => {
   }, []);
 
   return (
-    <div
-      className="container bg-cover bg-center"
-      ref={containerRef}
-      style={{
-        backgroundImage: `url("https://i.ibb.co.com/tqHndSh/mobile-bg.png")`,
-        borderRadius: "5px",
-      }}
-    >
+    <div className="container bg-cover bg-center" ref={containerRef}>
       <img
         src="https://i.ibb.co.com/HNw0wHV/mobile-in-hand.png"
         alt="Sliding Animation"

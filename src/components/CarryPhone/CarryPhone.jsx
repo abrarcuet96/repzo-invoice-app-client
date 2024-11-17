@@ -7,9 +7,9 @@ const CarryPhone = () => {
       <div className="container w-1/2">
         <ScrollAnimation />
       </div>
-      <div className="flex flex-col w-1/2 mx-5 justify-between">
+      <div className="flex flex-col w-1/2 ml-5 justify-between">
         <div>
-          <h1 className="text-5xl">
+          <h1 className="text-4xl">
             Take your free invoicing software{" "}
             <span className="text-[#0e86d4]">everywhere.</span>
           </h1>

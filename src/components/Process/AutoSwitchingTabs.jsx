@@ -43,7 +43,7 @@ const AutoSwitchingTabs = () => {
       }}
       className="max-w-screen-xl mx-auto bg-cover bg-center h-[700px] flex flex-col justify-start items-start mt-56"
     >
-      <h1 className="text-5xl w-[500px]">
+      <h1 className="text-4xl w-[500px]">
         <span className="text-[#0e86d4] font-medium">
           Invoice and get paid.
         </span>{" "}
