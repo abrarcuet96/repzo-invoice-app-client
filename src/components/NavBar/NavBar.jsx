@@ -1,43 +1,56 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
   const handleLogOut = () => {
-    logOut().then((res) => {
+    logOut().then(() => {
       toast.success("Logout successful", {
         position: "top-center",
       });
+      setDropdownOpen(false);
     });
   };
-  const navLink = (
+
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const navLinks = (
     <>
       <li>
         <NavLink
           to="/"
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "pending"
-              : isActive
-              ? "text-[#0e86d4] text-lg"
-              : "text-lg"
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#0E86D4] font-semibold transition-all duration-200"
+              : "text-gray-800 hover:text-[#0E86D4] font-medium transition-all duration-200"
           }
         >
           Home
         </NavLink>
       </li>
-
       <li>
         <NavLink
           to="/signup"
-          className={({ isActive, isPending }) =>
-            isPending
-              ? "pending"
-              : isActive
-              ? "text-[#0e86d4] text-lg"
-              : "text-lg"
+          className={({ isActive }) =>
+            isActive
+              ? "text-[#0E86D4] font-semibold transition-all duration-200"
+              : "text-gray-800 hover:text-[#0E86D4] font-medium transition-all duration-200"
           }
         >
           Register
@@ -45,80 +58,96 @@ const NavBar = () => {
       </li>
     </>
   );
+
   return (
-    <div className="shadow-sm">
-      <div className=" navbar max-w-screen-xl mx-auto">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+    <div className="shadow-md">
+      <div className="max-w-screen-xl mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <div className="flex items-center space-x-3">
+          <h1 className="text-2xl font-bold text-[#0E86D4]">RepZo</h1>
+        </div>
+
+        {/* Nav Links (Desktop) */}
+        <div className="hidden lg:flex items-center space-x-8">
+          <ul className="flex space-x-6">{navLinks}</ul>
+        </div>
+
+        {/* Profile/Authentication */}
+        <div className="flex items-center space-x-4">
+          {user ? (
+            <div className="relative" ref={dropdownRef}>
+              <button
+                className="flex items-center space-x-2 border border-gray-300 rounded-full p-2 hover:border-[#0E86D4] transition-all"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
+                <img
+                  className="w-8 h-8 rounded-full object-cover"
+                  src={user.photoURL}
+                  alt="Profile"
                 />
-              </svg>
+                <span className="font-medium text-gray-800">
+                  {user?.displayName}
+                </span>
+              </button>
+              {dropdownOpen && (
+                <ul className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md border border-gray-200 z-10">
+                  <li>
+                    <NavLink
+                      to="/dashboard/dashboardHome"
+                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      Dashboard
+                    </NavLink>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogOut}
+                      className="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              )}
             </div>
-            <ul
-              tabIndex={0}
-              className="menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow  gap-4"
+          ) : (
+            <NavLink
+              to="/login"
+              className="text-primary font-medium hover:text-primary-dark transition-all duration-200"
             >
-              {navLink}
-            </ul>
-          </div>
-          <h1 className="text-2xl">RepZo</h1>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu-horizontal px-1 gap-6">{navLink}</ul>
-        </div>
-        <div className="navbar-end">
-          <ul className="menu-horizontal px-2">
-            {user ? (
-              <>
-                <li>
-                  <NavLink
-                    to="/"
-                    className={({ isActive, isPending }) =>
-                      isPending
-                        ? "pending"
-                        : isActive
-                        ? "text-[#0e86d4] text-lg"
-                        : "text-lg"
-                    }
-                    onClick={handleLogOut}
-                  >
-                    Logout
-                  </NavLink>
-                </li>
-              </>
-            ) : (
-              <li>
-                <NavLink
-                  to="/login"
-                  className={({ isActive, isPending }) =>
-                    isPending
-                      ? "pending"
-                      : isActive
-                      ? "text-[#0e86d4] text-lg"
-                      : "text-lg"
-                  }
-                >
-                  Login
-                </NavLink>
-              </li>
-            )}
-            <Toaster />
-          </ul>
+              Login
+            </NavLink>
+          )}
         </div>
       </div>
+
+      {/* Mobile Navbar */}
+      <div className="lg:hidden px-6 py-4">
+        <button className="text-primary focus:outline-none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h8m-8 6h16"
+            />
+          </svg>
+        </button>
+        <div className="mt-4 space-y-2">
+          <ul>{navLinks}</ul>
+        </div>
+      </div>
+
+      <Toaster />
     </div>
   );
 };
+
 export default NavBar;

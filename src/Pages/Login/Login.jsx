@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
+import { FaEnvelope, FaLock } from "react-icons/fa"; // Icons for email and password
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import { AuthContext } from "../../Providers/AuthProvider";
+
 const Login = () => {
   const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -17,79 +20,142 @@ const Login = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    loginUser(data.email, data.password).then((res) => {
-      navigate(from, { replace: true });
-      toast.success("Login successful.", {
-        position: "top-center",
+    loginUser(data.email, data.password)
+      .then(() => {
+        navigate(from, { replace: true });
+        toast.success("Login successful.", { position: "top-center" });
+      })
+      .catch((err) => {
+        toast.error(
+          "Login unsuccessful. Please register if you don’t have an account.",
+          { position: "top-center" }
+        );
+        navigate("/signup");
       });
-    });
     reset();
   };
+
   return (
-    <div className="hero min-h-[800px] flex flex-col">
-      <div className="flex bg-[#055c9d] w-full min-h-[200px] justify-center items-center">
-        <h1 className="text-5xl font-semibold text-white">
-          Login to your account
+    <div className="min-h-[800px] flex mt-2">
+      {/* Left Section */}
+      <div className="w-1/2 bg-gradient-to-r from-[#055c9d] to-[#003060] text-white flex flex-col justify-center p-10 space-y-6">
+        <h1 className="text-3xl font-semibold mb-4 leading-snug">
+          Welcome Back to <span className="text-yellow-300">RepZo</span>
         </h1>
+        <p className="text-lg mb-4">
+          Log in to manage your invoices and keep your business on track. Your
+          dashboard is just a few clicks away.
+        </p>
+        <ul className="space-y-2 text-lg">
+          <li className="flex items-center">
+            <span className="inline-block w-2 h-2 bg-yellow-300 rounded-full mr-2"></span>
+            Secure access to all your records.
+          </li>
+          <li className="flex items-center">
+            <span className="inline-block w-2 h-2 bg-yellow-300 rounded-full mr-2"></span>
+            Generate and manage invoices.
+          </li>
+          <li className="flex items-center">
+            <span className="inline-block w-2 h-2 bg-yellow-300 rounded-full mr-2"></span>
+            Designed for efficiency and speed.
+          </li>
+        </ul>
       </div>
-      <div className="flex flex-row justify-center items-center h-[700px] w-full">
-        <div className=" w-1/2 h-full bg-opacity-30 flex flex-col justify-center items-center p-10">
-          <h1 className="text-5xl font-semibold text-center">
-            Effortless Invoicing,{" "}
-            <span className="text-[#0e86d4] font-bold">Anytime, Anywhere.</span>
-          </h1>
-          <p className="my-8 text-center">
-            Streamline your invoicing process with ease! Generate, send, and
-            manage invoices in seconds. Let us handle the details so you can
-            focus on growing your business.
+
+      {/* Right Section */}
+      <div className="w-1/2 flex items-center justify-center bg-white p-10">
+        <div className="w-full max-w-md rounded-lg p-8">
+          <h2 className="text-2xl font-semibold text-center text-gray-800">
+            Log In
+          </h2>
+          <p className="text-center text-gray-500 mt-2">
+            Access your account and continue where you left off.
           </p>
-        </div>
-        <div className="card w-1/2 flex justify-center items-center">
-          <form className="card-body w-3/4" onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Email</span>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
+            {/* Email */}
+            <div className="relative">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 font-medium text-sm"
+              >
+                Email Address
               </label>
-              <input
-                type="email"
-                {...register("email", { required: true })}
-                placeholder="email"
-                className="input input-bordered rounded-md"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                {...register("password", { required: true })}
-                {...(errors.password && <span>This field is required</span>)}
-                placeholder="password"
-                className="input input-bordered rounded-md"
-                required
-              />
+              <div className="flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-[#055c9d]">
+                <FaEnvelope className="text-gray-400 mx-3" />
+                <input
+                  id="email"
+                  type="email"
+                  {...register("email", { required: "Email is required" })}
+                  placeholder="Enter your email"
+                  className="w-full px-4 py-3 border-0 focus:ring-0 rounded-md focus:outline-none"
+                />
+              </div>
+              {errors.email && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
-            <div className="form-control mt-6">
-              <input
-                className="btn bg-[#003060] text-white text-xl rounded-md"
-                type="submit"
-                value="Login"
-              />
-              <Toaster />
+            {/* Password */}
+            <div className="relative">
+              <label
+                htmlFor="password"
+                className="block text-gray-700 font-medium text-sm"
+              >
+                Password
+              </label>
+              <div className="flex items-center border border-gray-300 rounded-md shadow-sm focus-within:ring-2 focus-within:ring-[#055c9d]">
+                <FaLock className="text-gray-400 mx-3" />
+                <input
+                  id="password"
+                  type="password"
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
+                  placeholder="Enter your password"
+                  className="w-full px-4 py-3 border-0 focus:ring-0 rounded-md focus:outline-none"
+                />
+              </div>
+              {errors.password && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
-            <p className="text-center">
-              Do not have an account? Please
-              <Link className="font-bold" to="/signup">
-                <span className="text-[#055c9d]"> Register</span>
-              </Link>
-            </p>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-[#055c9d] text-white py-3 rounded-lg font-medium hover:bg-[#003060] transition"
+            >
+              Log In
+            </button>
           </form>
+
+          {/* Social Login */}
+          <div className="text-center my-4">
+            <p className="text-gray-600">Or log in with Google</p>
+            <SocialLogin />
+          </div>
+
+          {/* Register Link */}
+          <p className="text-center text-gray-600 mt-4">
+            Don’t have an account?{" "}
+            <Link
+              to="/signup"
+              className="text-[#055c9d] font-medium hover:underline"
+            >
+              Register
+            </Link>
+          </p>
         </div>
       </div>
+
+      <Toaster />
     </div>
   );
 };
+
 export default Login;

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Freelance invoicing solution",
+    "target": "Entrepreneurs",
+    "description": "Negotiate, close deals, and get paid",
+    "imageUrl": "https://i.ibb.co.com/V3gwbyG/agencies-1x.webp"
+  },
+  {
+    "name": "Invoicing app for contractors",
+    "target": "Consultants",
+    "description": "Juggle projects and expenses",
+    "imageUrl": "https://i.ibb.co.com/F3nzLY9/consultants-1x.webp"
+  },
+  {
+    "name": "Zoho Invoice for agencies",
+    "target": "Agencies",
+    "description": "Create one-time & recurring invoices",
+    "imageUrl": "https://i.ibb.co.com/xYDLZ48/entr-self-emp-1x.webp"
+  },
+  {
+    "name": "Zoho Invoice for self employed",
+    "target": "Freelancers",
+    "description": "Manage invoices and track payments",
+    "imageUrl": "https://i.ibb.co.com/J5WWrVP/freelancers-1x.webp"
+  }
+]

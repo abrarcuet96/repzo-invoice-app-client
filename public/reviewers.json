@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Alice Johnson",
+    "company": "TechPro Solutions",
+    "review": "RepZo has streamlined our invoicing process significantly. It's user-friendly, efficient, and saves us so much time!",
+    "imageUrl": "https://i.ibb.co.com/G7Dj798/premium-photo-1690579805307-7ec030c75543.jpg"
+  },
+  {
+    "name": "Michael Smith",
+    "company": "Creative Ventures Co.",
+    "review": "As a freelancer, I love how RepZo keeps my invoices organized and payments on track. Highly recommended!",
+    "imageUrl": "https://i.ibb.co.com/88HXdhc/images.jpg"
+  },
+  {
+    "name": "Sophia Martinez",
+    "company": "EcoBuild Enterprises",
+    "review": "RepZo is a game-changer for managing our recurring invoices. The automation features are fantastic!",
+    "imageUrl": "https://i.ibb.co.com/sQ1Gch4/photo-1633332755192-727a05c4013d.jpg"
+  },
+  {
+    "name": "David Lee",
+    "company": "NextGen Consultants",
+    "review": "RepZo's intuitive design and robust features make it an essential tool for our agency. We couldn't be happier!",
+    "imageUrl": "https://i.ibb.co.com/G7Dj798/premium-photo-1690579805307-7ec030c75543.jpg"
+  },
+  {
+    "name": "Alice Johnson",
+    "company": "TechPro Solutions",
+    "review": "RepZo has streamlined our invoicing process significantly. It's user-friendly, efficient, and saves us so much time!",
+    "imageUrl": "https://i.ibb.co.com/G7Dj798/premium-photo-1690579805307-7ec030c75543.jpg"
+  },
+  {
+    "name": "Michael Smith",
+    "company": "Creative Ventures Co.",
+    "review": "As a freelancer, I love how RepZo keeps my invoices organized and payments on track. Highly recommended!",
+    "imageUrl": "https://i.ibb.co.com/88HXdhc/images.jpg"
+  },
+  {
+    "name": "Sophia Martinez",
+    "company": "EcoBuild Enterprises",
+    "review": "RepZo is a game-changer for managing our recurring invoices. The automation features are fantastic!",
+    "imageUrl": "https://i.ibb.co.com/sQ1Gch4/photo-1633332755192-727a05c4013d.jpg"
+  },
+  {
+    "name": "David Lee",
+    "company": "NextGen Consultants",
+    "review": "RepZo's intuitive design and robust features make it an essential tool for our agency. We couldn't be happier!",
+    "imageUrl": "https://i.ibb.co.com/G7Dj798/premium-photo-1690579805307-7ec030c75543.jpg"
+  }
+]
