@@ -6,7 +6,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 import useQuote from "../../../../hooks/useQuote";
-const QuotesTable = ({ quote, index }) => {
+const QuotesTable = ({ quote, serial }) => {
   const axiosPublic = useAxiosPublic();
   const { invalidateQuotes } = useQuote();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -96,9 +96,12 @@ const QuotesTable = ({ quote, index }) => {
 
   return (
     <>
-      <tr key={quote.quoteId} className="border-b hover:bg-gray-50 transition">
-        <td className="py-4 px-6">{index + 1}</td>
-        <td className="py-4 px-6">{quote.quoteId}</td>
+      <tr
+        key={quote.quoteId}
+        className="border-b hover:bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 transition-all duration-300 ease-in-out"
+      >
+        <td className="py-4 px-6">{serial + 1}</td>
+        <td className="py-4 px-6 font-medium text-blue-600">{quote.quoteId}</td>
         <td className="py-4 px-6">{quote.customerId}</td>
         <td className="py-4 px-6">
           {quote.quoteDate.match(/\w{3} \w{3} \d{2} \d{4}/)[0]}
@@ -109,23 +112,23 @@ const QuotesTable = ({ quote, index }) => {
         <td className="py-4 px-6">
           <button
             onClick={() => toggleModal(quote)}
-            className="flex items-center px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+            className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaEye className="mr-2" />
             View
           </button>
         </td>
-        <td className="py-4 px-6 flex gap-2 justify-start">
+        <td className="py-4 px-6 flex gap-3 justify-start">
           <NavLink
             to={`/dashboard/editQuoteDetails/${quote.quoteId}`}
-            className="flex items-center px-2 py-1 bg-green-500 text-white rounded-md hover:bg-green-700"
+            className="flex items-center text-sm px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaRegEdit className="mr-2" />
             Edit
           </NavLink>
           <button
             onClick={() => handleDelete(quote.quoteId)}
-            className="flex items-center px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700"
+            className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaTrash className="mr-2" />
             Delete
@@ -133,49 +136,92 @@ const QuotesTable = ({ quote, index }) => {
         </td>
       </tr>
 
+      {/* Modal */}
       {isModalOpen && currentQuote && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-96 relative">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-md p-8 w-full max-w-lg relative transform transition-all duration-300">
             <button
               onClick={() => toggleModal(null)}
-              className="absolute top-1 right-1 text-red-600 text-3xl hover:text-red-700"
+              className="absolute top-4 right-4 text-gray-500 hover:text-red-600 transition-colors"
             >
-              <IoMdCloseCircle />
+              <IoMdCloseCircle className="text-2xl" />
             </button>
-            <h2 className="text-xl font-semibold mb-4">Quote Details</h2>
-            <p>
-              <strong>Quote Id:</strong> {currentQuote.quoteId}
-            </p>
-            <p>
-              <strong>Quote Date:</strong>{" "}
-              {
-                currentQuote.quoteDate.match(
-                  /\w{3} \w{3} \d{2} \d{4} \d{2}:\d{2}:\d{2}/
-                )[0]
-              }
-            </p>
-            <p>
-              <strong>Expiry Date:</strong> {currentQuote.expiryDate}
-            </p>
-            <p>
-              <strong>Total Items:</strong> {totalItems}
-            </p>
-            <p>
-              <strong>Total:</strong> {total}
-            </p>
-            <p>
-              <strong>Created at:</strong> {currentQuote.createdAt}
-            </p>
-            <p>
-              <strong>Updated at:</strong> {currentQuote.updatedAt}
-            </p>
 
-            <div className="mt-4 flex justify-center">
+            <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+              Quote Details
+            </h2>
+
+            <div className="overflow-x-auto rounded-md">
+              <table className="min-w-full text-sm text-gray-700">
+                <thead className="bg-gray-100">
+                  <tr>
+                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                      Field
+                    </th>
+                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                      Details
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Quote ID
+                    </td>
+                    <td className="py-3 px-6">{currentQuote.quoteId}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Quote Date
+                    </td>
+                    <td className="py-3 px-6">
+                      {
+                        currentQuote.quoteDate.match(
+                          /\w{3} \w{3} \d{2} \d{4} \d{2}:\d{2}:\d{2}/
+                        )[0]
+                      }
+                    </td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Expiry Date
+                    </td>
+                    <td className="py-3 px-6">{currentQuote.expiryDate}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Total Items
+                    </td>
+                    <td className="py-3 px-6">{totalItems}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Total
+                    </td>
+                    <td className="py-3 px-6">{total}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Created at
+                    </td>
+                    <td className="py-3 px-6">{currentQuote.createdAt}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Updated at
+                    </td>
+                    <td className="py-3 px-6">{currentQuote.updatedAt}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-6 flex justify-center">
               <NavLink
                 to={`/dashboard/editQuoteDetails/${currentQuote.quoteId}`}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                className="px-6 py-3 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-all duration-200"
               >
-                Edit Details
+                Edit Quote
               </NavLink>
             </div>
           </div>

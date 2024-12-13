@@ -75,7 +75,13 @@ const AddQuote = () => {
     }
   };
 
-  const onHoverFetchItems = () => {
+  const onHoverFetchItems = (index) => {
+    const updatedItems = items.map((item, i) => ({
+      ...item,
+      dropdownVisible: i === index, // Show dropdown only for the clicked item
+    }));
+    setItems(updatedItems);
+
     if (itemResults?.length === 0) {
       axiosPublic.get(`/api/item`).then((res) => {
         if (res.data.success) {
@@ -128,7 +134,7 @@ const AddQuote = () => {
       axiosPublic.get(`/api/item?name=${value}`).then((res) => {
         if (res.data.success && res.data.data) {
           updatedItems[index].price = res.data.data.price;
-          updatedItems[index].itemId = res.data.data._id;
+          updatedItems[index].itemId = res.data.data.itemId;
           updatedItems[index].name = res.data.data.name;
           setItems(updatedItems);
         }
@@ -139,12 +145,18 @@ const AddQuote = () => {
   };
 
   const onSelectItem = (index, item) => {
-    const updatedItems = [...items];
-    updatedItems[index].name = item.name;
-    updatedItems[index].itemId = item._id;
-    updatedItems[index].price = item.price;
+    const updatedItems = items.map((it, i) =>
+      i === index
+        ? {
+            ...it,
+            name: item.name,
+            itemId: item.itemId,
+            price: item.price,
+            dropdownVisible: false,
+          }
+        : { ...it, dropdownVisible: false }
+    );
     setItems(updatedItems);
-    setItemResults([]);
   };
 
   const addItemRow = () => {
@@ -160,17 +172,13 @@ const AddQuote = () => {
     console.log(data);
     const date = new Date(data.expiryDate);
 
-    // Convert the date to Bangladesh Time (GMT+6)
     const gmtPlus6Date = new Date(
       date.toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
     );
 
-    // Get the date in the format "Thu Dec 12 2024 22:35:17 GMT+0600 (Bangladesh Standard Time)"
     const formattedDate = gmtPlus6Date
       .toString()
       .match(/\w{3} \w{3} \d{2} \d{4}/)[0];
-
-    console.log("Formatted Expiry Date in GMT+6: ", formattedDate);
 
     const quoteInfo = {
       customerId: selectedCustomer?.customerId,
@@ -196,179 +204,229 @@ const AddQuote = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-start justify-start px-4 py-10">
-      <div className="w-full max-w-3xl border border-grey-200 rounded-md p-8 space-y-6">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-6 border-b pb-3">
-          Create Quote
-        </h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Customer Details */}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Customer
-              </label>
-              <input
-                type="text"
-                placeholder="Search for a customer"
-                className="w-full mt-1 p-4 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                onChange={(e) => onSearchCustomer(e.target.value)}
-                onClick={onHoverFetchCustomers}
-                value={selectedCustomer ? selectedCustomer.name : ""}
-                ref={searchInputRef}
-              />
-              {Array.isArray(customerResults) && customerResults.length > 0 && (
-                <ul
-                  ref={searchDropdownRef}
-                  className="absolute bg-white border rounded-lg shadow-lg max-h-48 mt-1 z-10"
-                >
-                  {customerResults.map((customer) => (
-                    <li
-                      key={customer._id}
-                      onClick={() => onSelectCustomer(customer)}
-                      className="p-3 hover:bg-blue-50 cursor-pointer"
+    <div className="min-h-screen flex items-start  px-4 py-8">
+      <div className="w-full max-w-3xl flex flex-col gap-8 bg-white rounded-lg p-3">
+        {/* Left Side: Form */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">
+            Create Quote
+          </h2>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {/* Customer Details */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Customer
+                </label>
+                <input
+                  type="text"
+                  placeholder="Search for a customer"
+                  className="w-full mt-1 p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                  onChange={(e) => onSearchCustomer(e.target.value)}
+                  onClick={onHoverFetchCustomers}
+                  value={selectedCustomer ? selectedCustomer.name : ""}
+                  ref={searchInputRef}
+                />
+                {Array.isArray(customerResults) &&
+                  customerResults.length > 0 && (
+                    <ul
+                      ref={searchDropdownRef}
+                      className="absolute bg-white border rounded-lg shadow-lg h-auto mt-1 z-10"
                     >
-                      {customer.name} ({customer.email})
-                    </li>
-                  ))}
-                </ul>
-              )}
+                      {customerResults.map((customer) => (
+                        <li
+                          key={customer._id}
+                          onClick={() => onSelectCustomer(customer)}
+                          className="p-3 hover:bg-blue-50 cursor-pointer"
+                        >
+                          {customer.name} ({customer.email})
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Expiry Date
+                </label>
+                <input
+                  type="date"
+                  {...register("expiryDate", {
+                    required: "Expiry date is required",
+                  })}
+                  className="w-full mt-1 p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                />
+                {errors.expiryDate && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.expiryDate.message}
+                  </p>
+                )}
+              </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Expiry Date
-              </label>
-              <input
-                type="date"
-                {...register("expiryDate", {
-                  required: "Expiry date is required",
-                })}
-                className="w-full mt-1 p-4 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-              />
-              {errors.expiryDate && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.expiryDate.message}
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Invoice Items */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-gray-700">
-              Invoice Items
-            </h3>
-            <table className="w-full table-auto border-collapse">
-              <thead>
-                <tr>
-                  <th className="p-3 text-left text-sm font-medium text-gray-700">
-                    Item
-                  </th>
-                  <th className="p-3 text-left text-sm font-medium text-gray-700">
-                    Quantity
-                  </th>
-                  <th className="p-3 text-left text-sm font-medium text-gray-700">
-                    Unit Price
-                  </th>
-                  <th className="p-3 text-left text-sm font-medium text-gray-700">
-                    Total
-                  </th>
-                  <th className="p-3 text-center text-sm font-medium text-gray-700">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {items.map((item, index) => (
-                  <tr key={index} className="border-t">
-                    <td className="p-3">
-                      <input
-                        type="text"
-                        value={item.name}
-                        onChange={(e) =>
-                          handleItemChange(index, "name", e.target.value)
-                        }
-                        onClick={onHoverFetchItems}
-                        className="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                        ref={itemInputRef}
-                      />
-                      {Array.isArray(itemResults) && itemResults.length > 0 && (
-                        <ul
-                          ref={itemDropdownRef}
-                          className="absolute bg-white border rounded-lg shadow-lg max-h-48 mt-1 z-10"
-                        >
-                          {itemResults.map((item) => (
-                            <li
-                              key={item._id}
-                              onClick={() => onSelectItem(index, item)}
-                              className="p-3 hover:bg-blue-50 cursor-pointer"
-                            >
-                              {item.name} ({item.price})
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </td>
-                    <td className="p-3">
-                      <input
-                        type="number"
-                        min="1"
-                        value={item.quantity}
-                        onChange={(e) =>
-                          handleItemChange(index, "quantity", e.target.value)
-                        }
-                        className="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      />
-                    </td>
-                    <td className="p-3">
-                      <input
-                        type="number"
-                        value={item.price}
-                        onChange={(e) =>
-                          handleItemChange(index, "price", e.target.value)
-                        }
-                        className="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
-                      />
-                    </td>
-                    <td className="p-3">{item.quantity * item.price}</td>
-                    <td className="p-3 text-center">
-                      <div className="flex items-center justify-center gap-2">
-                        <button
-                          type="button"
-                          onClick={addItemRow}
-                          className="text-blue-600 hover:text-blue-800"
-                        >
-                          <IoAddCircleSharp size={25} />
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => removeItemRow(index)}
-                          className="text-red-600 hover:text-red-800"
-                        >
-                          <FiTrash2 size={20} />
-                        </button>
-                      </div>
-                    </td>
+            {/* Invoice Items */}
+            <div className="space-y-4 mb-4  pb-4">
+              <h3 className="text-lg font-semibold text-gray-700">
+                Invoice Items
+              </h3>
+              <table className="w-full table-auto border-collapse">
+                <thead>
+                  <tr>
+                    <th className="p-2 text-left text-sm font-medium text-gray-700">
+                      Item
+                    </th>
+                    <th className="p-2 text-left text-sm font-medium text-gray-700">
+                      Quantity
+                    </th>
+                    <th className="p-2 text-left text-sm font-medium text-gray-700">
+                      Unit Price
+                    </th>
+                    <th className="p-2 text-left text-sm font-medium text-gray-700">
+                      Total
+                    </th>
+                    <th className="p-2 text-center text-sm font-medium text-gray-700">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {items.map((item, index) => (
+                    <tr key={index} className="border-t">
+                      <td className="p-2">
+                        <input
+                          type="text"
+                          value={item.name}
+                          onChange={(e) =>
+                            handleItemChange(index, "name", e.target.value)
+                          }
+                          onClick={() => onHoverFetchItems(index)}
+                          className="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                          ref={itemInputRef}
+                        />
+                        {item.dropdownVisible &&
+                          Array.isArray(itemResults) &&
+                          itemResults.length > 0 && (
+                            <ul
+                              ref={itemDropdownRef}
+                              className="absolute bg-white border rounded-lg shadow-lg max-h-48 mt-1 z-10"
+                            >
+                              {itemResults.map((result) => (
+                                <li
+                                  key={result._id}
+                                  onClick={() => onSelectItem(index, result)}
+                                  className="p-3 hover:bg-blue-50 cursor-pointer"
+                                >
+                                  {result.name} ({result.price})
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                      </td>
+                      <td className="p-2">
+                        <input
+                          type="number"
+                          min="1"
+                          value={item.quantity}
+                          onChange={(e) =>
+                            handleItemChange(index, "quantity", e.target.value)
+                          }
+                          className="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                        />
+                      </td>
+                      <td className="p-2">
+                        <input
+                          type="number"
+                          value={item.price}
+                          onChange={(e) =>
+                            handleItemChange(index, "price", e.target.value)
+                          }
+                          className="w-full p-2 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                        />
+                      </td>
+                      <td className="p-2">{item.quantity * item.price}</td>
+                      <td className="p-2 text-center">
+                        <div className="flex items-center justify-center gap-2">
+                          <button
+                            type="button"
+                            onClick={addItemRow}
+                            className="text-blue-600 hover:text-blue-800"
+                          >
+                            <IoAddCircleSharp size={25} />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => removeItemRow(index)}
+                            className="text-red-600 hover:text-red-800"
+                          >
+                            <FiTrash2 size={20} />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-          {/* Submit Button */}
-          <div className="flex items-center justify-start space-x-4">
-            <button
-              type="submit"
-              disabled={loading}
-              className="py-2 px-6 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-            >
-              {loading ? <span>Loading...</span> : <span>Create</span>}
-            </button>
+            <div className="max-w-full flex ">
+              <div className="w-1/2"></div>
+              <div className="mt-6 border-t pt-4 space-y-2 w-1/2">
+                <div className="flex justify-between text-sm text-gray-600">
+                  <span>Subtotal:</span>
+                  <span>
+                    {items.reduce(
+                      (sum, item) => sum + item.quantity * item.price,
+                      0
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between text-lg font-semibold text-gray-800">
+                  <span>Total:</span>
+                  <span>
+                    {items.reduce(
+                      (sum, item) => sum + item.quantity * item.price,
+                      0
+                    )}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex items-center justify-end space-x-4">
+              <button
+                type="submit"
+                disabled={loading}
+                className="py-2 px-6 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+              >
+                {loading ? <span>Loading...</span> : <span>Create</span>}
+                <Toaster></Toaster>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* Right Side: Informational Panel */}
+        <div className="space-y-6 bg-blue-50 p-6 rounded-md border border-blue-100">
+          <h3 className="text-lg font-semibold text-gray-800">Help & Tips</h3>
+          <p className="text-sm text-gray-600">
+            Please fill out the details on the left to create a quote. You can
+            search for customers and items from the available dropdowns. Once
+            added, invoice items will automatically calculate the totals.
+          </p>
+          <p className="text-sm text-gray-600">
+            Use the "Add" and "Remove" buttons to manage invoice items. Don't
+            forget to set the correct expiry date to ensure the quote is valid.
+          </p>
+          <div className="bg-blue-100 p-4 rounded-md">
+            <p className="text-sm text-blue-700">
+              Tip: Ensure that all required fields are filled before submitting
+              the form.
+            </p>
           </div>
-        </form>
+        </div>
       </div>
-      <Toaster />
     </div>
   );
 };

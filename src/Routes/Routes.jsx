@@ -3,8 +3,11 @@ import Home from "../Pages/Home/Home";
 import Dashboard from "../Pages/Layout/Dashboard/Dashboard";
 import AddCustomer from "../Pages/Layout/DashboardPages/Customers/addCustomer";
 import Customers from "../Pages/Layout/DashboardPages/Customers/Customers";
-import EditCustomer from "../Pages/Layout/DashboardPages/Customers/editCustomer";
+import EditCustomer from "../Pages/Layout/DashboardPages/Customers/EditCustomer";
 import DashboardHome from "../Pages/Layout/DashboardPages/DashboardHome/DashboardHome";
+import AddExpense from "../Pages/Layout/DashboardPages/Expenses/AddExpense";
+import EditExpense from "../Pages/Layout/DashboardPages/Expenses/EditExpense";
+import Expenses from "../Pages/Layout/DashboardPages/Expenses/Expenses";
 import AddItem from "../Pages/Layout/DashboardPages/Items/AddItem";
 import EditItem from "../Pages/Layout/DashboardPages/Items/EditItem";
 import Items from "../Pages/Layout/DashboardPages/Items/Items";
@@ -60,6 +63,10 @@ const router = createBrowserRouter([
         element: <Quotes></Quotes>,
       },
       {
+        path: "userExpenses",
+        element: <Expenses></Expenses>,
+      },
+      {
         path: "addCustomer/:email",
         element: <AddCustomer></AddCustomer>,
         loader: ({ params }) =>
@@ -74,6 +81,12 @@ const router = createBrowserRouter([
       {
         path: "addQuote/:email",
         element: <AddQuote></AddQuote>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/users/${params.email}`),
+      },
+      {
+        path: "addExpense/:email",
+        element: <AddExpense></AddExpense>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/users/${params.email}`),
       },
@@ -94,6 +107,12 @@ const router = createBrowserRouter([
         element: <EditQuote></EditQuote>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/quote/${params.id}`),
+      },
+      {
+        path: "editExpenseDetails/:id",
+        element: <EditExpense></EditExpense>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/expense/${params.id}`),
       },
     ],
   },

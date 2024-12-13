@@ -5,16 +5,25 @@ import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
-import useCustomer from "../../../../hooks/useCustomer";
-const ItemsTable = ({ item, serial }) => {
-  const axiosPublic = useAxiosPublic();
-  const { invalidateCustomers } = useCustomer();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentItem, setCurrentItem] = useState(null);
+import useExpense from "../../../../hooks/useExpense";
 
-  const toggleModal = (item) => {
+const ExpensesTable = ({ expense, serial }) => {
+  const axiosPublic = useAxiosPublic();
+  const { invalidateExpenses } = useExpense();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentExpense, setCurrentExpense] = useState(null);
+  const date = new Date(expense.date);
+
+  const gmtPlus6Date = new Date(
+    date.toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
+  );
+
+  const formattedDate = gmtPlus6Date
+    .toString()
+    .match(/\w{3} \w{3} \d{2} \d{4}/)[0];
+  const toggleModal = (expense) => {
     setIsModalOpen(!isModalOpen);
-    setCurrentItem(item);
+    setCurrentExpense(expense);
   };
 
   const handleDelete = () => {
@@ -32,19 +41,19 @@ const ItemsTable = ({ item, serial }) => {
         title: "text-gray-800 font-medium mb-2",
         htmlContainer: "text-gray-600 mb-6",
         confirmButton:
-          "bg-red-600 text-white px-5 py-2.5 rounded-md hover:bg-red-700 transition focus:outline-none  font-medium mx-4",
+          "bg-red-600 text-white px-5 py-2.5 rounded-md hover:bg-red-700 transition focus:outline-none font-medium mx-4",
         cancelButton:
-          "bg-gray-100 text-gray-800 px-5 py-2.5 rounded-md hover:bg-gray-200 transition focus:outline-none  font-medium",
+          "bg-gray-100 text-gray-800 px-5 py-2.5 rounded-md hover:bg-gray-200 transition focus:outline-none font-medium",
       },
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
         axiosPublic
-          .delete(`/api/item/${item.itemId}`)
+          .delete(`/api/expense/${expense.expenseId}`)
           .then((res) => {
             if (res.data.success) {
-              invalidateCustomers();
+              invalidateExpenses();
               Swal.fire({
                 title:
                   "<h2 class='text-xl font-semibold text-gray-800'>Deleted!</h2>",
@@ -87,19 +96,21 @@ const ItemsTable = ({ item, serial }) => {
   return (
     <>
       <tr
-        key={item.itemId}
+        key={expense.id}
         className="border-b hover:bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 transition-all duration-300 ease-in-out"
       >
         <td className="py-4 px-6">{serial + 1}</td>
-        <td className="py-4 px-6 font-medium text-blue-600">{item.itemId}</td>
-        <td className="py-4 px-6">{item.name}</td>
-        <td className="py-4 px-6">{item.description}</td>
-        <td className="py-4 px-6">{item.type}</td>
-        <td className="py-4 px-6">{item.price}</td>
-        <td className="py-4 px-6">{item.currency}</td>
+        <td className="py-4 px-6 font-medium text-blue-600">
+          {expense.expenseId}
+        </td>
+        <td className="py-4 px-6">{expense.name}</td>
+        <td className="py-4 px-6">{expense.amount}</td>
+        <td className="py-4 px-6">{expense.currency}</td>
+        <td className="py-4 px-6">{formattedDate}</td>
+        <td className="py-4 px-6">{expense.category}</td>
         <td className="py-4 px-6">
           <button
-            onClick={() => toggleModal(item)}
+            onClick={() => toggleModal(expense)}
             className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaEye className="mr-2" />
@@ -108,14 +119,14 @@ const ItemsTable = ({ item, serial }) => {
         </td>
         <td className="py-4 px-6 flex gap-3 justify-start">
           <NavLink
-            to={`/dashboard/editItemDetails/${item.itemId}`}
+            to={`/dashboard/editExpenseDetails/${expense.expenseId}`}
             className="flex items-center text-sm px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaRegEdit className="mr-2" />
             Edit
           </NavLink>
           <button
-            onClick={() => handleDelete(item.itemId)}
+            onClick={handleDelete}
             className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaTrash className="mr-2" />
@@ -125,7 +136,7 @@ const ItemsTable = ({ item, serial }) => {
       </tr>
 
       {/* Modal */}
-      {isModalOpen && currentItem && (
+      {isModalOpen && currentExpense && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-md p-8 w-full max-w-lg relative transform transition-all duration-300">
             <button
@@ -136,7 +147,7 @@ const ItemsTable = ({ item, serial }) => {
             </button>
 
             <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
-              Item Details
+              Expense Details
             </h2>
 
             <div className="overflow-x-auto rounded-md">
@@ -156,49 +167,37 @@ const ItemsTable = ({ item, serial }) => {
                     <td className="py-3 px-6 font-medium text-gray-600">
                       Item ID
                     </td>
-                    <td className="py-3 px-6">{currentItem.itemId}</td>
+                    <td className="py-3 px-6">{currentExpense.expenseId}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
                       Name
                     </td>
-                    <td className="py-3 px-6">{currentItem.name}</td>
+                    <td className="py-3 px-6">{currentExpense.name}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Description
+                      Amount
                     </td>
-                    <td className="py-3 px-6">{currentItem.description}</td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Type
-                    </td>
-                    <td className="py-3 px-6">{currentItem.type}</td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Price
-                    </td>
-                    <td className="py-3 px-6">{currentItem.price}</td>
+                    <td className="py-3 px-6">{currentExpense.amount}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
                       Currency
                     </td>
-                    <td className="py-3 px-6">{currentItem.currency}</td>
+                    <td className="py-3 px-6">{currentExpense.currency}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Created at
+                      Date
                     </td>
-                    <td className="py-3 px-6">{currentItem.createdAt}</td>
+                    <td className="py-3 px-6">{currentExpense.date}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Updated at
+                      Category
                     </td>
-                    <td className="py-3 px-6">{currentItem.updatedAt}</td>
+                    <td className="py-3 px-6">{currentExpense.category}</td>
                   </tr>
                 </tbody>
               </table>
@@ -206,10 +205,10 @@ const ItemsTable = ({ item, serial }) => {
 
             <div className="mt-6 flex justify-center">
               <NavLink
-                to={`/dashboard/editItemDetails/${currentItem.itemId}`}
+                to={`/dashboard/editExpenseDetails/${currentExpense.expenseId}`}
                 className="px-6 py-3 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-all duration-200"
               >
-                Edit Item
+                Edit Expense
               </NavLink>
             </div>
           </div>
@@ -219,4 +218,4 @@ const ItemsTable = ({ item, serial }) => {
   );
 };
 
-export default ItemsTable;
+export default ExpensesTable;
