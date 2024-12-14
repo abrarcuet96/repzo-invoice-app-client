@@ -7,7 +7,8 @@ import { AuthContext } from "../../Providers/AuthProvider";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 
 const Register = () => {
-  const { registerUser, updateUserProfile } = useContext(AuthContext);
+  const { registerUser, updateUserProfile, loading, setLoading } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
   const {
@@ -21,24 +22,29 @@ const Register = () => {
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
   const onSubmit = (data) => {
+    const userInfo = {
+      name: data.name,
+      email: data.email,
+      profileImage: data.photo,
+      role: data.role, // Capture the selected role
+    };
+
     registerUser(data.email, data.password)
       .then(() => {
         updateUserProfile(data.name, data.photo).then(() => {
-          const userInfo = {
-            name: data.name,
-            email: data.email,
-            profileImage: data.photo,
-          };
           axiosPublic.post("/api/users", userInfo).then((res) => {
             if (res.data.success) {
               toast.success("Registration successful!", { duration: 1000 });
+              setTimeout(() => {
+                navigate("/");
+              }, 1000);
               reset();
-              navigate("/");
             }
           });
         });
       })
       .catch((err) => {
+        setLoading(false);
         toast.error(`Registration failed: ${err.message}`, { duration: 1000 });
       });
   };
@@ -166,12 +172,33 @@ const Register = () => {
               )}
             </div>
 
+            {/* Role Selection */}
+            <div className="relative">
+              <label className="block text-gray-700 font-medium">
+                Select how you want to register?
+              </label>
+              <div className="flex items-center border-2 rounded-md border-gray-300 focus-within:ring-2 focus-within:ring-[#0E86D4]">
+                <select
+                  {...register("role", { required: "Role is required" })}
+                  className="w-full py-2 px-4 rounded-md focus:outline-none"
+                >
+                  <option value="user">User</option>
+                  <option value="customer">Customer</option>
+                </select>
+              </div>
+              {errors.role && (
+                <p className="text-sm text-red-500">{errors.role.message}</p>
+              )}
+            </div>
+
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-[#0E86D4] text-white py-2 rounded-md font-medium hover:bg-[#055c9d] transition ease-in-out duration-300"
+              disabled={loading}
+              className="py-2 px-5 w-full bg-blue-500 text-white rounded-md shadow hover:bg-blue-600 disabled:bg-gray-300"
             >
-              Register
+              {loading ? "Please wait..." : "Register"}
+              <Toaster />
             </button>
           </form>
 
@@ -186,8 +213,6 @@ const Register = () => {
           </p>
         </div>
       </div>
-
-      <Toaster />
     </div>
   );
 };

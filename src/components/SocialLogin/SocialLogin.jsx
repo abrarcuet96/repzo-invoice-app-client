@@ -9,11 +9,12 @@ const SocialLogin = () => {
   const navigate = useNavigate();
   const handleGoogleSignIn = () => {
     googleSignIn().then((res) => {
-      console.log(res.user);
       toast.success("Login successful.", {
         position: "top-center",
       });
-      navigate("/");
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
 
       const userInfo = {
         name: res.user.displayName,
@@ -21,12 +22,13 @@ const SocialLogin = () => {
         profileImage: res.user.photoURL,
       };
       axiosPublic.post("/api/users", userInfo).then((res) => {
-        console.log(res);
         if (res.data.success === true) {
           toast.success("Your registration is successful.", {
             position: "top-center",
           });
-          navigate("/");
+          setTimeout(() => {
+            navigate("/");
+          }, 1000);
         }
       });
     });

@@ -93,7 +93,18 @@ const ItemsTable = ({ item, serial }) => {
         <td className="py-4 px-6">{serial + 1}</td>
         <td className="py-4 px-6 font-medium text-blue-600">{item.itemId}</td>
         <td className="py-4 px-6">{item.name}</td>
-        <td className="py-4 px-6">{item.description}</td>
+        <td className="py-4 px-6 relative group">
+          {/* Show the first three words */}
+          <span className="truncate block">
+            {item.description.split(" ").slice(0, 1).join(" ")}...
+          </span>
+
+          {/* Tooltip for full description */}
+          <div className="absolute left-0 top-0 mt-1 hidden w-max max-w-sm bg-blue-200 text-black text-sm rounded-md shadow-lg p-2 group-hover:block">
+            {item.description}
+          </div>
+        </td>
+
         <td className="py-4 px-6">{item.type}</td>
         <td className="py-4 px-6">{item.price}</td>
         <td className="py-4 px-6">{item.currency}</td>

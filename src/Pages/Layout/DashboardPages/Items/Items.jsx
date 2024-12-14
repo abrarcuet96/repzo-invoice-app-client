@@ -124,36 +124,35 @@ const Items = () => {
                   </tbody>
                 </table>
               </div>
+              {/* Pagination Controls */}
+              <div className="flex justify-center items-center mt-6 space-x-6">
+                {/* Previous Button */}
+                <button
+                  onClick={handlePrevPage}
+                  className="px-5 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={currentPage === 1}
+                >
+                  <HiOutlineChevronLeft className="text-lg" />
+                </button>
+
+                {/* Page Numbers */}
+                <div className="flex space-x-2 items-center text-sm text-gray-600">
+                  <span>{currentPage}</span>
+                  <span>/</span>
+                  <span>{totalPages}</span>
+                </div>
+
+                {/* Next Button */}
+                <button
+                  onClick={handleNextPage}
+                  className="px-5 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  disabled={currentPage === totalPages}
+                >
+                  <HiOutlineChevronRight className="text-lg" />
+                </button>
+              </div>
             </>
           )}
-
-          {/* Pagination Controls */}
-          <div className="flex justify-center items-center mt-6 space-x-6">
-            {/* Previous Button */}
-            <button
-              onClick={handlePrevPage}
-              className="px-5 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={currentPage === 1}
-            >
-              <HiOutlineChevronLeft className="text-lg" />
-            </button>
-
-            {/* Page Numbers */}
-            <div className="flex space-x-2 items-center text-sm text-gray-600">
-              <span>{currentPage}</span>
-              <span>/</span>
-              <span>{totalPages}</span>
-            </div>
-
-            {/* Next Button */}
-            <button
-              onClick={handleNextPage}
-              className="px-5 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={currentPage === totalPages}
-            >
-              <HiOutlineChevronRight className="text-lg" />
-            </button>
-          </div>
         </>
       )}
     </div>

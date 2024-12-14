@@ -7,7 +7,7 @@ import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const Login = () => {
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser, loading, setLoading } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -22,17 +22,20 @@ const Login = () => {
   const onSubmit = (data) => {
     loginUser(data.email, data.password)
       .then(() => {
-        navigate(from, { replace: true });
         toast.success("Login successful.", { position: "top-center" });
+        setTimeout(() => {
+          navigate(from, { replace: true });
+        }, 1000);
+        reset();
       })
       .catch((err) => {
+        setLoading(false);
         toast.error(
           "Login unsuccessful. Please register if you don’t have an account.",
           { position: "top-center" }
         );
         navigate("/signup");
       });
-    reset();
   };
 
   return (
@@ -128,9 +131,11 @@ const Login = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-[#055c9d] text-white py-3 rounded-lg font-medium hover:bg-[#003060] transition"
+              disabled={loading}
+              className="py-2 px-5 bg-blue-500 text-white rounded-md shadow w-full hover:bg-blue-600 disabled:bg-gray-300"
             >
-              Log In
+              {loading ? "Please wait..." : "Log In"}
+              <Toaster></Toaster>
             </button>
           </form>
 
@@ -152,8 +157,6 @@ const Login = () => {
           </p>
         </div>
       </div>
-
-      <Toaster />
     </div>
   );
 };

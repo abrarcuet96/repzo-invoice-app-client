@@ -1,5 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../Pages/Home/Home";
+import CustomerDashboard from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerDashboard";
+import CustomerHome from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerHome/CustomerHome";
+import CustomerInvoices from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerInvoices/CustomerInvoices";
+import CustomerQuotes from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerQuotes/CustomerQuotes";
+import CustomerUser from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerUser/CustomerUser";
 import Dashboard from "../Pages/Layout/Dashboard/Dashboard";
 import AddCustomer from "../Pages/Layout/DashboardPages/Customers/addCustomer";
 import Customers from "../Pages/Layout/DashboardPages/Customers/Customers";
@@ -53,6 +58,7 @@ const router = createBrowserRouter([
         path: "dashboardHome",
         element: <DashboardHome></DashboardHome>,
       },
+
       {
         path: "userCustomers",
         element: <Customers></Customers>,
@@ -132,6 +138,34 @@ const router = createBrowserRouter([
         element: <EditExpense></EditExpense>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/expense/${params.id}`),
+      },
+    ],
+  },
+  {
+    path: "customerDashboard",
+    element: (
+      <PrivateRoute>
+        <CustomerDashboard></CustomerDashboard>
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        path: "customerHome",
+        element: <CustomerHome></CustomerHome>,
+      },
+      {
+        path: "customerQuotes",
+        element: <CustomerQuotes></CustomerQuotes>,
+      },
+      {
+        path: "customerInvoices",
+        element: <CustomerInvoices></CustomerInvoices>,
+      },
+      {
+        path: "customerUser/:email",
+        element: <CustomerUser></CustomerUser>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/customerUser/${params.email}`),
       },
     ],
   },

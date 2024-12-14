@@ -2,12 +2,14 @@ import { useContext, useEffect, useRef, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProvider";
+import useUser from "../../hooks/useUser";
+import PageLoading from "../PageLoading/PageLoading";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const [userData, loading] = useUser();
   const handleLogOut = () => {
     logOut().then(() => {
       toast.success("Logout successful", {
@@ -93,7 +95,15 @@ const NavBar = () => {
                 <ul className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md border border-gray-200 z-10">
                   <li>
                     <NavLink
-                      to="/dashboard/dashboardHome"
+                      to={
+                        loading ? (
+                          <PageLoading></PageLoading>
+                        ) : userData?.data?.role === "user" ? (
+                          "/dashboard/dashboardHome"
+                        ) : (
+                          "/customerDashboard/customerHome"
+                        )
+                      }
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
                       onClick={() => setDropdownOpen(false)}
                     >
@@ -102,10 +112,13 @@ const NavBar = () => {
                   </li>
                   <li>
                     <button
+                      type="submit"
+                      disabled={loading}
                       onClick={handleLogOut}
                       className="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
                     >
-                      Logout
+                      {loading ? "Logging out..." : "Log out"}
+                      <Toaster></Toaster>
                     </button>
                   </li>
                 </ul>
@@ -144,8 +157,6 @@ const NavBar = () => {
           <ul>{navLinks}</ul>
         </div>
       </div>
-
-      <Toaster />
     </div>
   );
 };

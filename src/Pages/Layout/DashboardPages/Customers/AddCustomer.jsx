@@ -233,7 +233,7 @@ const AddCustomer = () => {
             </div>
 
             {/* Submit Button */}
-            <div className="flex items-center justify-end space-x-4">
+            <div className="flex items-center justify-start space-x-4">
               <button
                 type="submit"
                 disabled={loading}

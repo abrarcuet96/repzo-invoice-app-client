@@ -25,7 +25,7 @@ const GoBackButton = ({ loading, navigatePath }) => {
             d="M15 19l-7-7 7-7"
           />
         </svg>
-        {loading ? "Cancelling..." : "Back"}
+        {loading ? "Going Back..." : "Back"}
       </button>
     </div>
   );
