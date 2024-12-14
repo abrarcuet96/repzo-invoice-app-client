@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import GoBackButton from "../../../../components/GoBackButton/GoBackButton";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const AddItem = () => {
@@ -54,6 +55,10 @@ const AddItem = () => {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Item Information */}
             <div className="space-y-4">
+              <GoBackButton
+                loading={loading}
+                navigatePath="/dashboard/userItems"
+              />
               <h3 className="text-lg font-medium text-gray-700">
                 Item Information
               </h3>

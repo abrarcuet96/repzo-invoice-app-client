@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
-import { FiTrash2 } from "react-icons/fi"; // Material Design icons for plus and trash
-import { IoAddCircleSharp } from "react-icons/io5";
+import { FiTrash2 } from "react-icons/fi"; // Trash icon
+import { IoAddCircleSharp } from "react-icons/io5"; // Add icon
 import { useLoaderData, useNavigate } from "react-router-dom";
 import GoBackButton from "../../../../components/GoBackButton/GoBackButton";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
+import formatDate from "../../../../utils/formatDate";
 
-const AddQuote = () => {
+const AddInvoice = () => {
+  const user = useLoaderData();
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const [customerResults, setCustomerResults] = useState([]);
@@ -15,7 +17,6 @@ const AddQuote = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [items, setItems] = useState([{ name: "", quantity: 1, price: 0 }]);
   const [loading, setLoading] = useState(false);
-  const user = useLoaderData();
   const {
     reset,
     register,
@@ -27,7 +28,6 @@ const AddQuote = () => {
   const searchDropdownRef = useRef(null);
   const itemInputRef = useRef(null);
   const itemDropdownRef = useRef(null);
-
   useEffect(() => {
     const handleClickOutsideSearchInput = (event) => {
       if (
@@ -65,10 +65,19 @@ const AddQuote = () => {
       document.removeEventListener("mousedown", handleClickOutsideItem);
     };
   }, []);
+  //   const [status, setStatus] = useState("unpaid"); // Invoice status
+  const [currency, setCurrency] = useState("USD"); // Default currency
+  //   const [paymentStatus, setPaymentStatus] = useState("pending"); // Default payment status
 
+  // Calculate the total from items
+  const calculateTotal = () => {
+    return items.reduce((sum, item) => sum + item.quantity * item.price, 0);
+  };
+
+  // Fetch customers when input is clicked
   const onHoverFetchCustomers = () => {
     if (customerResults?.length === 0) {
-      axiosPublic.get(`/api/customer`).then((res) => {
+      axiosPublic.get("/api/customer").then((res) => {
         if (res.data.success) {
           setCustomerResults(res.data.data);
         }
@@ -76,6 +85,7 @@ const AddQuote = () => {
     }
   };
 
+  // Fetch items when input is clicked
   const onHoverFetchItems = (index) => {
     const updatedItems = items.map((item, i) => ({
       ...item,
@@ -84,7 +94,7 @@ const AddQuote = () => {
     setItems(updatedItems);
 
     if (itemResults?.length === 0) {
-      axiosPublic.get(`/api/item`).then((res) => {
+      axiosPublic.get("/api/item").then((res) => {
         if (res.data.success) {
           setItemResults(res.data.data);
         }
@@ -161,7 +171,7 @@ const AddQuote = () => {
   };
 
   const addItemRow = () => {
-    setItems([...items, { name: "", quantity: 1, price: 0 }]);
+    setItems([...items, { itemId: "", name: "", quantity: 1, price: 0 }]);
   };
 
   const removeItemRow = (index) => {
@@ -170,53 +180,54 @@ const AddQuote = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
-    const date = new Date(data.expiryDate);
+    const issuedDate = formatDate(data.issuedDate);
+    console.log(issuedDate);
 
-    const gmtPlus6Date = new Date(
-      date.toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
-    );
-
-    const formattedDate = gmtPlus6Date
-      .toString()
-      .match(/\w{3} \w{3} \d{2} \d{4}/)[0];
-
-    const quoteInfo = {
+    const dueDate = formatDate(data.dueDate);
+    const invoiceInfo = {
       customerId: selectedCustomer?.customerId,
-      expiryDate: formattedDate, // Use the formatted date here
+      issuedDate: issuedDate,
+      dueDate: dueDate,
+      status: "unpaid",
+      currency: currency,
+      payment: { status: "pending", amount: calculateTotal() },
       items: items,
-      total: items.reduce((sum, item) => sum + item.quantity * item.price, 0),
+      total: calculateTotal(),
     };
-    setLoading(true); // Set loading to true while submitting
+    console.log(invoiceInfo);
 
-    axiosPublic.post(`/api/quote/${user.data._id}`, quoteInfo).then((res) => {
-      setLoading(false); // Set loading to false once the response is received
+    setLoading(true);
 
-      if (res.data.success) {
-        toast.success("Quote added successfully.");
-        reset();
-        setTimeout(() => {
-          navigate("/dashboard/userQuotes");
-        }, 1000);
-      } else {
-        toast.error("Failed to create the quote.");
-      }
-    });
+    axiosPublic
+      .post(`/api/invoice/${user.data._id}`, invoiceInfo)
+      .then((res) => {
+        setLoading(false);
+
+        if (res.data.success) {
+          toast.success("Invoice created successfully.");
+          reset();
+          setTimeout(() => {
+            navigate("/dashboard/userInvoices");
+          }, 1000);
+        } else {
+          toast.error("Failed to create the invoice.");
+        }
+      });
   };
 
   return (
     <div className="min-h-screen flex items-start  px-4 py-8">
       <div className="w-full max-w-3xl flex flex-col gap-8 bg-white rounded-lg p-3">
-        {/* Left Side: Form */}
         <div className="space-y-6">
           <GoBackButton
             loading={loading}
-            navigatePath="/dashboard/userQuotes"
+            navigatePath="/dashboard/userInvoices"
           />
-          <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">
-            Create Quote
+
+          <h2 className="text-2xl font-semibold text-gray-800 border-b pb-3">
+            Create Invoice
           </h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {/* Customer Details */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
@@ -236,7 +247,7 @@ const AddQuote = () => {
                   customerResults.length > 0 && (
                     <ul
                       ref={searchDropdownRef}
-                      className="absolute bg-white border rounded-lg shadow-lg h-auto mt-1 z-10"
+                      className="absolute bg-white border rounded-lg shadow-lg mt-1 z-10"
                     >
                       {customerResults.map((customer) => (
                         <li
@@ -253,25 +264,57 @@ const AddQuote = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700">
-                  Expiry Date
+                  Issued Date
                 </label>
                 <input
                   type="date"
-                  {...register("expiryDate", {
-                    required: "Expiry date is required",
+                  {...register("issuedDate", {
+                    required: "Issued date is required",
                   })}
                   className="w-full mt-1 p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
                 />
-                {errors.expiryDate && (
+                {errors.issuedDate && (
                   <p className="mt-1 text-sm text-red-600">
-                    {errors.expiryDate.message}
+                    {errors.issuedDate.message}
                   </p>
                 )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Due Date
+                </label>
+                <input
+                  type="date"
+                  {...register("dueDate", { required: "Due date is required" })}
+                  className="w-full mt-1 p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                />
+                {errors.dueDate && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.dueDate.message}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Currency
+                </label>
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="BDT">BDT</option>
+                  <option value="GBP">GBP</option>
+                </select>
               </div>
             </div>
 
             {/* Invoice Items */}
-            <div className="space-y-4 mb-4  pb-4">
+            <div className="space-y-4">
               <h3 className="text-lg font-semibold text-gray-700">
                 Invoice Items
               </h3>
@@ -374,9 +417,9 @@ const AddQuote = () => {
               </table>
             </div>
 
-            <div className="max-w-full flex ">
-              <div className="w-1/2"></div>
-              <div className="mt-6 border-t pt-4 space-y-2 w-1/2">
+            {/* Total Calculation */}
+            <div className="mt-6 flex justify-end gap-4 border-t pt-4">
+              <div className="w-1/2 space-y-2">
                 <div className="flex justify-between text-sm text-gray-600">
                   <span>Subtotal:</span>
                   <span>
@@ -398,36 +441,44 @@ const AddQuote = () => {
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div className="flex items-center justify-end space-x-4">
+            {/* Buttons */}
+            <div className="flex justify-end mt-2 gap-4">
               <button
                 type="submit"
+                className={`py-2 px-6 text-white rounded-lg ${
+                  loading ? "bg-gray-500" : "bg-blue-600 hover:bg-blue-700"
+                }`}
                 disabled={loading}
-                className="py-2 px-6 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
               >
-                {loading ? <span>Loading...</span> : <span>Create</span>}
-                <Toaster></Toaster>
+                {loading ? "Creating..." : "Create Invoice"}
+                <Toaster />
               </button>
             </div>
           </form>
         </div>
-
-        {/* Right Side: Informational Panel */}
         <div className="space-y-6 bg-blue-50 p-6 rounded-md border border-blue-100">
-          <h3 className="text-lg font-semibold text-gray-800">Help & Tips</h3>
-          <p className="text-sm text-gray-600">
-            Please fill out the details on the left to create a quote. You can
-            search for customers and items from the available dropdowns. Once
-            added, invoice items will automatically calculate the totals.
-          </p>
-          <p className="text-sm text-gray-600">
-            Use the "Add" and "Remove" buttons to manage invoice items. Don't
-            forget to set the correct expiry date to ensure the quote is valid.
-          </p>
+          <h3 className="text-lg font-semibold text-gray-800">
+            Payment Amount
+          </h3>
+          <div className="bg-blue-100 p-4 rounded-md mt-4">
+            <p className="text-lg font-semibold text-blue-700">
+              Total Amount: {calculateTotal()}
+            </p>
+          </div>
+          <div className="text-sm text-gray-600">
+            <p>
+              The payment amount is automatically calculated based on the total
+              of all invoice items. Ensure the totals match before submitting.
+            </p>
+            <p className="mt-2">
+              Use the "Add" and "Remove" buttons to adjust the items in your
+              invoice. The payment amount will update accordingly.
+            </p>
+          </div>
           <div className="bg-blue-100 p-4 rounded-md">
             <p className="text-sm text-blue-700">
-              Tip: Ensure that all required fields are filled before submitting
-              the form.
+              Tip: Double-check the quantities and prices before finalizing the
+              payment amount.
             </p>
           </div>
         </div>
@@ -436,4 +487,4 @@ const AddQuote = () => {
   );
 };
 
-export default AddQuote;
+export default AddInvoice;

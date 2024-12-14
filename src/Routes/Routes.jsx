@@ -8,6 +8,9 @@ import DashboardHome from "../Pages/Layout/DashboardPages/DashboardHome/Dashboar
 import AddExpense from "../Pages/Layout/DashboardPages/Expenses/AddExpense";
 import EditExpense from "../Pages/Layout/DashboardPages/Expenses/EditExpense";
 import Expenses from "../Pages/Layout/DashboardPages/Expenses/Expenses";
+import AddInvoice from "../Pages/Layout/DashboardPages/Invoices/AddInvoice";
+import EditInvoice from "../Pages/Layout/DashboardPages/Invoices/EditInvoice";
+import Invoices from "../Pages/Layout/DashboardPages/Invoices/Invoices";
 import AddItem from "../Pages/Layout/DashboardPages/Items/AddItem";
 import EditItem from "../Pages/Layout/DashboardPages/Items/EditItem";
 import Items from "../Pages/Layout/DashboardPages/Items/Items";
@@ -63,6 +66,10 @@ const router = createBrowserRouter([
         element: <Quotes></Quotes>,
       },
       {
+        path: "userInvoices",
+        element: <Invoices></Invoices>,
+      },
+      {
         path: "userExpenses",
         element: <Expenses></Expenses>,
       },
@@ -81,6 +88,12 @@ const router = createBrowserRouter([
       {
         path: "addQuote/:email",
         element: <AddQuote></AddQuote>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/users/${params.email}`),
+      },
+      {
+        path: "addInvoice/:email",
+        element: <AddInvoice></AddInvoice>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/users/${params.email}`),
       },
@@ -107,6 +120,12 @@ const router = createBrowserRouter([
         element: <EditQuote></EditQuote>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/quote/${params.id}`),
+      },
+      {
+        path: "editInvoiceDetails/:id",
+        element: <EditInvoice></EditInvoice>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/invoice/${params.id}`),
       },
       {
         path: "editExpenseDetails/:id",

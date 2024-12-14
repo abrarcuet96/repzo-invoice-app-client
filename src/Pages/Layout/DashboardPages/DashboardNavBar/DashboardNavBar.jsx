@@ -21,7 +21,7 @@ const DashboardNavBar = ({ profileImage }) => {
         </div>
 
         {/* Right Section: Profile Avatar and Dropdown */}
-        <div className="relative flex items-center">
+        <div className="relative flex items-center z-50">
           <div className="dropdown dropdown-end">
             {/* Profile Avatar */}
             <div

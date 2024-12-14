@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import GoBackButton from "../../../../components/GoBackButton/GoBackButton";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const EditCustomer = () => {
@@ -66,6 +67,10 @@ const EditCustomer = () => {
       <div className="w-full max-w-3xl flex flex-col gap-8 bg-white rounded-lg p-3">
         {/* Form Section */}
         <div className="space-y-6">
+          <GoBackButton
+            loading={loading}
+            navigatePath="/dashboard/userCustomers"
+          />
           {/* Title */}
           <h2 className="text-2xl font-bold text-gray-800 border-b pb-4">
             Edit Customer

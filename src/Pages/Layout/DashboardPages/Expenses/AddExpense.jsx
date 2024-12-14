@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import GoBackButton from "../../../../components/GoBackButton/GoBackButton";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 
 const AddExpense = () => {
@@ -56,6 +57,10 @@ const AddExpense = () => {
     <div className="min-h-screen flex items-start  px-4 py-8">
       <div className="w-full max-w-3xl flex flex-col gap-8 bg-white rounded-lg p-3">
         <div className="space-y-6">
+          <GoBackButton
+            loading={loading}
+            navigatePath="/dashboard/userExpenses"
+          />
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b pb-2">
             Add New Expense
           </h2>

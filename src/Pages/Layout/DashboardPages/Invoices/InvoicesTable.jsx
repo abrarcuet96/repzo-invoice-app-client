@@ -5,25 +5,26 @@ import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
-import useExpense from "../../../../hooks/useExpense";
+import useInvoice from "../../../../hooks/useInvoice";
+const InvoicesTable = ({ invoice, serial }) => {
+  console.log(invoice);
 
-const ExpensesTable = ({ expense, serial }) => {
   const axiosPublic = useAxiosPublic();
-  const { invalidateExpenses } = useExpense();
+  const { invalidateInvoices } = useInvoice();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentExpense, setCurrentExpense] = useState(null);
-  const date = new Date(expense.date);
+  const [currentInvoice, setCurrentInvoice] = useState(null);
 
-  const gmtPlus6Date = new Date(
-    date.toLocaleString("en-US", { timeZone: "Asia/Dhaka" })
-  );
+  const total = invoice.items.reduce((acc, item) => {
+    return acc + item.price * item.quantity;
+  }, 0);
+  const totalItems = invoice.items.reduce((acc, item) => {
+    return acc + item.quantity;
+  }, 0);
+  console.log(total);
 
-  const formattedDate = gmtPlus6Date
-    .toString()
-    .match(/\w{3} \w{3} \d{2} \d{4}/)[0];
-  const toggleModal = (expense) => {
+  const toggleModal = (invoice) => {
     setIsModalOpen(!isModalOpen);
-    setCurrentExpense(expense);
+    setCurrentInvoice(invoice);
   };
 
   const handleDelete = () => {
@@ -41,23 +42,23 @@ const ExpensesTable = ({ expense, serial }) => {
         title: "text-gray-800 font-medium mb-2",
         htmlContainer: "text-gray-600 mb-6",
         confirmButton:
-          "bg-red-600 text-white px-5 py-2.5 rounded-md hover:bg-red-700 transition focus:outline-none font-medium mx-4",
+          "bg-red-600 text-white px-5 py-2.5 rounded-md hover:bg-red-700 transition focus:outline-none  font-medium mx-4",
         cancelButton:
-          "bg-gray-100 text-gray-800 px-5 py-2.5 rounded-md hover:bg-gray-200 transition focus:outline-none font-medium",
+          "bg-gray-100 text-gray-800 px-5 py-2.5 rounded-md hover:bg-gray-200 transition focus:outline-none  font-medium",
       },
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
         axiosPublic
-          .delete(`/api/expense/${expense.expenseId}`)
+          .delete(`/api/invoice/${invoice.invoiceId}`)
           .then((res) => {
             if (res.data.success) {
-              invalidateExpenses();
+              invalidateInvoices();
               Swal.fire({
                 title:
                   "<h2 class='text-xl font-semibold text-gray-800'>Deleted!</h2>",
-                html: "<p class='text-sm text-gray-600'>Item has been deleted successfully.</p>",
+                html: "<p class='text-sm text-gray-600'>Invoice has been deleted successfully.</p>",
                 icon: "success",
                 buttonsStyling: false,
                 customClass: {
@@ -76,7 +77,7 @@ const ExpensesTable = ({ expense, serial }) => {
             Swal.fire({
               title:
                 "<h2 class='text-xl font-semibold text-red-600'>Error!</h2>",
-              html: "<p class='text-sm text-gray-600'>Failed to delete the item. Please try again later.</p>",
+              html: "<p class='text-sm text-gray-600'>Failed to delete the Invoice. Please try again later.</p>",
               icon: "error",
               buttonsStyling: false,
               customClass: {
@@ -92,25 +93,51 @@ const ExpensesTable = ({ expense, serial }) => {
       }
     });
   };
+  console.log(invoice.issuedDate);
 
   return (
     <>
       <tr
-        key={expense.id}
+        key={invoice.invoiceId}
         className="border-b hover:bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 transition-all duration-300 ease-in-out"
       >
         <td className="py-4 px-6">{serial + 1}</td>
         <td className="py-4 px-6 font-medium text-blue-600">
-          {expense.expenseId}
+          {invoice.invoiceId}
         </td>
-        <td className="py-4 px-6">{expense.name}</td>
-        <td className="py-4 px-6">{expense.amount}</td>
-        <td className="py-4 px-6">{expense.currency}</td>
-        <td className="py-4 px-6">{formattedDate}</td>
-        <td className="py-4 px-6">{expense.category}</td>
+        <td className="py-4 px-6">{invoice.customerId}</td>
+        <td className="py-4 px-6">{invoice.issuedDate}</td>
+        <td className="py-4 px-6">{invoice.dueDate}</td>
+        <td className="py-4 px-6">
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${
+              invoice.status === "paid"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
+          >
+            {invoice.status}
+          </span>
+        </td>
+
+        <td className="py-4 px-6">{totalItems}</td>
+        <td className="py-4 px-6">{total}</td>
+        <td className="py-4 px-6">{invoice.currency}</td>
+        <td className="py-4 px-6">
+          <span
+            className={`px-3 py-1 rounded-full text-sm font-medium ${
+              invoice.payment.status === "recieved"
+                ? "bg-green-100 text-green-800"
+                : "bg-yellow-100 text-yellow-800"
+            }`}
+          >
+            {invoice.payment.status}
+          </span>
+        </td>
+
         <td className="py-4 px-6">
           <button
-            onClick={() => toggleModal(expense)}
+            onClick={() => toggleModal(invoice)}
             className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaEye className="mr-2" />
@@ -119,14 +146,14 @@ const ExpensesTable = ({ expense, serial }) => {
         </td>
         <td className="py-4 px-6 flex gap-3 justify-start">
           <NavLink
-            to={`/dashboard/editExpenseDetails/${expense.expenseId}`}
+            to={`/dashboard/editInvoiceDetails/${invoice.invoiceId}`}
             className="flex items-center text-sm px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaRegEdit className="mr-2" />
             Edit
           </NavLink>
           <button
-            onClick={handleDelete}
+            onClick={() => handleDelete(invoice.invoiceId)}
             className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-200"
           >
             <FaTrash className="mr-2" />
@@ -136,7 +163,7 @@ const ExpensesTable = ({ expense, serial }) => {
       </tr>
 
       {/* Modal */}
-      {isModalOpen && currentExpense && (
+      {isModalOpen && currentInvoice && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-md p-8 w-full max-w-lg relative transform transition-all duration-300">
             <button
@@ -147,7 +174,7 @@ const ExpensesTable = ({ expense, serial }) => {
             </button>
 
             <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
-              Expense Details
+              Invoice Details
             </h2>
 
             <div className="overflow-x-auto rounded-md">
@@ -165,39 +192,61 @@ const ExpensesTable = ({ expense, serial }) => {
                 <tbody>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Expense ID
+                      Invoice ID
                     </td>
-                    <td className="py-3 px-6">{currentExpense.expenseId}</td>
+                    <td className="py-3 px-6">{currentInvoice.invoiceId}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Name
+                      Customer ID
                     </td>
-                    <td className="py-3 px-6">{currentExpense.name}</td>
+                    <td className="py-3 px-6">{currentInvoice.customerId}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Amount
+                      Issued Date
                     </td>
-                    <td className="py-3 px-6">{currentExpense.amount}</td>
+                    <td className="py-3 px-6">{currentInvoice.issuedDate}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Currency
+                      Due Date
                     </td>
-                    <td className="py-3 px-6">{currentExpense.currency}</td>
+                    <td className="py-3 px-6">{currentInvoice.dueDate}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Date
+                      Total Items
                     </td>
-                    <td className="py-3 px-6">{currentExpense.date}</td>
+                    <td className="py-3 px-6">{totalItems}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
-                      Category
+                      Total
                     </td>
-                    <td className="py-3 px-6">{currentExpense.category}</td>
+                    <td className="py-3 px-6">
+                      {total} {invoice.currency}
+                    </td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Payment Status
+                    </td>
+                    <td className="py-3 px-6">
+                      {currentInvoice.payment.status}
+                    </td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Created at
+                    </td>
+                    <td className="py-3 px-6">{currentInvoice.createdAt}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Updated at
+                    </td>
+                    <td className="py-3 px-6">{currentInvoice.updatedAt}</td>
                   </tr>
                 </tbody>
               </table>
@@ -205,10 +254,10 @@ const ExpensesTable = ({ expense, serial }) => {
 
             <div className="mt-6 flex justify-center">
               <NavLink
-                to={`/dashboard/editExpenseDetails/${currentExpense.expenseId}`}
+                to={`/dashboard/editInvoiceDetails/${currentInvoice.invoiceId}`}
                 className="px-6 py-3 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-all duration-200"
               >
-                Edit Expense
+                Edit Invoice
               </NavLink>
             </div>
           </div>
@@ -218,4 +267,4 @@ const ExpensesTable = ({ expense, serial }) => {
   );
 };
 
-export default ExpensesTable;
+export default InvoicesTable;

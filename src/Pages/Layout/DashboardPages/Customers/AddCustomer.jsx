@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import GoBackButton from "../../../../components/GoBackButton/GoBackButton";
 import useAxiosPublic from "../../../../hooks/useAxiosPublic";
 const AddCustomer = () => {
   const user = useLoaderData();
@@ -49,6 +50,10 @@ const AddCustomer = () => {
     <div className="min-h-screen flex items-start  px-4 py-8">
       <div className="w-full max-w-3xl flex flex-col gap-8 bg-white rounded-lg p-3">
         <div className="space-y-6">
+          <GoBackButton
+            loading={loading}
+            navigatePath="/dashboard/userCustomers"
+          />
           {/* Form Header */}
           <h2 className="text-2xl font-semibold text-gray-800 mb-4 border-b pb-3">
             Create New Customer
@@ -234,7 +239,7 @@ const AddCustomer = () => {
                 disabled={loading}
                 className="py-2 px-6 text-white bg-blue-600 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
               >
-                {loading ? <span>Loading...</span> : <span>Create</span>}
+                {loading ? <span>Creating...</span> : <span>Create</span>}
                 <Toaster></Toaster>
               </button>
             </div>
