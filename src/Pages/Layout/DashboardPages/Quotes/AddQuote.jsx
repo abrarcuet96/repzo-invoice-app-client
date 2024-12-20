@@ -15,6 +15,7 @@ const AddQuote = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [items, setItems] = useState([{ name: "", quantity: 1, price: 0 }]);
   const [loading, setLoading] = useState(false);
+  const [currency, setCurrency] = useState("USD");
   const user = useLoaderData();
   const {
     reset,
@@ -185,7 +186,12 @@ const AddQuote = () => {
       customerId: selectedCustomer?.customerId,
       expiryDate: formattedDate, // Use the formatted date here
       items: items,
+      currency: currency,
       total: items.reduce((sum, item) => sum + item.quantity * item.price, 0),
+      status: "pending",
+      isAccepted: false,
+      isDeclined: false,
+      isInvoiceSent: false,
     };
     setLoading(true); // Set loading to true while submitting
 
@@ -268,6 +274,21 @@ const AddQuote = () => {
                   </p>
                 )}
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Currency
+                </label>
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  className="w-full p-3 border rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="BDT">BDT</option>
+                  <option value="GBP">GBP</option>
+                </select>
+              </div>
             </div>
 
             {/* Invoice Items */}
@@ -314,7 +335,7 @@ const AddQuote = () => {
                           itemResults.length > 0 && (
                             <ul
                               ref={itemDropdownRef}
-                              className="absolute bg-white border rounded-lg shadow-lg max-h-48 mt-1 z-10"
+                              className="absolute bg-white border rounded-lg shadow-lg h-auto mt-1 z-10"
                             >
                               {itemResults.map((result) => (
                                 <li

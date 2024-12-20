@@ -12,7 +12,7 @@ const Invoices = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const InvoicesPerPage = 8; // Number of Invoices per page
+  const InvoicesPerPage = 5; // Number of Invoices per page
 
   const handleNextPage = () => {
     if (currentPage < totalPages) setCurrentPage(currentPage + 1);
@@ -25,7 +25,12 @@ const Invoices = () => {
   // Get the Invoices for the current page
   const totalInvoices = userData?.data?.invoices?.length || 0;
   const totalPages = Math.ceil(totalInvoices / InvoicesPerPage);
-  const currentInvoices = userData?.data?.invoices?.slice(
+
+  const sortedInvoices =
+    userData?.data?.invoices?.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    ) || [];
+  const currentInvoices = sortedInvoices?.slice(
     (currentPage - 1) * InvoicesPerPage,
     currentPage * InvoicesPerPage
   );

@@ -1,11 +1,11 @@
-const TemplateTable = ({ quoteItems }) => {
-  const subtotal = quoteItems?.reduce(
+const CustomerTemplateTable = ({ invoiceItems }) => {
+  const subtotal = invoiceItems?.reduce(
     (acc, item) => acc + item.quantity * item.price,
     0
   );
   return (
     <>
-      {quoteItems?.length ? (
+      {invoiceItems?.length ? (
         <table className="w-full border-collapse">
           <thead className="bg-blue-200">
             <tr>
@@ -24,7 +24,7 @@ const TemplateTable = ({ quoteItems }) => {
             </tr>
           </thead>
           <tbody>
-            {quoteItems.map((item) => (
+            {invoiceItems.map((item) => (
               <tr key={item.itemId}>
                 <td className="border border-gray-200 px-4 py-2">
                   {item.name}
@@ -146,4 +146,4 @@ const TemplateTable = ({ quoteItems }) => {
     </>
   );
 };
-export default TemplateTable;
+export default CustomerTemplateTable;

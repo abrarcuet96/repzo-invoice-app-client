@@ -4,7 +4,7 @@ import { useLoaderData } from "react-router-dom";
 
 const CustomerUser = () => {
   const user = useLoaderData();
-  console.log(user);
+  console.log(user.data[0]);
 
   return (
     <div className="min-h-screen  py-10 flex justify-start items-start">
@@ -12,15 +12,17 @@ const CustomerUser = () => {
         {/* Profile Header (Card Style) */}
         <div className="bg-gray-100 p-8 rounded-md flex items-center space-x-6">
           <img
-            src={user.data[0].profileImage}
+            src={user.data[0][0].profileImage}
             alt="Profile"
             className="w-28 h-28 rounded-full border-4 border-white shadow-lg transform transition-transform duration-300 hover:scale-105"
           />
           <div>
             <h1 className="text-3xl font-semibold text-gray-800">
-              {user.data[0].name}
+              {user.data[0][0].name}
             </h1>
-            <p className="text-base text-gray-600 mt-1">{user.data[0].email}</p>
+            <p className="text-base text-gray-600 mt-1">
+              {user.data[0][0].email}
+            </p>
           </div>
         </div>
 
@@ -43,11 +45,11 @@ const CustomerUser = () => {
               <tbody>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">Full Name</td>
-                  <td className="py-3 px-4">{user.data[0].name}</td>
+                  <td className="py-3 px-4">{user.data[0][0].name}</td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">Email Address</td>
-                  <td className="py-3 px-4">{user.data[0].email}</td>
+                  <td className="py-3 px-4">{user.data[0][0].email}</td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">Phone</td>

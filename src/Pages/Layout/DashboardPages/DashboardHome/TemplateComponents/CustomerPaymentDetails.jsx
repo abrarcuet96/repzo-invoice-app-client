@@ -1,12 +1,12 @@
-const PaymentDetails = ({ quoteDueDate }) => {
+const CustomerPaymentDetails = ({ invoiceDueDate }) => {
   return (
     <>
-      {quoteDueDate ? (
+      {invoiceDueDate ? (
         <div>
           <h3 className="text-lg font-semibold text-blue-700">
             Payment Details:
           </h3>
-          <p className="mt-2 text-gray-700">Due Date: {quoteDueDate}</p>
+          <p className="mt-2 text-gray-700">Due Date: {invoiceDueDate}</p>
         </div>
       ) : (
         <div>
@@ -19,4 +19,4 @@ const PaymentDetails = ({ quoteDueDate }) => {
     </>
   );
 };
-export default PaymentDetails;
+export default CustomerPaymentDetails;
