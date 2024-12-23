@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import useUser from "../../../../../hooks/useUser";
+import useUser from "../../../../hooks/useUser";
 
-const CustomerHome = () => {
+const UserProfile = () => {
   const [userData] = useUser();
   const { name, email, profileImage, profile } = userData?.data || {};
 
@@ -20,24 +20,8 @@ const CustomerHome = () => {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 space-y-6">
-        <p className="text-xl font-medium text-gray-700">
-          You haven't created your profile yet!
-        </p>
-        <NavLink
-          to="/dashboard/createUserProfile"
-          className={({ isActive, isPending }) =>
-            `px-6 py-3 rounded-md text-white font-medium shadow-md transition-all duration-200 ${
-              isPending
-                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                : isActive
-                ? "bg-[#0E86D4] hover:bg-[#0c6ba8]"
-                : "bg-[#0E86D4] hover:bg-[#0c6ba8] shadow-lg hover:shadow-xl"
-            }`
-          }
-        >
-          Create Profile
-        </NavLink>
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <p className="text-lg text-gray-500">No profile data available.</p>
       </div>
     );
   }
@@ -98,7 +82,7 @@ const CustomerHome = () => {
       {/* Action Button */}
       <div className="flex items-center justify-end w-full max-w-4xl">
         <NavLink
-          to={`/customerDashboard/updateCustomerProfile/${profileId}`}
+          to={`/dashboard/updateUserProfile/${profileId}`}
           className="py-3 px-8 text-white bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 transition-transform duration-300 hover:scale-105 focus:ring-4 focus:ring-blue-300"
         >
           Update Profile
@@ -108,4 +92,4 @@ const CustomerHome = () => {
   );
 };
 
-export default CustomerHome;
+export default UserProfile;

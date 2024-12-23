@@ -66,7 +66,7 @@ const CustomerTemplateThree = ({ invoice, userData }) => {
               <ClientInvoiceIdAndIssueDate invoiceDate={invoice.issuedDate} />
             </div>
             <div className="mt-4 md:mt-0 text-right">
-              <CompanyDetails></CompanyDetails>
+              <CompanyDetails userData={userData} />
             </div>
           </div>
         </div>

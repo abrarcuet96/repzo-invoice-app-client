@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { FaEye, FaRegEdit, FaTrash } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { CiEdit } from "react-icons/ci";
+import { FaEllipsisV, FaEye } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
+import { MdDeleteOutline } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
@@ -13,7 +15,7 @@ const InvoicesTable = ({ invoice, serial }) => {
   const { invalidateInvoices } = useInvoice();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentInvoice, setCurrentInvoice] = useState(null);
-
+  const [openDropdown, setOpenDropdown] = useState(null);
   const total = invoice.items.reduce((acc, item) => {
     return acc + item.price * item.quantity;
   }, 0);
@@ -94,7 +96,19 @@ const InvoicesTable = ({ invoice, serial }) => {
     });
   };
   console.log(invoice.issuedDate);
-
+  const toggleDropdown = (id) => {
+    setOpenDropdown((prev) => (prev === id ? null : id));
+  };
+  const isDropdownOpen = (id) => openDropdown === id;
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".dropdown-trigger")) {
+        setOpenDropdown(null);
+      }
+    };
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
   return (
     <>
       <tr
@@ -144,21 +158,35 @@ const InvoicesTable = ({ invoice, serial }) => {
             View
           </button>
         </td>
-        <td className="py-4 px-6 flex gap-3 justify-start">
-          <NavLink
-            to={`/dashboard/editInvoiceDetails/${invoice.invoiceId}`}
-            className="flex items-center text-sm px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transform hover:scale-105 transition-all duration-200"
-          >
-            <FaRegEdit className="mr-2" />
-            Edit
-          </NavLink>
+        <td className="py-4 px-6 text-center relative">
           <button
-            onClick={() => handleDelete(invoice.invoiceId)}
-            className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-200"
+            className="dropdown-trigger flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none"
+            onClick={() => toggleDropdown(invoice.invoiceId)}
+            aria-expanded={isDropdownOpen(invoice.invoiceId)}
           >
-            <FaTrash className="mr-2" />
-            Delete
+            <FaEllipsisV className="text-gray-500" />
           </button>
+          {isDropdownOpen(invoice.invoiceId) && (
+            <div className="absolute right-[85px] top-2 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg w-52 z-10">
+              <div className="flex justify-evenly items-center px-4 py-2">
+                <NavLink
+                  to={`/dashboard/editInvoiceDetails/${invoice.invoiceId}`}
+                  className="flex items-center text-sm text-gray-700 hover:text-blue-500"
+                >
+                  <CiEdit className="mr-2 text-xl" />
+                  Edit
+                </NavLink>
+                <div>|</div>
+                <button
+                  onClick={() => handleDelete(invoice.invoiceId)}
+                  className="flex items-center text-sm text-gray-700 hover:text-red-500"
+                >
+                  <MdDeleteOutline className="mr-2 text-xl" />
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
         </td>
       </tr>
 
@@ -251,7 +279,47 @@ const InvoicesTable = ({ invoice, serial }) => {
                 </tbody>
               </table>
             </div>
-
+            {/* Items Table */}
+            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Items</h3>
+            <div className="overflow-x-auto rounded-md">
+              <div className="max-h-48 overflow-y-auto">
+                <table className="min-w-full text-sm text-gray-700">
+                  <thead className="bg-gray-100 sticky top-0 z-10">
+                    <tr>
+                      <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                        Item Name
+                      </th>
+                      <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                        Quantity
+                      </th>
+                      <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                        Price
+                      </th>
+                      <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                        Subtotal
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {currentInvoice.items.map((item, index) => (
+                      <tr
+                        key={index}
+                        className="border-b hover:bg-gray-50 transition-colors"
+                      >
+                        <td className="py-3 px-6 font-medium text-gray-600">
+                          {item.name}
+                        </td>
+                        <td className="py-3 px-6">{item.quantity}</td>
+                        <td className="py-3 px-6">{item.price}</td>
+                        <td className="py-3 px-6">
+                          {item.quantity * item.price}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
             <div className="mt-6 flex justify-center">
               <NavLink
                 to={`/dashboard/editInvoiceDetails/${currentInvoice.invoiceId}`}

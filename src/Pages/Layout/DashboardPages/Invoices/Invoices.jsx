@@ -26,11 +26,11 @@ const Invoices = () => {
   const totalInvoices = userData?.data?.invoices?.length || 0;
   const totalPages = Math.ceil(totalInvoices / InvoicesPerPage);
 
-  const sortedInvoices =
-    userData?.data?.invoices?.sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    ) || [];
-  const currentInvoices = sortedInvoices?.slice(
+  // const sortedInvoices =
+  //   userData?.data?.invoices?.sort(
+  //     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  //   ) || [];
+  const currentInvoices = userData?.data?.invoices?.slice(
     (currentPage - 1) * InvoicesPerPage,
     currentPage * InvoicesPerPage
   );

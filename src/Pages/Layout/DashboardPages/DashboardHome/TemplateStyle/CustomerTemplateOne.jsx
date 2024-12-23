@@ -65,7 +65,7 @@ const CustomerTemplateOne = ({ invoice, userData }) => {
               <ClientInvoiceIdAndIssueDate invoiceDate={invoice.issuedDate} />
             </div>
             <div className="text-right">
-              <CompanyDetails />
+              <CompanyDetails userData={userData} />
             </div>
           </div>
         </div>

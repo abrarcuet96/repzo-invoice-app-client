@@ -7,9 +7,12 @@ import PageLoading from "../PageLoading/PageLoading";
 
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // Mobile menu state
   const dropdownRef = useRef(null);
   const [userData, loading] = useUser();
+
   const handleLogOut = () => {
     logOut().then(() => {
       toast.success("Logout successful", {
@@ -63,13 +66,13 @@ const NavBar = () => {
 
   return (
     <div>
+      {/* Desktop Navbar */}
       <div className="max-w-screen-xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
         <div className="flex items-center space-x-3">
           <h1 className="text-2xl font-bold text-[#0E86D4]">RepZo</h1>
         </div>
 
-        {/* Nav Links (Desktop) */}
+        {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center space-x-8">
           <ul className="flex space-x-6">{navLinks}</ul>
         </div>
@@ -84,7 +87,7 @@ const NavBar = () => {
               >
                 <img
                   className="w-8 h-8 rounded-full object-cover"
-                  src={user.photoURL}
+                  src={user?.photoURL}
                   alt="Profile"
                 />
                 <span className="font-medium text-gray-800">
@@ -96,10 +99,10 @@ const NavBar = () => {
                   <li>
                     <NavLink
                       to={
-                        loading ? (
+                        loading && userData?.data?.role ? (
                           <PageLoading></PageLoading>
                         ) : userData?.data?.role === "user" ? (
-                          "/dashboard/dashboardHome"
+                          "/dashboard/userHome"
                         ) : (
                           "/customerDashboard/customerHome"
                         )
@@ -118,7 +121,7 @@ const NavBar = () => {
                       className="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
                     >
                       {loading ? "Logging out..." : "Log out"}
-                      <Toaster></Toaster>
+                      <Toaster />
                     </button>
                   </li>
                 </ul>
@@ -136,8 +139,11 @@ const NavBar = () => {
       </div>
 
       {/* Mobile Navbar */}
-      <div className="lg:hidden px-6 py-4">
-        <button className="text-primary focus:outline-none">
+      <div className="lg:hidden px-6 py-4 flex justify-between items-center">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="text-primary focus:outline-none"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -153,9 +159,70 @@ const NavBar = () => {
             />
           </svg>
         </button>
-        <div className="mt-4 space-y-2">
-          <ul>{navLinks}</ul>
-        </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="mt-4 space-y-2">
+            <ul>{navLinks}</ul>
+            <div className="mt-4">
+              {user ? (
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    className="flex items-center space-x-2 border border-gray-300 rounded-full p-2 hover:border-[#0E86D4] transition-all w-full justify-center"
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                  >
+                    <img
+                      className="w-8 h-8 rounded-full object-cover"
+                      src={user?.photoURL}
+                      alt="Profile"
+                    />
+                    <span className="font-medium text-gray-800">
+                      {user?.displayName}
+                    </span>
+                  </button>
+                  {dropdownOpen && (
+                    <ul className="absolute mt-2 w-full bg-white shadow-lg rounded-md border border-gray-200 z-10">
+                      <li>
+                        <NavLink
+                          to={
+                            loading && userData?.data?.role ? (
+                              <PageLoading />
+                            ) : userData?.data?.role === "user" ? (
+                              "/dashboard/userHome"
+                            ) : (
+                              "/customerDashboard/customerHome"
+                            )
+                          }
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
+                          onClick={() => setDropdownOpen(false)}
+                        >
+                          Dashboard
+                        </NavLink>
+                      </li>
+                      <li>
+                        <button
+                          type="submit"
+                          disabled={loading}
+                          onClick={handleLogOut}
+                          className="w-full text-left block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-all"
+                        >
+                          {loading ? "Logging out..." : "Log out"}
+                        </button>
+                      </li>
+                    </ul>
+                  )}
+                </div>
+              ) : (
+                <NavLink
+                  to="/login"
+                  className="block text-primary font-medium hover:text-primary-dark transition-all duration-200"
+                >
+                  Login
+                </NavLink>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

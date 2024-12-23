@@ -45,9 +45,9 @@ const AutoSwitchingTabs = () => {
     >
       <h1 className="text-4xl w-[500px]">
         <span className="text-[#0e86d4] font-medium">
-          Invoice and get paid.
+          Create invoices and get paid.
         </span>{" "}
-        It's as simple as that.
+        Simple as that.
       </h1>
       <div className="divider w-[500px]"></div>
       <div className="tab-header">

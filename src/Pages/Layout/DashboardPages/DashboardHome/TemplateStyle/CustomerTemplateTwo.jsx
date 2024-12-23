@@ -1,6 +1,7 @@
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import React, { useRef } from "react";
+import { MdOutlineFileDownload } from "react-icons/md";
 import ClientInvoiceIdAndIssueDate from "../TemplateComponents/ClientInvoiceIdAndIssueDate";
 import CompanyDetails from "../TemplateComponents/CompanyDetails";
 import CustomerPaymentDetails from "../TemplateComponents/CustomerPaymentDetails";
@@ -53,7 +54,7 @@ const CustomerTemplateTwo = ({ invoice, userData }) => {
     <div>
       <div
         ref={invoiceRef}
-        className="max-w-4xl  h-auto  mx-auto border border-blue-300 rounded-lg shadow-lg overflow-hidden"
+        className="max-w-4xl  h-auto  mx-auto border border-blue-300 shadow-lg overflow-hidden"
       >
         {/* Header Section */}
         <div className="bg-blue-600 p-6 text-white">
@@ -64,7 +65,7 @@ const CustomerTemplateTwo = ({ invoice, userData }) => {
               <ClientInvoiceIdAndIssueDate invoiceDate={invoice.issuedDate} />
             </div>
             <div className="text-right">
-              <CompanyDetails></CompanyDetails>
+              <CompanyDetails userData={userData} />
             </div>
           </div>
         </div>

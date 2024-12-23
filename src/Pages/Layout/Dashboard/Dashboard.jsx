@@ -1,9 +1,10 @@
 import { FaBox, FaHome, FaListAlt, FaUsers, FaWallet } from "react-icons/fa"; // Using icons from react-icons
 import { PiInvoice } from "react-icons/pi";
+import { RiHome6Fill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
 import useUser from "../../../hooks/useUser";
 import DashboardNavBar from "../DashboardPages/DashboardNavBar/DashboardNavBar";
-
+import DashboardFooter from "./DashboardComponents/DashboardFooter";
 const Dashboard = () => {
   const [userData, loading] = useUser();
 
@@ -26,6 +27,20 @@ const Dashboard = () => {
         </li>
       </div>
       <div className="flex flex-col space-y-2 mb-4">
+        <li>
+          <NavLink
+            to="/dashboard/userHome"
+            className={({ isActive, isPending }) =>
+              isPending
+                ? "pending flex items-center bg-blue-700 text-white px-5 py-2 rounded-lg font-medium text-sm gap-2 hover:bg-blue-600 focus:outline-none transition-colors duration-300"
+                : isActive
+                ? "flex items-center bg-blue-800 text-white px-5 py-2 rounded-lg font-medium text-sm gap-2 hover:bg-blue-600 focus:outline-none transition-colors duration-300"
+                : "flex items-center text-white px-5 py-2 rounded-lg font-medium text-sm gap-2 hover:bg-blue-600 hover:text-white focus:outline-none transition-colors duration-300"
+            }
+          >
+            <RiHome6Fill /> Home
+          </NavLink>
+        </li>
         <li>
           <NavLink
             to="/dashboard/userCustomers"
@@ -107,16 +122,22 @@ const Dashboard = () => {
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
-        {/* Page content */}
-        {loading ? (
-          ""
-        ) : (
-          <DashboardNavBar profileImage={userData.data.profileImage} />
-        )}
+      <div className="drawer-content flex flex-col justify-between">
+        <div>
+          {/* Page content */}
+          {loading ? (
+            ""
+          ) : (
+            <DashboardNavBar profileImage={userData?.data?.profileImage} />
+          )}
 
-        <div className="px-8 py-6 ">
-          <Outlet />
+          <div className="px-8 py-6 ">
+            <Outlet />
+          </div>
+        </div>
+
+        <div>
+          <DashboardFooter></DashboardFooter>
         </div>
       </div>
       <div className="drawer-side bg-[#0d2c4d] shadow-lg max-h-screen  ">

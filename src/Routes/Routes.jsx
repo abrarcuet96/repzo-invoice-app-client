@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../Pages/Home/Home";
 import CancelPayment from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerCheckoutPage/CancelPayment";
-import CustomerCheckoutPage from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerCheckoutPage/CustomerCheckoutPage";
 import FailedPayment from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerCheckoutPage/FailedPayment";
 import SuccessPayment from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerCheckoutPage/SuccessPayment";
 import CustomerDashboard from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerDashboard";
 import CustomerHome from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerHome/CustomerHome";
+import UpdateCustomerProfile from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerHome/UpdateCustomerProfile";
 import CustomerInvoices from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerInvoices/CustomerInvoices";
 import CustomerQuotes from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerQuotes/CustomerQuotes";
 import CustomerUser from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerUser/CustomerUser";
@@ -29,6 +29,10 @@ import PdfViewer from "../Pages/Layout/DashboardPages/PDFViewer/PDFViewer";
 import AddQuote from "../Pages/Layout/DashboardPages/Quotes/AddQuote";
 import EditQuote from "../Pages/Layout/DashboardPages/Quotes/EditQuote";
 import Quotes from "../Pages/Layout/DashboardPages/Quotes/Quotes";
+import TrackPage from "../Pages/Layout/DashboardPages/TrackPage/TrackPage";
+import CreateUserProfile from "../Pages/Layout/DashboardPages/UserProfile/CretaeUserProfile";
+import UpdateUserProfile from "../Pages/Layout/DashboardPages/UserProfile/UpdateUserProfile";
+import UserProfile from "../Pages/Layout/DashboardPages/UserProfile/UserProfile";
 import Login from "../Pages/Login/Login";
 import Main from "../Pages/Main/Main";
 import Register from "../Pages/Register/Register";
@@ -74,8 +78,27 @@ const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "userProfile",
+        element: <UserProfile></UserProfile>,
+      },
+      {
+        path: "updateUserProfile/:profileId",
+        element: <UpdateUserProfile></UpdateUserProfile>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/api/quote/${params.id}`),
+      },
+
+      {
+        path: "createUserProfile",
+        element: <CreateUserProfile></CreateUserProfile>,
+      },
+      {
         path: "dashboardHome",
         element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "userHome",
+        element: <TrackPage></TrackPage>,
       },
       {
         path: "pdfViewer",
@@ -183,14 +206,14 @@ const router = createBrowserRouter([
         element: <CustomerHome></CustomerHome>,
       },
       {
-        path: "customerInvoicePage/:id",
-        element: <CustomerInvoicePage></CustomerInvoicePage>,
+        path: "updateCustomerProfile/:profileId",
+        element: <UpdateCustomerProfile></UpdateCustomerProfile>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/invoice/${params.id}`),
+          fetch(`http://localhost:5000/api/quote/${params.id}`),
       },
       {
-        path: "customerCheckoutPage/:id",
-        element: <CustomerCheckoutPage></CustomerCheckoutPage>,
+        path: "customerInvoicePage/:id",
+        element: <CustomerInvoicePage></CustomerInvoicePage>,
         loader: ({ params }) =>
           fetch(`http://localhost:5000/api/invoice/${params.id}`),
       },

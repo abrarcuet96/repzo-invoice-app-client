@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { FaEnvelope, FaEye, FaRegEdit, FaTrash } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { CiEdit } from "react-icons/ci";
+import { FaEllipsisV, FaEnvelope, FaEye } from "react-icons/fa";
 import { IoMdCloseCircle, IoMdSend } from "react-icons/io";
-import { MdDownloadDone } from "react-icons/md";
+import { MdDeleteOutline, MdDownloadDone } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
@@ -14,6 +15,7 @@ const QuotesTable = ({ quote, serial }) => {
   const [currentQuote, setCurrentQuote] = useState(null);
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const [currentMessage, setCurrentMessage] = useState("");
+  const [openDropdown, setOpenDropdown] = useState(null);
   const total = quote.items.reduce((acc, item) => {
     return acc + item.price * item.quantity;
   }, 0);
@@ -100,13 +102,27 @@ const QuotesTable = ({ quote, serial }) => {
       setIsMessageModalOpen(true);
     }
   };
+  const toggleDropdown = (id) => {
+    setOpenDropdown((prev) => (prev === id ? null : id));
+  };
+  const isDropdownOpen = (id) => openDropdown === id;
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".dropdown-trigger")) {
+        setOpenDropdown(null);
+      }
+    };
+    window.addEventListener("click", handleClickOutside);
+    return () => window.removeEventListener("click", handleClickOutside);
+  }, []);
+
   return (
     <>
       <tr
         key={quote.quoteId}
-        className="border-b hover:bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 transition-all duration-300 ease-in-out"
+        className="border-b hover:bg-blue-50 transition-colors duration-300"
       >
-        <td className="py-4 px-6">{serial + 1}</td>
+        <td className="py-4 px-6 text-center">{serial + 1}</td>
         <td className="py-4 px-6 font-medium text-blue-600">{quote.quoteId}</td>
         <td className="py-4 px-6">{quote.customerId}</td>
         <td className="py-4 px-6">
@@ -131,52 +147,30 @@ const QuotesTable = ({ quote, serial }) => {
         </td>
         <td className="py-4 px-6">
           {quote.isInvoiceSent === false ? (
-            <>
-              <button
-                onClick={() =>
-                  (window.location.href = `/dashboard/invoicePage/${quote.quoteId}`)
-                }
-                className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200 disabled:bg-gray-300 disabled:hover:scale-100"
-                disabled={quote.status !== "accepted"}
-              >
-                <IoMdSend className="mr-2" />
-                Send
-              </button>
-            </>
+            <button
+              onClick={() =>
+                (window.location.href = `/dashboard/invoicePage/${quote.quoteId}`)
+              }
+              className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200 disabled:bg-gray-300"
+              disabled={quote.status !== "accepted"}
+            >
+              <IoMdSend className="mr-2" />
+              Send
+            </button>
           ) : (
-            <>
-              <div className="flex items-center text-sm px-4 py-2 border border-orange-500 text-orange-500 rounded-lg ">
-                <MdDownloadDone className="mr-2" />
-                Sent
-              </div>
-            </>
+            <div className="flex items-center px-3 py-1 rounded-full text-sm font-medium bg-orange-100 text-orange-800">
+              <MdDownloadDone className="mr-2" />
+              Sent
+            </div>
           )}
         </td>
-
         <td className="py-4 px-6">
           <button
             onClick={() => toggleModal(quote)}
-            className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200"
+            className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all duration-200"
           >
             <FaEye className="mr-2" />
             View
-          </button>
-        </td>
-
-        <td className="py-4 px-6 flex gap-3 justify-start">
-          <NavLink
-            to={`/dashboard/editQuoteDetails/${quote.quoteId}`}
-            className="flex items-center text-sm px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transform hover:scale-105 transition-all duration-200"
-          >
-            <FaRegEdit className="mr-2" />
-            Edit
-          </NavLink>
-          <button
-            onClick={() => handleDelete(quote.quoteId)}
-            className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-200"
-          >
-            <FaTrash className="mr-2" />
-            Delete
           </button>
         </td>
         <td className="py-4 px-6 text-center">
@@ -191,6 +185,36 @@ const QuotesTable = ({ quote, serial }) => {
           >
             <FaEnvelope className="text-lg" />
           </button>
+        </td>
+        <td className="py-4 px-6 text-center relative">
+          <button
+            className="dropdown-trigger flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none"
+            onClick={() => toggleDropdown(quote.quoteId)}
+            aria-expanded={isDropdownOpen(quote.quoteId)}
+          >
+            <FaEllipsisV className="text-gray-500" />
+          </button>
+          {isDropdownOpen(quote.quoteId) && (
+            <div className="absolute right-[85px] top-2 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg w-52 z-10">
+              <div className="flex justify-evenly items-center px-4 py-2">
+                <NavLink
+                  to={`/dashboard/editQuoteDetails/${quote.quoteId}`}
+                  className="flex items-center text-sm text-gray-700 hover:text-blue-500"
+                >
+                  <CiEdit className="mr-2 text-xl" />
+                  Edit
+                </NavLink>
+                <div>|</div>
+                <button
+                  onClick={() => handleDelete(quote.quoteId)}
+                  className="flex items-center text-sm text-gray-700 hover:text-red-500"
+                >
+                  <MdDeleteOutline className="mr-2 text-xl" />
+                  Delete
+                </button>
+              </div>
+            </div>
+          )}
         </td>
       </tr>
 

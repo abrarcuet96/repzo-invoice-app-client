@@ -1,18 +1,22 @@
 import { useState } from "react";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { FaEye } from "react-icons/fa";
 import { IoMdCloseCircle, IoMdSend } from "react-icons/io";
-import { MdOutlinePayment } from "react-icons/md";
+import {
+  MdDeleteSweep,
+  MdDownloadDone,
+  MdOutlinePayment,
+} from "react-icons/md";
+import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
+import { v4 as uuidv4 } from "uuid";
 import useAxiosPublic from "../../../../../hooks/useAxiosPublic";
 
-const CustomerInvoicesTable = ({ invoice, serial }) => {
+const CustomerInvoicesTable = ({ invoice }) => {
   console.log(invoice);
 
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
-  const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
   const [currentInvoice, setCurrentInvoice] = useState(null);
-  const [declineMessage, setDeclineMessage] = useState("");
   const axiosPublic = useAxiosPublic();
 
   const total = invoice.items.reduce(
@@ -29,81 +33,101 @@ const CustomerInvoicesTable = ({ invoice, serial }) => {
     setCurrentInvoice(invoice);
   };
 
-  const toggleDeclineModal = (invoice) => {
-    setIsDeclineModalOpen(!isDeclineModalOpen);
-    setCurrentInvoice(invoice);
-  };
   console.log(currentInvoice);
 
-  //   const handleAccept = (invoiceId) => {
-  //     Swal.fire({
-  //       title:
-  //         "<h2 class='text-3xl font-semibold text-gray-800'>Are you sure?</h2>",
-  //       html: `<p class="text-sm text-red-600">You are going to accept the invoice.</p>`,
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonText: "Accept",
-  //       cancelButtonText: "Cancel",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         const invoiceUpdateStatus = { status: "accepted", isAccepted: true };
-  //         axiosPublic
-  //           .put(`/api/invoice/${invoiceId}`, invoiceUpdateStatus)
-  //           .then((res) => {
-  //             if (res.data.success) {
-  //               Swal.fire(
-  //                 "Accepted!",
-  //                 "invoice has been accepted successfully.",
-  //                 "success"
-  //               );
-  //               setTimeout(() => window.location.reload(), 1000);
-  //             }
-  //           })
-  //           .catch(() =>
-  //             Swal.fire(
-  //               "Error!",
-  //               "Failed to accept the invoice. Try again later.",
-  //               "error"
-  //             )
-  //           );
-  //       }
-  //     });
-  //   };
+  const handlePay = () => {
+    const paymentInfo = {
+      invoiceId: invoice.invoiceId,
+      total: total,
+      currency: invoice.currency,
+      userId: invoice.userId,
+      tranId: uuidv4(),
+    };
+    console.log(paymentInfo);
 
-  //   const handleDeclineSubmit = (invoiceId) => {
-  //     if (!declineMessage.trim()) {
-  //       toast.error("Please enter a decline message!");
-  //       return;
-  //     }
-
-  //     const invoiceUpdateStatus = {
-  //       status: "declined",
-  //       isDeclined: true,
-  //       message: declineMessage,
-  //     };
-  //     axiosPublic
-  //       .put(`/api/invoice/${invoiceId}`, invoiceUpdateStatus)
-  //       .then((res) => {
-  //         if (res.data.success) {
-  //           Swal.fire(
-  //             "Declined!",
-  //             "invoice has been declined successfully.",
-  //             "success"
-  //           );
-  //           setTimeout(() => window.location.reload(), 1000);
-  //         }
-  //       })
-  //       .catch(() =>
-  //         Swal.fire(
-  //           "Error!",
-  //           "Failed to decline the invoice. Try again later.",
-  //           "error"
-  //         )
-  //       );
-  //     setIsDeclineModalOpen(false);
-  //     setDeclineMessage("");
-  //   };
-
+    axiosPublic.post(`/api/sslPayment`, paymentInfo).then((res) => {
+      if (res.data.success) {
+        console.log(res.data);
+        const redirectUrl = res.data.paymentUrl;
+        if (redirectUrl) {
+          window.location.replace(redirectUrl);
+        }
+      } else {
+        toast.error("Failed to pay.");
+      }
+    });
+  };
+  const handleRemove = (id) => {
+    Swal.fire({
+      title:
+        "<h2 class='text-3xl font-semibold text-gray-800'>Are you sure?</h2>",
+      html: `<p class="text-sm text-red-600">
+          You won't be able to revert this action.
+        </p>`,
+      icon: "warning",
+      showCancelButton: true,
+      buttonsStyling: false,
+      customClass: {
+        popup: "rounded-lg shadow-lg bg-white p-6 max-w-md",
+        title: "text-gray-800 font-medium mb-2",
+        htmlContainer: "text-gray-600 mb-6",
+        confirmButton:
+          "bg-red-600 text-white px-5 py-2.5 rounded-md hover:bg-red-700 transition focus:outline-none  font-medium mx-4",
+        cancelButton:
+          "bg-gray-100 text-gray-800 px-5 py-2.5 rounded-md hover:bg-gray-200 transition focus:outline-none  font-medium",
+      },
+      confirmButtonText: "Remove",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const updateInvoice = {
+          isDeleted: true,
+        };
+        axiosPublic
+          .put(`/api/invoice/${id}`, updateInvoice)
+          .then((res) => {
+            if (res.data.success) {
+              Swal.fire({
+                title:
+                  "<h2 class='text-xl font-semibold text-gray-800'>Removed!</h2>",
+                html: "<p class='text-sm text-gray-600'>Invoice has been removed successfully.</p>",
+                icon: "success",
+                buttonsStyling: false,
+                customClass: {
+                  popup: "rounded-lg shadow-lg bg-white p-6 max-w-md",
+                  title: "text-gray-800 font-medium mb-4",
+                  htmlContainer: "text-gray-600 mb-6",
+                  confirmButton:
+                    "bg-green-600 text-white px-5 py-2.5 rounded-md hover:bg-green-700 transition focus:outline-none font-medium",
+                },
+                confirmButtonText: "OK",
+              }).then(() => {
+                // Reload the page when the user clicks OK
+                window.location.reload();
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error during delete:", error);
+            Swal.fire({
+              title:
+                "<h2 class='text-xl font-semibold text-red-600'>Error!</h2>",
+              html: "<p class='text-sm text-gray-600'>Failed to remove the Invoice. Please try again later.</p>",
+              icon: "error",
+              buttonsStyling: false,
+              customClass: {
+                popup: "rounded-lg shadow-lg bg-white p-6 max-w-md",
+                title: "text-red-600 font-medium mb-4",
+                htmlContainer: "text-gray-600 mb-6",
+                confirmButton:
+                  "bg-red-600 text-white px-5 py-2.5 rounded-md hover:bg-red-700 transition focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 font-medium",
+              },
+              confirmButtonText: "OK",
+            });
+          });
+      }
+    });
+  };
   return (
     <>
       <tr className="border-b hover:bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200">
@@ -123,42 +147,39 @@ const CustomerInvoicesTable = ({ invoice, serial }) => {
             <FaEye className="mr-2" /> View
           </button>
         </td>
-        {/* <td className="py-4 px-6 flex gap-3">
-          <button
-            onClick={() => handleAccept(invoice.invoiceId)}
-            className="flex items-center text-sm px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-          >
-            <MdDone className="mr-2" /> Accept
-          </button>
-          <button
-            onClick={() => toggleDeclineModal(invoice)}
-            className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-          >
-            <RxCross2 className="mr-2" /> Decline
-          </button>
-        </td> */}
         <td className="py-4 px-6">
           <button
             onClick={() =>
               (window.location.href = `/customerDashboard/customerInvoicePage/${invoice.invoiceId}`)
             }
             className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200 disabled:bg-gray-300 disabled:hover:scale-100"
-            // disabled={quote.status !== "accepted"}
           >
             <IoMdSend className="mr-2" />
             Preview
           </button>
         </td>
         <td className="py-4 px-6">
+          {invoice.status === "paid" ? (
+            <div className="flex justify-center items-center w-[80px] px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+              <MdDownloadDone className="mr-2" />
+              Paid
+            </div>
+          ) : (
+            <button
+              onClick={handlePay}
+              className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200 disabled:bg-gray-300 disabled:hover:scale-100"
+            >
+              <MdOutlinePayment className="mr-2" />
+              Pay
+            </button>
+          )}
+        </td>
+        <td className="py-4 px-6">
           <button
-            onClick={() =>
-              (window.location.href = `/customerDashboard/customerCheckoutPage/${invoice.invoiceId}`)
-            }
-            className="flex items-center text-sm px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transform hover:scale-105 transition-all duration-200 disabled:bg-gray-300 disabled:hover:scale-100"
-            // disabled={quote.status !== "accepted"}
+            onClick={() => handleRemove(invoice.invoiceId)}
+            className="flex items-center text-sm px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-200 disabled:bg-gray-300 disabled:hover:scale-100"
           >
-            <MdOutlinePayment className="mr-2" />
-            Pay
+            <MdDeleteSweep className="text-2xl" />
           </button>
         </td>
       </tr>

@@ -1,6 +1,7 @@
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 const Banner = () => {
   const [rating, setRating] = useState(4);
   return (
@@ -9,22 +10,22 @@ const Banner = () => {
         <div className="absolute w-[800px] top-[100px] left-80">
           <h1 className="text-4xl mt-10 mr-40">
             <span className="text-[#0e86d4] font-semibold">
-              Free Tax Invoice Software
+              The Ultimate Free Tax Invoice Software
             </span>{" "}
-            your business will absolutely love!
+            Your Business Will Love!
           </h1>
           <p className="mr-64 text-xl mt-10">
-            RepZo Invoice is the ultimate invoicing software to help you create
-            invoice templates, send them to customers, and accept payments
-            online. It works on all your devices and is completely free!
+            RepZo Invoice lets you create, send, and receive payments for
+            invoices easily. It’s free and works on all your devices!
           </p>
           <div className="flex flex-col mt-10 gap-4">
-            <button className="btn btn-lg bg-[#0e86d4] text-white w-[300px]">
+            <NavLink
+              to={"/dashboard/userHome"}
+              className="btn btn-lg bg-[#0e86d4] text-white w-[300px]"
+            >
               Start invoicing for free
-            </button>
-            <button className="btn btn-lg  w-[300px]">
-              Explore demo account
-            </button>
+            </NavLink>
+            <button className="btn btn-lg  w-[300px]">Watch Demo</button>
           </div>
         </div>
       </div>

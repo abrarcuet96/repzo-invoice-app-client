@@ -1,5 +1,4 @@
 import Banner from "../../components/Banner/Banner";
-import Brands from "../../components/Brands/Brands";
 import CardContent from "../../components/CardSection/CardContent";
 import CarryPhone from "../../components/CarryPhone/CarryPhone";
 import AutoSwitchingTabs from "../../components/Process/AutoSwitchingTabs";
@@ -15,7 +14,7 @@ const Home = () => {
       <CarryPhone></CarryPhone>
       <Stacks></Stacks>
       <Templates></Templates>
-      <Brands></Brands>
+      {/* <Brands></Brands> */}
       <CardContent></CardContent>
       <SmallBusiness></SmallBusiness>
     </>

@@ -1,27 +1,27 @@
 import React from "react";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import { useLoaderData } from "react-router-dom";
 
 const CustomerUser = () => {
   const user = useLoaderData();
-  console.log(user.data[0]);
+  console.log(user.data[0][0]);
+  const { name, email, profileImage, profile } = user?.data[0][0] || {};
+  const address = profile?.address || {};
 
   return (
-    <div className="min-h-screen  py-10 flex justify-start items-start">
-      <div className="w-full max-w-4xl  rounded-md overflow-hidden">
-        {/* Profile Header (Card Style) */}
+    <div className="min-h-screen py-10 flex justify-center items-start">
+      <div className="w-full max-w-4xl rounded-md overflow-hidden">
+        {/* Profile Header */}
         <div className="bg-gray-100 p-8 rounded-md flex items-center space-x-6">
           <img
-            src={user.data[0][0].profileImage}
+            src={profileImage}
             alt="Profile"
             className="w-28 h-28 rounded-full border-4 border-white shadow-lg transform transition-transform duration-300 hover:scale-105"
           />
           <div>
-            <h1 className="text-3xl font-semibold text-gray-800">
-              {user.data[0][0].name}
-            </h1>
+            <h1 className="text-3xl font-semibold text-gray-800">{name}</h1>
+            <p className="text-base text-gray-600 mt-1">{email}</p>
             <p className="text-base text-gray-600 mt-1">
-              {user.data[0][0].email}
+              {profile.companyName} - {profile.industryName}
             </p>
           </div>
         </div>
@@ -45,58 +45,40 @@ const CustomerUser = () => {
               <tbody>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">Full Name</td>
-                  <td className="py-3 px-4">{user.data[0][0].name}</td>
+                  <td className="py-3 px-4">{name}</td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">Email Address</td>
-                  <td className="py-3 px-4">{user.data[0][0].email}</td>
+                  <td className="py-3 px-4">{email}</td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">Phone</td>
-                  <td className="py-3 px-4">+1 234 567 890</td>
+                  <td className="py-3 px-4">{profile.phone}</td>
+                </tr>
+                <tr className="border-b hover:bg-gray-50">
+                  <td className="py-3 px-4">Company</td>
+                  <td className="py-3 px-4">{profile.company}</td>
+                </tr>
+                <tr className="border-b hover:bg-gray-50">
+                  <td className="py-3 px-4">Industry</td>
+                  <td className="py-3 px-4">{profile.industryName}</td>
+                </tr>
+                <tr className="border-b hover:bg-gray-50">
+                  <td className="py-3 px-4">Currency</td>
+                  <td className="py-3 px-4">{profile.currency}</td>
+                </tr>
+                <tr className="border-b hover:bg-gray-50">
+                  <td className="py-3 px-4">Time Zone</td>
+                  <td className="py-3 px-4">{profile.timeZone}</td>
                 </tr>
                 <tr className="border-b hover:bg-gray-50">
                   <td className="py-3 px-4">Location</td>
-                  <td className="py-3 px-4">Dhaka, Bangladesh</td>
+                  <td className="py-3 px-4">
+                    {`${address.street}, ${address.city}, ${address.state}, ${address.postalCode}, ${address.country}`}
+                  </td>
                 </tr>
               </tbody>
             </table>
-          </div>
-
-          {/* Social Links */}
-          <div className="mt-6">
-            <h3 className="text-lg font-semibold text-gray-800">
-              Social Profiles
-            </h3>
-            <div className="flex space-x-6 mt-2">
-              <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline text-sm flex items-center space-x-2"
-              >
-                <FaLinkedin />
-                <span>LinkedIn</span>
-              </a>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-800 hover:underline text-sm flex items-center space-x-2"
-              >
-                <FaGithub />
-                <span>GitHub</span>
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-400 hover:underline text-sm flex items-center space-x-2"
-              >
-                <FaTwitter />
-                <span>Twitter</span>
-              </a>
-            </div>
           </div>
         </div>
       </div>

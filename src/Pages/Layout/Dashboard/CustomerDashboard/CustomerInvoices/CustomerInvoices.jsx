@@ -6,6 +6,7 @@ import CustomerInvoicesTable from "./CustomerInvoicesTable";
 const CustomerInvoices = () => {
   const user = useLoaderData();
   console.log(user.data[2]);
+  const isDeleted = user.data[2].filter((res) => res.isDeleted === false);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,15 +21,15 @@ const CustomerInvoices = () => {
   };
 
   // Get the quotes for the current page
-  const totalInvoices = user.data[2].length || 0;
+  const totalInvoices = isDeleted?.length || 0;
   const totalPages = Math.ceil(totalInvoices / invoicesPerPage);
-  const currentInvoices = user.data[2].slice(
+  const currentInvoices = isDeleted?.slice(
     (currentPage - 1) * invoicesPerPage,
     currentPage * invoicesPerPage
   );
   return (
     <div className="flex flex-col space-y-8 mx-8 my-8">
-      {user.data[2].length === 0 ? (
+      {isDeleted.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-[500px] bg-gradient-to-r from-gray-50 via-gray-100 to-gray-200 p-10 rounded-lg shadow-xl">
           <div className="text-center mb-6">
             <LuFileWarning className="text-7xl text-yellow-500 animate-pulse" />
@@ -52,6 +53,7 @@ const CustomerInvoices = () => {
                   <th className="py-3 px-6">Details</th>
                   <th className="py-3 px-6">Invoice</th>
                   <th className="py-3 px-6">Payment</th>
+                  <th className="py-3 px-6">Remove</th>
                   {/* <th className="py-3 px-6">Actions</th> */}
                 </tr>
               </thead>

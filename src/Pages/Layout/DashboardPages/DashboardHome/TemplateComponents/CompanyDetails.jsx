@@ -1,10 +1,18 @@
-const CompanyDetails = () => {
+const CompanyDetails = ({ userData }) => {
   return (
     <>
-      <h2 className="text-2xl font-semibold">Your Company Name</h2>
-      <p>123 Business Blvd</p>
-      <p>City, State, ZIP</p>
-      <p>Email: contact@company.com</p>
+      <h2 className="text-xl font-semibold">
+        {userData?.profile?.companyName}
+      </h2>
+      <p>
+        {userData?.profile?.address?.postalCode} -{" "}
+        {userData?.profile?.address?.street}
+      </p>
+      <p>
+        {userData?.profile?.address?.state} -{" "}
+        {userData?.profile?.address?.country}
+      </p>
+      <p>{userData?.email}</p>
     </>
   );
 };

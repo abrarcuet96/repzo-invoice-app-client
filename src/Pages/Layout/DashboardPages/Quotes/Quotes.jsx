@@ -26,12 +26,12 @@ const Quotes = () => {
   const totalPages = Math.ceil(totalQuotes / quotesPerPage);
 
   // Sort the quotes in descending order based on 'createdAt'
-  const sortedQuotes =
-    userData?.data?.quotes.sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    ) || [];
+  // const sortedQuotes =
+  //   userData?.data?.quotes.sort(
+  //     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  //   ) || [];
 
-  const currentQuotes = sortedQuotes.slice(
+  const currentQuotes = userData?.data?.quotes.slice(
     (currentPage - 1) * quotesPerPage,
     currentPage * quotesPerPage
   );
@@ -117,8 +117,8 @@ const Quotes = () => {
                       <th className="py-3 px-6">Status</th>
                       <th className="py-3 px-6">Invoice</th>
                       <th className="py-3 px-6">Details</th>
-                      <th className="py-3 px-6">Actions</th>
                       <th className="py-3 px-6">Message</th>
+                      <th className="py-3 px-6">Actions</th>
                     </tr>
                   </thead>
 

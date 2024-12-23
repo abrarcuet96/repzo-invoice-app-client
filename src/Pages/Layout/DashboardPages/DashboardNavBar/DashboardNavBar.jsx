@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
 import useAuth from "../../../../hooks/useAuth";
+import useUser from "../../../../hooks/useUser";
 
 const DashboardNavBar = ({ profileImage }) => {
   const { logOut } = useAuth();
+  const [userData] = useUser();
+  console.log(profileImage);
 
   const handleLogOut = () => {
     logOut().then((res) => {
@@ -44,11 +47,52 @@ const DashboardNavBar = ({ profileImage }) => {
               className="menu menu-sm dropdown-content bg-white shadow-lg rounded-lg w-52 p-2 mt-2 border border-[#0E86D4] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             >
               <li>
-                <a className="flex justify-between items-center py-2 text-sm text-gray-800 hover:bg-[#0E86D4] hover:text-white transition duration-200">
-                  Profile
-                  <span className="badge bg-[#0E86D4] text-white">New</span>
-                </a>
+                {userData?.data?.profile !== undefined ? (
+                  <>
+                    {userData?.data?.role === "user" ? (
+                      <NavLink
+                        to="/dashboard/userProfile"
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "text-sm text-[#0E86D4]"
+                            : "text-sm text-gray-600"
+                        }
+                      >
+                        Profile
+                      </NavLink>
+                    ) : (
+                      <NavLink
+                        to="/dashboard/customerHome"
+                        className={({ isActive, isPending }) =>
+                          isPending
+                            ? "pending"
+                            : isActive
+                            ? "text-sm text-[#0E86D4]"
+                            : "text-sm text-gray-600"
+                        }
+                      >
+                        Profile
+                      </NavLink>
+                    )}
+                  </>
+                ) : (
+                  <NavLink
+                    to="/dashboard/createUserProfile"
+                    className={({ isActive, isPending }) =>
+                      isPending
+                        ? "pending"
+                        : isActive
+                        ? "text-sm text-[#0E86D4]"
+                        : "text-sm text-gray-600"
+                    }
+                  >
+                    Create Profile
+                  </NavLink>
+                )}
               </li>
+
               <li>
                 <NavLink
                   to="/"

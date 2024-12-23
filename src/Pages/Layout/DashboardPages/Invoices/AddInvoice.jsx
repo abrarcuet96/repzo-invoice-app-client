@@ -78,8 +78,11 @@ const AddInvoice = () => {
   const onHoverFetchCustomers = () => {
     if (customerResults?.length === 0) {
       axiosPublic.get("/api/customer").then((res) => {
+        const neededCustomers = res?.data?.data?.filter(
+          (cus) => cus?.userId === user?.data?._id
+        );
         if (res.data.success) {
-          setCustomerResults(res.data.data);
+          setCustomerResults(neededCustomers);
         }
       });
     }
@@ -95,8 +98,12 @@ const AddInvoice = () => {
 
     if (itemResults?.length === 0) {
       axiosPublic.get("/api/item").then((res) => {
+        const neededItems = res?.data?.data?.filter(
+          (ite) => ite?.userId === user?.data?._id
+        );
+
         if (res.data.success) {
-          setItemResults(res.data.data);
+          setItemResults(neededItems);
         }
       });
     }
@@ -193,6 +200,7 @@ const AddInvoice = () => {
       payment: { status: "pending", amount: calculateTotal() },
       items: items,
       total: calculateTotal(),
+      isDeleted: false,
     };
     console.log(invoiceInfo);
 

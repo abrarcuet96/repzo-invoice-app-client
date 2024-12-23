@@ -26,7 +26,7 @@ const InvoicePage = () => {
           userData={userData?.data}
           template="standard"
         ></TemplateOne>
-      ) : userData?.data?.template === "continetal" ? (
+      ) : userData?.data?.template === "continental" ? (
         <TemplateTwo
           quote={quote?.data}
           userData={userData?.data}

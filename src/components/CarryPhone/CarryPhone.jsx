@@ -10,8 +10,8 @@ const CarryPhone = () => {
       <div className="flex flex-col w-1/2 ml-5 justify-between">
         <div>
           <h1 className="text-4xl">
-            Take your free invoicing software{" "}
-            <span className="text-[#0e86d4]">everywhere.</span>
+            Access your free invoicing software{" "}
+            <span className="text-[#0e86d4]"> anytime, anywhere.</span>
           </h1>
           <p className="text-xl mt-6">
             RepZo Invoice is supported by all your daily devices. Your data is

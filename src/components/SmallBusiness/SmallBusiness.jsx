@@ -53,8 +53,8 @@ const SmallBusiness = () => {
     <div className="w-full h-auto flex flex-col mt-40">
       <div className="flex justify-center">
         <h1 className="text-4xl text-center">
-          Loved by small <br /> businesses{" "}
-          <span className="text-[#0e86d4]">all over the world</span>
+          Trusted by small <br />{" "}
+          <span className="text-[#0e86d4]">businesses worldwide.</span>
         </h1>
       </div>
       <div className="card">

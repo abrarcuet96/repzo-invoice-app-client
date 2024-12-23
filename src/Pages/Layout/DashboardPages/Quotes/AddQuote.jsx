@@ -70,8 +70,12 @@ const AddQuote = () => {
   const onHoverFetchCustomers = () => {
     if (customerResults?.length === 0) {
       axiosPublic.get(`/api/customer`).then((res) => {
+        
+        const neededCustomers = res?.data?.data?.filter(
+          (cus) => cus?.userId === user?.data?._id
+        );
         if (res.data.success) {
-          setCustomerResults(res.data.data);
+          setCustomerResults(neededCustomers);
         }
       });
     }
@@ -86,8 +90,12 @@ const AddQuote = () => {
 
     if (itemResults?.length === 0) {
       axiosPublic.get(`/api/item`).then((res) => {
+        const neededItems = res?.data?.data?.filter(
+          (ite) => ite?.userId === user?.data?._id
+        );
+
         if (res.data.success) {
-          setItemResults(res.data.data);
+          setItemResults(neededItems);
         }
       });
     }
@@ -192,6 +200,7 @@ const AddQuote = () => {
       isAccepted: false,
       isDeclined: false,
       isInvoiceSent: false,
+      isDeleted: false,
     };
     setLoading(true); // Set loading to true while submitting
 
