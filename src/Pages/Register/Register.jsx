@@ -175,7 +175,7 @@ const Register = () => {
             {/* Role Selection */}
             <div className="relative">
               <label className="block text-gray-700 font-medium">
-                Select how you want to register?
+                Select how you want to use RepZo?
               </label>
               <div className="flex items-center border-2 rounded-md border-gray-300 focus-within:ring-2 focus-within:ring-[#0E86D4]">
                 <select

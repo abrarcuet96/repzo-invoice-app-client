@@ -11,6 +11,7 @@ const CustomersTable = ({ customer, serial }) => {
   const { invalidateCustomers } = useCustomer();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentCustomer, setCurrentCustomer] = useState(null);
+  console.log(customer._id);
 
   const toggleModal = (customer) => {
     setIsModalOpen(!isModalOpen);

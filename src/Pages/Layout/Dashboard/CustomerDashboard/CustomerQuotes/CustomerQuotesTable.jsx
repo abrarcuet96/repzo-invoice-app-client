@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import useAxiosPublic from "../../../../../hooks/useAxiosPublic";
 
-const CustomerQuotesTable = ({ quote, serial }) => {
+const CustomerQuotesTable = ({ quote }) => {
   const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [isDeclineModalOpen, setIsDeclineModalOpen] = useState(false);
   const [currentQuote, setCurrentQuote] = useState(null);
@@ -62,7 +62,6 @@ const CustomerQuotesTable = ({ quote, serial }) => {
                 },
                 confirmButtonText: "OK",
               }).then(() => {
-                // Reload the page when the user clicks OK
                 window.location.reload();
               });
             }
@@ -123,7 +122,7 @@ const CustomerQuotesTable = ({ quote, serial }) => {
     setIsDeclineModalOpen(false);
     setDeclineMessage("");
   };
-
+  console.log(currentQuote);
   return (
     <>
       {!quote.isAccepted && !quote.isDeclined && (

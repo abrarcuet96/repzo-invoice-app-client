@@ -5,19 +5,15 @@ import { NavLink } from "react-router-dom";
 const Banner = () => {
   const [rating, setRating] = useState(4);
   return (
-    <>
-      <div className="position flex justify-center items-center">
-        <div className="absolute w-[800px] top-[100px] left-80">
-          <h1 className="text-4xl mt-10 mr-40">
+    <div className="flex flex-col justify-center items-center">
+      <div className=" flex justify-center items-center h-[600px]">
+        <div className="w-1/2">
+          <h1 className="text-3xl mt-10 mr-40">
             <span className="text-[#0e86d4] font-semibold">
-              The Ultimate Free Tax Invoice Software
+              The Ultimate Invoice Software
             </span>{" "}
             Your Business Will Love!
           </h1>
-          <p className="mr-64 text-xl mt-10">
-            RepZo Invoice lets you create, send, and receive payments for
-            invoices easily. It’s free and works on all your devices!
-          </p>
           <div className="flex flex-col mt-10 gap-4">
             <NavLink
               to={"/dashboard/userHome"}
@@ -28,8 +24,11 @@ const Banner = () => {
             <button className="btn btn-lg  w-[300px]">Watch Demo</button>
           </div>
         </div>
+        <div className="w-1/2">
+          <img src="https://i.ibb.co.com/VJQ222v/home-banner-2.png" alt="" />
+        </div>
       </div>
-      <div className="stats stats-vertical lg:stats-horizontal shadow-xl absolute bottom-[40px] left-[650px]">
+      <div className="stats stats-vertical lg:stats-horizontal shadow-xl ">
         <div className="stat p-10">
           <div className="stat-title">Downloads</div>
           <div className="stat-value">31K</div>
@@ -55,7 +54,7 @@ const Banner = () => {
           <div className="stat-desc">↘︎ 90 (14%)</div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Banner;

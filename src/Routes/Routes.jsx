@@ -85,7 +85,7 @@ const router = createBrowserRouter([
         path: "updateUserProfile/:profileId",
         element: <UpdateUserProfile></UpdateUserProfile>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/quote/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/quote/${params.id}`),
       },
 
       {
@@ -108,7 +108,7 @@ const router = createBrowserRouter([
         path: "invoicePage/:id",
         element: <InvoicePage></InvoicePage>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/quote/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/quote/${params.id}`),
       },
 
       {
@@ -135,61 +135,61 @@ const router = createBrowserRouter([
         path: "addCustomer/:email",
         element: <AddCustomer></AddCustomer>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/users/${params.email}`),
+          fetch(`https://repzo-backend.vercel.app/api/users/${params.email}`),
       },
       {
         path: "addItem/:email",
         element: <AddItem></AddItem>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/users/${params.email}`),
+          fetch(`https://repzo-backend.vercel.app/api/users/${params.email}`),
       },
       {
         path: "addQuote/:email",
         element: <AddQuote></AddQuote>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/users/${params.email}`),
+          fetch(`https://repzo-backend.vercel.app/api/users/${params.email}`),
       },
       {
         path: "addInvoice/:email",
         element: <AddInvoice></AddInvoice>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/users/${params.email}`),
+          fetch(`https://repzo-backend.vercel.app/api/users/${params.email}`),
       },
       {
         path: "addExpense/:email",
         element: <AddExpense></AddExpense>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/users/${params.email}`),
+          fetch(`https://repzo-backend.vercel.app/api/users/${params.email}`),
       },
       {
         path: "editCustomerDetails/:id",
         element: <EditCustomer></EditCustomer>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/customer/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/customer/${params.id}`),
       },
       {
         path: "editItemDetails/:id",
         element: <EditItem></EditItem>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/item/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/item/${params.id}`),
       },
       {
         path: "editQuoteDetails/:id",
         element: <EditQuote></EditQuote>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/quote/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/quote/${params.id}`),
       },
       {
         path: "editInvoiceDetails/:id",
         element: <EditInvoice></EditInvoice>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/invoice/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/invoice/${params.id}`),
       },
       {
         path: "editExpenseDetails/:id",
         element: <EditExpense></EditExpense>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/expense/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/expense/${params.id}`),
       },
     ],
   },
@@ -209,31 +209,37 @@ const router = createBrowserRouter([
         path: "updateCustomerProfile/:profileId",
         element: <UpdateCustomerProfile></UpdateCustomerProfile>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/quote/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/quote/${params.id}`),
       },
       {
         path: "customerInvoicePage/:id",
         element: <CustomerInvoicePage></CustomerInvoicePage>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/invoice/${params.id}`),
+          fetch(`https://repzo-backend.vercel.app/api/invoice/${params.id}`),
       },
       {
         path: "customerQuotes/:email",
         element: <CustomerQuotes></CustomerQuotes>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/customerUser/${params.email}`),
+          fetch(
+            `https://repzo-backend.vercel.app/api/customerUser/${params.email}`
+          ),
       },
       {
         path: "customerInvoices/:email",
         element: <CustomerInvoices></CustomerInvoices>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/customerUser/${params.email}`),
+          fetch(
+            `https://repzo-backend.vercel.app/api/customerUser/${params.email}`
+          ),
       },
       {
         path: "customerUser/:email",
         element: <CustomerUser></CustomerUser>,
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/api/customerUser/${params.email}`),
+          fetch(
+            `https://repzo-backend.vercel.app/api/customerUser/${params.email}`
+          ),
       },
     ],
   },
