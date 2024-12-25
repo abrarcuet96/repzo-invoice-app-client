@@ -123,8 +123,8 @@ const QuotesTable = ({ quote, serial }) => {
         className="border-b hover:bg-blue-50 transition-colors duration-300"
       >
         <td className="py-4 px-6 text-center">{serial + 1}</td>
-        <td className="py-4 px-6 font-medium text-blue-600">{quote.quoteId}</td>
-        <td className="py-4 px-6">{quote.customerId}</td>
+        <td className="py-4 px-6 font-medium text-blue-600">{quote.quoteNo}</td>
+        <td className="py-4 px-6">{quote.customerNo}</td>
         <td className="py-4 px-6">
           {quote.quoteDate.match(/\w{3} \w{3} \d{2} \d{4}/)[0]}
         </td>
@@ -250,6 +250,12 @@ const QuotesTable = ({ quote, serial }) => {
                       Quote ID
                     </td>
                     <td className="py-3 px-6">{currentQuote.quoteId}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Quote No
+                    </td>
+                    <td className="py-3 px-6">{currentQuote.quoteNo}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">

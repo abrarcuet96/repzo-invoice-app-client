@@ -3,55 +3,60 @@ import "./CarryPhone.css";
 import ScrollAnimation from "./ScrollAnimation";
 const CarryPhone = () => {
   return (
-    <div className="flex mt-40">
-      <div className="container w-1/2">
+    <div className="flex flex-col lg:flex-row mt-24">
+      {/* Left Section (Scroll Animation) */}
+      <div className="w-full lg:w-1/2">
         <ScrollAnimation />
       </div>
-      <div className="flex flex-col w-1/2 ml-5 justify-between">
+
+      {/* Right Section with Text and Images */}
+      <div className="flex flex-col w-full lg:w-1/2 lg:ml-5 justify-between mt-8 lg:mt-0">
         <div>
-          <h1 className="text-4xl">
+          <h1 className="text-3xl md:text-4xl text-center lg:text-left">
             Access your free invoicing software{" "}
-            <span className="text-[#0e86d4]"> anytime, anywhere.</span>
+            <span className="text-[#0e86d4]">anytime, anywhere.</span>
           </h1>
-          <p className="text-xl mt-6">
+          <p className="text-lg md:text-xl mt-6 text-center lg:text-left">
             RepZo Invoice is supported by all your daily devices. Your data is
             up to date at all times.
           </p>
         </div>
-        <div className="flex gap-2">
-          <div className="w-[100px]">
+
+        {/* App Store and Google Play Buttons */}
+        <div className="flex gap-4 mt-8 justify-center lg:justify-start">
+          <div className="w-[120px] sm:w-[100px]">
             <Link>
               <img
-                src="https://i.ibb.co.com/qFyDVCq/android-download.png"
-                alt=""
+                src="https://i.ibb.co/qFyDVCq/android-download.png"
+                alt="Google Play"
                 className="rounded-md"
               />
             </Link>
           </div>
-          <div className="w-[110px]">
+          <div className="w-[120px] sm:w-[110px]">
             <Link>
               <img
-                src="https://i.ibb.co.com/VBGCsbZ/appstore.png"
-                alt=""
+                src="https://i.ibb.co/VBGCsbZ/appstore.png"
+                alt="App Store"
                 className="rounded-md"
               />
             </Link>
           </div>
         </div>
-        <div className="flex gap-2 mt-10">
-          <div className="space-y-2">
-            <div>
-              <img
-                src="https://i.ibb.co.com/8PMR0nd/2.png"
-                alt=""
-                className="rounded-md"
-              />
-            </div>
-          </div>
-          <div>
+
+        {/* Image Section */}
+        <div className="flex gap-4 mt-10 justify-center lg:justify-start">
+          <div className="max-w-sm:w-[120px]">
             <img
-              src="https://i.ibb.co.com/x11vgq2/3.png"
-              alt=""
+              src="https://i.ibb.co/8PMR0nd/2.png"
+              alt="Device Image 1"
+              className="rounded-md"
+            />
+          </div>
+          <div className="max-w-sm:w-[120px]">
+            <img
+              src="https://i.ibb.co/x11vgq2/3.png"
+              alt="Device Image 2"
               className="rounded-md"
             />
           </div>

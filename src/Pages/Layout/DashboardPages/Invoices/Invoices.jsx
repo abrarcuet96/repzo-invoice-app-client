@@ -107,8 +107,8 @@ const Invoices = () => {
                   <thead className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold">
                     <tr>
                       <th className="py-3 px-6">#</th>
-                      <th className="py-3 px-6">Invoice ID</th>
-                      <th className="py-3 px-6">Customer ID</th>
+                      <th className="py-3 px-6">Invoice No</th>
+                      <th className="py-3 px-6">Customer No</th>
                       <th className="py-3 px-6">Issued Date</th>
                       <th className="py-3 px-6">Due Date</th>
                       <th className="py-3 px-6">Status</th>

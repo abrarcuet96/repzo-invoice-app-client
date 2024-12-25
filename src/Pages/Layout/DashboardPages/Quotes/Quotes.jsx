@@ -107,8 +107,8 @@ const Quotes = () => {
                   <thead className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold">
                     <tr>
                       <th className="py-3 px-6">#</th>
-                      <th className="py-3 px-6">Quote ID</th>
-                      <th className="py-3 px-6">Customer ID</th>
+                      <th className="py-3 px-6">Quote No</th>
+                      <th className="py-3 px-6">Customer No</th>
                       <th className="py-3 px-6">Quote Date</th>
                       <th className="py-3 px-6">Expiry Date</th>
                       <th className="py-3 px-6">Total Items</th>

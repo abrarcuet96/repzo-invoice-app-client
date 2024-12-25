@@ -91,7 +91,7 @@ const ItemsTable = ({ item, serial }) => {
         className="border-b hover:bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 transition-all duration-300 ease-in-out"
       >
         <td className="py-4 px-6">{serial + 1}</td>
-        <td className="py-4 px-6 font-medium text-blue-600">{item.itemId}</td>
+        <td className="py-4 px-6 font-medium text-blue-600">{item.itemNo}</td>
         <td className="py-4 px-6">{item.name}</td>
         <td className="py-4 px-6 relative group">
           {/* Show the first three words */}
@@ -168,6 +168,12 @@ const ItemsTable = ({ item, serial }) => {
                       Item ID
                     </td>
                     <td className="py-3 px-6">{currentItem.itemId}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Item No
+                    </td>
+                    <td className="py-3 px-6">{currentItem.itemNo}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">

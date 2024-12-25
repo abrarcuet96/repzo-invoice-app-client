@@ -37,7 +37,7 @@ import Login from "../Pages/Login/Login";
 import Main from "../Pages/Main/Main";
 import Register from "../Pages/Register/Register";
 import PrivateRoute from "./PrivateRoute";
-
+import AboutUs from "./../Pages/AboutUs/AboutUs.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,14 +48,18 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "/login",
-        element: <Login></Login>,
-      },
-      {
-        path: "/signup",
-        element: <Register></Register>,
+        path: "/aboutUs",
+        element: <AboutUs></AboutUs>,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
+  },
+  {
+    path: "/signup",
+    element: <Register></Register>,
   },
   {
     path: "/success",

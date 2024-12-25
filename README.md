@@ -55,7 +55,6 @@ A feature-rich invoicing platform that allows users to efficiently manage custom
 - **Database:** MongoDB (via Mongoose)
 - **Authentication:** bcrypt
 - **Utilities:** dotenv, cors, moment-timezone
-- **File Handling:** multer, gridfs-stream
 
 ---
 

@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAgEIOO2uDK-zdisEiz6q9ozmzsPN_iclI",
-  authDomain: "repzo-invoice-app.firebaseapp.com",
-  projectId: "repzo-invoice-app",
-  storageBucket: "repzo-invoice-app.firebasestorage.app",
-  messagingSenderId: "1020662034797",
-  appId: "1:1020662034797:web:cc739fb69afe1f7ee62a64",
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 // Initialize Firebase

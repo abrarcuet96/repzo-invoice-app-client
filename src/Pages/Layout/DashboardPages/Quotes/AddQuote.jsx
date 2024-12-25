@@ -70,7 +70,6 @@ const AddQuote = () => {
   const onHoverFetchCustomers = () => {
     if (customerResults?.length === 0) {
       axiosPublic.get(`/api/customer`).then((res) => {
-        
         const neededCustomers = res?.data?.data?.filter(
           (cus) => cus?.userId === user?.data?._id
         );
@@ -192,7 +191,8 @@ const AddQuote = () => {
 
     const quoteInfo = {
       customerId: selectedCustomer?.customerId,
-      expiryDate: formattedDate, // Use the formatted date here
+      customerNo: selectedCustomer?.customerNo,
+      expiryDate: formattedDate,
       items: items,
       currency: currency,
       total: items.reduce((sum, item) => sum + item.quantity * item.price, 0),

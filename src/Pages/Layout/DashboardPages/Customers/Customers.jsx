@@ -99,7 +99,7 @@ const Customers = () => {
                   <thead className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold">
                     <tr>
                       <th className="py-3 px-6">#</th>
-                      <th className="py-3 px-6">Customer Id</th>
+                      <th className="py-3 px-6">Customer No</th>
                       <th className="py-3 px-6">Name</th>
                       <th className="py-3 px-6">Email</th>
                       <th className="py-3 px-6">Phone</th>

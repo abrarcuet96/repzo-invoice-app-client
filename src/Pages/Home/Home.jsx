@@ -9,15 +9,18 @@ import Templates from "../../components/Templates/Templates";
 const Home = () => {
   return (
     <>
-      <Banner></Banner>
-      <AutoSwitchingTabs></AutoSwitchingTabs>
-      <CarryPhone></CarryPhone>
-      <Stacks></Stacks>
-      <Templates></Templates>
-      {/* <Brands></Brands> */}
-      <CardContent></CardContent>
-      <SmallBusiness></SmallBusiness>
+      <Banner />
+      <div className="hidden lg:block">
+        <AutoSwitchingTabs />
+      </div>
+      <CarryPhone />
+      <Stacks />
+      <Templates />
+      {/* <Brands /> */}
+      <CardContent />
+      <SmallBusiness />
     </>
   );
 };
+
 export default Home;

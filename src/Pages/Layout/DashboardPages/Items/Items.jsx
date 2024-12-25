@@ -100,7 +100,7 @@ const Items = () => {
                   <thead className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold">
                     <tr>
                       <th className="py-3 px-6">#</th>
-                      <th className="py-3 px-6">Item Id</th>
+                      <th className="py-3 px-6">Item No</th>
                       <th className="py-3 px-6">Name</th>
                       <th className="py-3 px-6">Description</th>
                       <th className="py-3 px-6">Type</th>

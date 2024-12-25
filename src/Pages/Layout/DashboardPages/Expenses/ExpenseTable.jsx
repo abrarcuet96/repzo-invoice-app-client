@@ -101,7 +101,7 @@ const ExpensesTable = ({ expense, serial }) => {
       >
         <td className="py-4 px-6">{serial + 1}</td>
         <td className="py-4 px-6 font-medium text-blue-600">
-          {expense.expenseId}
+          {expense.expenseNo}
         </td>
         <td className="py-4 px-6">{expense.name}</td>
         <td className="py-4 px-6">{expense.amount}</td>
@@ -168,6 +168,12 @@ const ExpensesTable = ({ expense, serial }) => {
                       Expense ID
                     </td>
                     <td className="py-3 px-6">{currentExpense.expenseId}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Expense No
+                    </td>
+                    <td className="py-3 px-6">{currentExpense.expenseNo}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">

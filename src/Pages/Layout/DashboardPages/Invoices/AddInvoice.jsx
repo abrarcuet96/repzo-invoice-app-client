@@ -193,6 +193,7 @@ const AddInvoice = () => {
     const dueDate = formatDate(data.dueDate);
     const invoiceInfo = {
       customerId: selectedCustomer?.customerId,
+      customerNo: selectedCustomer?.customerNo,
       issuedDate: issuedDate,
       dueDate: dueDate,
       status: "unpaid",

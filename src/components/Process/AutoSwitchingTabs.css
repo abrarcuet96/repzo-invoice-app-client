@@ -6,6 +6,20 @@
   flex-direction: column;
   margin-bottom: 15px;
 }
+
+/* Make tab-header more flexible for smaller screens */
+@media (max-width: 1024px) {
+  .tab-header {
+    width: 100%; /* Full width for tablet and below */
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .tab-header {
+    justify-items: center;
+    align-items: center;
+  }
+}
 .tab-button {
   flex: 1;
   padding: 15px 0;
@@ -16,7 +30,17 @@
   color: #333;
   position: relative;
   font-size: 1.5em;
+  text-align: left; /* Align text to the left */
 }
+
+/* Reduce font size for smaller screens */
+@media (max-width: 768px) {
+  .tab-button {
+    font-size: 1.2em; /* Smaller font size for tablets and mobile */
+  }
+}
+
+/* Active button with underline animation */
 .tab-button.active::after {
   content: "";
   position: absolute;
@@ -27,6 +51,7 @@
   background-color: #0e86d4;
   animation: progressAnimation 3s linear infinite;
 }
+
 .tab-button + .tab-button::before {
   content: "";
   position: absolute;
@@ -36,6 +61,15 @@
   height: 100%;
   background-color: #e0e0e0;
 }
+
+/* Responsive changes for tabs */
+@media (max-width: 768px) {
+  .tab-button {
+    padding: 10px 0; /* Adjust padding for smaller screens */
+    font-size: 1.2em; /* Adjust font size */
+  }
+}
+
 @keyframes progressAnimation {
   0% {
     width: 0;
@@ -44,20 +78,42 @@
     width: 100%;
   }
 }
+
 .tab-content {
-  padding: 20px;
+  /* padding: 20px; */
   background-color: #f9f9f9;
   border: 1px solid #e0e0e0;
   border-radius: 0 5px 5px 5px;
 }
+
+/* Adjust content padding for smaller screens */
+/* @media (max-width: 768px) {
+  .tab-content {
+    padding: 15px;
+  }
+} */
 
 .tab-content h2 {
   margin-top: 0;
   font-size: 1.5em;
 }
 
+/* Make heading font size smaller for tablets and mobile devices */
+@media (max-width: 768px) {
+  .tab-content h2 {
+    font-size: 1.3em; /* Adjust font size */
+  }
+}
+
 .tab-content p {
   margin: 0;
   font-size: 1.5em;
   color: #666;
+}
+
+/* Adjust paragraph font size for mobile */
+@media (max-width: 768px) {
+  .tab-content p {
+    font-size: 1.2em; /* Smaller font size for mobile */
+  }
 }

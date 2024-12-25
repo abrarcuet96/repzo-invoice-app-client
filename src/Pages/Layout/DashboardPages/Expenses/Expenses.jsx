@@ -100,7 +100,7 @@ const Expenses = () => {
                   <thead className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold">
                     <tr>
                       <th className="py-3 px-6">#</th>
-                      <th className="py-3 px-6">Expense Id</th>
+                      <th className="py-3 px-6">Expense No</th>
                       <th className="py-3 px-6">Name</th>
                       <th className="py-3 px-6">Amount</th>
                       <th className="py-3 px-6">Currency</th>

@@ -22,7 +22,7 @@ const InvoicesTable = ({ invoice, serial }) => {
   const totalItems = invoice.items.reduce((acc, item) => {
     return acc + item.quantity;
   }, 0);
-  console.log(total);
+
 
   const toggleModal = (invoice) => {
     setIsModalOpen(!isModalOpen);
@@ -117,9 +117,9 @@ const InvoicesTable = ({ invoice, serial }) => {
       >
         <td className="py-4 px-6">{serial + 1}</td>
         <td className="py-4 px-6 font-medium text-blue-600">
-          {invoice.invoiceId}
+          {invoice.invoiceNo}
         </td>
-        <td className="py-4 px-6">{invoice.customerId}</td>
+        <td className="py-4 px-6">{invoice.customerNo}</td>
         <td className="py-4 px-6">{invoice.issuedDate}</td>
         <td className="py-4 px-6">{invoice.dueDate}</td>
         <td className="py-4 px-6">
@@ -226,9 +226,21 @@ const InvoicesTable = ({ invoice, serial }) => {
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
+                      Invoice No
+                    </td>
+                    <td className="py-3 px-6">{currentInvoice.invoiceNo}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
                       Customer ID
                     </td>
                     <td className="py-3 px-6">{currentInvoice.customerId}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Customer No
+                    </td>
+                    <td className="py-3 px-6">{currentInvoice.customerNo}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">

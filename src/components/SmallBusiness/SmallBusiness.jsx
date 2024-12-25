@@ -34,7 +34,7 @@ const SmallBusiness = () => {
   ];
   const productTemplate = (review) => {
     return (
-      <div className="m-5 shadow-lg rounded-md p-5 h-[200px] space-y-2">
+      <div className="m-5 shadow-lg rounded-md p-5 h-auto space-y-2">
         <div className="flex gap-2  items-center">
           <img
             className="w-[50px] h-[50px] rounded-full object-cover"
@@ -50,7 +50,7 @@ const SmallBusiness = () => {
     );
   };
   return (
-    <div className="w-full h-auto flex flex-col mt-40">
+    <div className="w-full h-auto flex flex-col mt-24">
       <div className="flex justify-center">
         <h1 className="text-4xl text-center">
           Trusted by small <br />{" "}

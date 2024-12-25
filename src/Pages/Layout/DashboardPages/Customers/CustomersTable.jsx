@@ -93,7 +93,7 @@ const CustomersTable = ({ customer, serial }) => {
       >
         <td className="py-4 px-6">{serial + 1}</td>
         <td className="py-4 px-6 font-medium text-blue-600">
-          {customer.customerId}
+          {customer.customerNo}
         </td>
         <td className="py-4 px-6">{customer.name}</td>
         <td className="py-4 px-6">{customer.email}</td>
@@ -158,6 +158,12 @@ const CustomersTable = ({ customer, serial }) => {
                       Customer ID
                     </td>
                     <td className="py-3 px-6">{currentCustomer.customerId}</td>
+                  </tr>
+                  <tr className="border-b hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-6 font-medium text-gray-600">
+                      Customer No
+                    </td>
+                    <td className="py-3 px-6">{currentCustomer.customerNo}</td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
                     <td className="py-3 px-6 font-medium text-gray-600">
