@@ -9,7 +9,7 @@ import TemplateTable from "../TemplateComponents/TemplateTable";
 
 const Standard = () => {
   return (
-    <div className="max-w-4xl  h-auto  mx-auto border border-blue-400 rounded-lg shadow-lg overflow-hidden">
+    <div className="max-w-2xl  h-auto  mx-auto border border-blue-400 rounded-lg shadow-lg overflow-hidden">
       {/* Header Section */}
       <div className="bg-gradient-to-r from-blue-700 to-blue-500 p-6 text-white">
         <div className="flex justify-between items-center">
@@ -26,7 +26,7 @@ const Standard = () => {
 
       {/* Bill To Section */}
       <div className="p-6 bg-white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="flex justify-between">
           {/* Client Details */}
           <ClientDetails></ClientDetails>
           {/* Payment Details */}

@@ -6,13 +6,13 @@ import "./Stacks.css";
 const Stacks = () => {
   return (
     <div className="mt-24">
-      <h1 className="text-4xl mb-6 text-center">
+      <h1 className="text-3xl lg:text-4xl mb-6 text-center">
         Quotes, timesheets, and{" "}
         <span className="text-[#0e86d4] custom-underline ">more!</span>
       </h1>
       <div className="grid mb-8 border border-gray-200 rounded-lg shadow-sm md:mb-12 md:grid-cols-2 bg-white  ">
         <figure className="flex flex-col items-center justify-center md:items-start md:justify-start p-8 bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e ">
-          <figcaption className="flex items-center justify-start mb-4 lg:mb-8  text-3xl ">
+          <figcaption className="flex items-center justify-start mb-4 lg:mb-8 text-2xl lg:text-3xl ">
             <PiQuotesFill className="text-[#0e86d4]" />
             <div className="space-y-0.5 font-medium text-gray-900  rtl:text-right ms-3">
               <div>Quotes</div>
@@ -27,7 +27,7 @@ const Stacks = () => {
           </blockquote>
         </figure>
         <figure className="flex flex-col items-center justify-center md:items-start md:justify-start p-8 text-center bg-white border-b border-gray-200 md:rounded-se-lg ">
-          <figcaption className="flex items-center justify-start mb-4 lg:mb-8  text-3xl">
+          <figcaption className="flex items-center justify-start mb-4 lg:mb-8 text-2xl lg:text-3xl">
             <MdTimer className="text-[#0e86d4]" />
             <div className="space-y-0.5 font-medium text-gray-900 text-left rtl:text-right ms-3">
               <div>Time tracking</div>
@@ -42,7 +42,7 @@ const Stacks = () => {
           </blockquote>
         </figure>
         <figure className="flex flex-col items-center justify-center md:items-start md:justify-start p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e ">
-          <figcaption className="flex items-center justify-start mb-4 lg:mb-8  text-3xl">
+          <figcaption className="flex items-center justify-start mb-4 lg:mb-8 text-2xl lg:text-3xl">
             <FaListAlt className="text-[#0e86d4]" />
             <div className="space-y-0.5 font-medium text-gray-900 text-left rtl:text-right ms-3">
               <div>Expenses</div>
@@ -57,7 +57,7 @@ const Stacks = () => {
           </blockquote>
         </figure>
         <figure className="flex flex-col items-center justify-center md:items-start md:justify-start p-8 text-center bg-white border-b border-gray-200 md:rounded-se-lg ">
-          <figcaption className="flex items-center justify-start mb-4 lg:mb-8  text-3xl">
+          <figcaption className="flex items-center justify-start mb-4 lg:mb-8 text-2xl lg:text-3xl">
             <BiSolidNotification className="text-[#0e86d4]" />
             <div className="space-y-0.5 font-medium text-gray-900 text-left rtl:text-right ms-3">
               <div>Payment reminders</div>
@@ -72,7 +72,7 @@ const Stacks = () => {
           </blockquote>
         </figure>
         <figure className="flex flex-col items-center justify-center md:items-start md:justify-start p-8 text-center bg-white border-b border-gray-200 rounded-t-lg md:rounded-t-none md:rounded-ss-lg md:border-e ">
-          <figcaption className="flex items-center justify-start mb-4 lg:mb-8  text-3xl">
+          <figcaption className="flex items-center justify-start mb-4 lg:mb-8 text-2xl lg:text-3xl">
             <MdSpaceDashboard className="text-[#0e86d4]" />
             <div className="space-y-0.5 font-medium text-gray-900  text-left rtl:text-right ms-3">
               <div>Customer portal</div>
@@ -87,7 +87,7 @@ const Stacks = () => {
           </blockquote>
         </figure>
         <figure className="flex flex-col items-center justify-center md:items-start md:justify-start p-8 text-center bg-white border-b border-gray-200 md:rounded-se-lg ">
-          <figcaption className="flex items-center justify-start mb-4 lg:mb-8  text-3xl">
+          <figcaption className="flex items-center justify-start mb-4 lg:mb-8 text-2xl lg:text-3xl">
             <BiSolidReport className="text-[#0e86d4]" />
             <div className="space-y-0.5 font-medium text-gray-900 text-left rtl:text-right ms-3">
               <div>Reports</div>

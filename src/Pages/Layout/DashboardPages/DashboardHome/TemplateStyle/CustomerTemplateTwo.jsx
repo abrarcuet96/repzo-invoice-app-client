@@ -54,17 +54,17 @@ const CustomerTemplateTwo = ({ invoice, userData }) => {
     <div>
       <div
         ref={invoiceRef}
-        className="max-w-4xl  h-auto  mx-auto border border-blue-300 shadow-lg overflow-hidden"
+        className="max-w-2xl h-auto mx-auto border border-blue-300 shadow-lg overflow-hidden"
       >
         {/* Header Section */}
         <div className="bg-blue-600 p-6 text-white">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-col md:flex-row justify-between items-center">
             <div>
               {/* Header */}
-              <TemplateHeader></TemplateHeader>
+              <TemplateHeader />
               <ClientInvoiceIdAndIssueDate invoiceDate={invoice.issuedDate} />
             </div>
-            <div className="text-right">
+            <div className="mt-4 md:mt-0 text-right">
               <CompanyDetails userData={userData} />
             </div>
           </div>
@@ -72,12 +72,11 @@ const CustomerTemplateTwo = ({ invoice, userData }) => {
 
         {/* Client Section */}
         <div className="p-6 bg-white">
-          <div className="flex justify-between">
-            <div className="w-1/2">
-              {/* Client Details */}
-              {/* <ClientDetails customer={customer}></ClientDetails> */}
+          <div className="flex flex-col md:flex-row justify-between">
+            <div className="w-full md:w-1/2">
+              {/* Placeholder for left side content, can add any client info here */}
             </div>
-            <div className="w-1/2">
+            <div className="w-full md:w-1/2">
               <CustomerPaymentDetails invoiceDueDate={invoice.dueDate} />
             </div>
           </div>
@@ -90,10 +89,12 @@ const CustomerTemplateTwo = ({ invoice, userData }) => {
 
         {/* Footer Section */}
         <div className="p-6 bg-blue-800 text-white text-center">
-          <TemplateFooter></TemplateFooter>
+          <TemplateFooter />
         </div>
       </div>
-      <div className="text-center flex justify-end ">
+
+      {/* Download Button Section */}
+      <div className="text-center flex justify-end mt-4">
         <button
           onClick={handleGeneratePDF}
           className="my-4 inline-flex items-center px-5 py-2 bg-green-500 text-white font-medium text-sm rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition-all duration-200"

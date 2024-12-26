@@ -6,7 +6,7 @@ const CustomerUser = () => {
   console.log(user.data[0][0]);
   const { name, email, profileImage, profile } = user?.data[0][0] || {};
   const address = profile?.address || {};
-  if (!user) {
+  if (!profile) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <p className="text-lg text-gray-500">User profile is not available.</p>

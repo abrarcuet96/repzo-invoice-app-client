@@ -56,13 +56,13 @@ const CustomerTemplateThree = ({ invoice, userData }) => {
     <div>
       <div
         ref={invoiceRef}
-        className="max-w-2xl h-auto  mx-auto border border-blue-300  shadow-lg overflow-hidden"
+        className="max-w-2xl h-auto mx-auto border border-blue-300 shadow-lg overflow-hidden"
       >
         {/* Header Section */}
         <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-6 text-white">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
             <div>
-              <TemplateHeader></TemplateHeader>
+              <TemplateHeader />
               <ClientInvoiceIdAndIssueDate invoiceDate={invoice.issuedDate} />
             </div>
             <div className="mt-4 md:mt-0 text-right">
@@ -73,10 +73,7 @@ const CustomerTemplateThree = ({ invoice, userData }) => {
 
         {/* Bill To Section */}
         <div className="p-6 bg-blue-50">
-          <div className="flex flex-col md:flex-row justify-between">
-            {/* Client Details */}
-            {/* <ClientDetails customer={customer}></ClientDetails> */}
-            {/* Payment Details */}
+          <div className="flex flex-col sm:flex-row justify-between">
             <CustomerPaymentDetails invoiceDueDate={invoice.dueDate} />
           </div>
         </div>
@@ -88,10 +85,12 @@ const CustomerTemplateThree = ({ invoice, userData }) => {
 
         {/* Footer Section */}
         <div className="p-6 bg-blue-600 text-white text-center">
-          <TemplateFooter></TemplateFooter>
+          <TemplateFooter />
         </div>
       </div>
-      <div className="text-center flex justify-end ">
+
+      {/* Download Button Section */}
+      <div className="text-center flex justify-end mt-4">
         <button
           onClick={handleGeneratePDF}
           className="my-4 inline-flex items-center px-5 py-2 bg-green-500 text-white font-medium text-sm rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition-all duration-200"

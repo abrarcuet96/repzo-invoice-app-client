@@ -150,6 +150,8 @@ const CustomerQuotesTable = ({ quote }) => {
             >
               <MdDone className="mr-2" /> Accept
             </button>
+          </td>
+          <td className="py-4 px-6 flex gap-3">
             <button
               onClick={() => toggleDeclineModal(quote)}
               className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"

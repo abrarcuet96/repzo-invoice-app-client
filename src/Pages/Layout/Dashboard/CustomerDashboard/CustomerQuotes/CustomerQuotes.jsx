@@ -54,7 +54,8 @@ const CustomerQuotes = () => {
                   <th className="py-3 px-6">Total Items</th>
                   <th className="py-3 px-6">Total</th>
                   <th className="py-3 px-6">Details</th>
-                  <th className="py-3 px-6">Actions</th>
+                  <th className="py-3 px-6">Accept</th>
+                  <th className="py-3 px-6">Decline</th>
                 </tr>
               </thead>
 

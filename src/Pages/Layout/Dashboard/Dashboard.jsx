@@ -1,5 +1,5 @@
 import { FaBox, FaHome, FaListAlt, FaUsers, FaWallet } from "react-icons/fa"; // Using icons from react-icons
-import { PiInvoice } from "react-icons/pi";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { RiHome6Fill } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
 import useUser from "../../../hooks/useUser";
@@ -118,11 +118,18 @@ const Dashboard = () => {
       </div>
     </div>
   );
-
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col justify-between">
+        {/* Page content here */}
+        <label
+          htmlFor="my-drawer-2"
+          className=" flex items-center justify-start p-2 text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
+        >
+          <GiHamburgerMenu className="w-6 h-6" />
+        </label>
+
         <div>
           {/* Page content */}
           {loading ? (
@@ -131,7 +138,7 @@ const Dashboard = () => {
             <DashboardNavBar profileImage={userData?.data?.profileImage} />
           )}
 
-          <div className="px-8 py-6 ">
+          <div className="px-8 py-6">
             <Outlet />
           </div>
         </div>
@@ -140,24 +147,19 @@ const Dashboard = () => {
           <DashboardFooter></DashboardFooter>
         </div>
       </div>
-      <div className="drawer-side bg-[#0d2c4d] shadow-lg max-h-screen  ">
+      <div className="drawer-side">
         <label
           htmlFor="my-drawer-2"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <div className="w-full p-4 flex justify-start items-center bg-[#0b213a] rounded-b-2xl mb-4">
-          <h1 className="text-white text-2xl font-bold flex justify-center items-center gap-2">
-            <PiInvoice /> <p>Invoice</p>
-          </h1>
-        </div>
-        <ul className="menu-vertical text-white ">
-          {/* Sidebar content */}
+
+        <ul className="menu-vertical text-white min-h-screen  bg-[#0d2c4d] shadow-lg w-60 p-4">
+          {/* Sidebar content here */}
           {navlink}
         </ul>
       </div>
     </div>
   );
 };
-
 export default Dashboard;

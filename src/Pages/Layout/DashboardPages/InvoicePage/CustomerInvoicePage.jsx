@@ -24,10 +24,10 @@ const CustomerInvoicePage = () => {
       className="min-h-screen flex justify-start items-start p-8"
       style={polkaDotStyle}
     >
-      <div className="">
+      <div className="max-lg:w-full">
         {/* Invoice Content */}
         {loading ? (
-          <div className="flex justify-center items-center min-h-screen max-w-4xl mx-auto">
+          <div className="flex justify-center items-center min-h-screen max-w-2xl mx-auto">
             <div className="text-center flex items-center space-x-2">
               <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-blue-500 border-solid"></div>
               <span className="text-lg text-gray-700">Loading data...</span>

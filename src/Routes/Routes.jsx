@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../Pages/Home/Home";
 import CancelPayment from "../Pages/Layout/Dashboard/CustomerDashboard/CustomerCheckoutPage/CancelPayment";
@@ -14,6 +15,7 @@ import AddCustomer from "../Pages/Layout/DashboardPages/Customers/addCustomer";
 import Customers from "../Pages/Layout/DashboardPages/Customers/Customers";
 import EditCustomer from "../Pages/Layout/DashboardPages/Customers/EditCustomer";
 import DashboardHome from "../Pages/Layout/DashboardPages/DashboardHome/DashboardHome";
+import DashboardResponsiveHome from "../Pages/Layout/DashboardPages/DashboardHome/DashboardResponsiveHome.jsx";
 import AddExpense from "../Pages/Layout/DashboardPages/Expenses/AddExpense";
 import EditExpense from "../Pages/Layout/DashboardPages/Expenses/EditExpense";
 import Expenses from "../Pages/Layout/DashboardPages/Expenses/Expenses";
@@ -36,8 +38,29 @@ import UserProfile from "../Pages/Layout/DashboardPages/UserProfile/UserProfile"
 import Login from "../Pages/Login/Login";
 import Main from "../Pages/Main/Main";
 import Register from "../Pages/Register/Register";
-import PrivateRoute from "./PrivateRoute";
 import AboutUs from "./../Pages/AboutUs/AboutUs.jsx";
+import PrivateRoute from "./PrivateRoute";
+const DashboardWrapper = () => {
+  const [isResponsive, setIsResponsive] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1440) {
+        setIsResponsive(true); // Mark as responsive for tablet/mobile sizes
+      } else {
+        setIsResponsive(false); // Use default dashboard for desktop
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Initial check
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return isResponsive ? <DashboardResponsiveHome /> : <DashboardHome />;
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -51,16 +74,17 @@ const router = createBrowserRouter([
         path: "/aboutUs",
         element: <AboutUs></AboutUs>,
       },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/signup",
+        element: <Register></Register>,
+      },
     ],
   },
-  {
-    path: "/login",
-    element: <Login></Login>,
-  },
-  {
-    path: "/signup",
-    element: <Register></Register>,
-  },
+
   {
     path: "/success",
     element: <SuccessPayment></SuccessPayment>,
@@ -98,7 +122,7 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboardHome",
-        element: <DashboardHome></DashboardHome>,
+        element: <DashboardWrapper />,
       },
       {
         path: "userHome",

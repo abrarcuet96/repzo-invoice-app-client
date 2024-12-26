@@ -67,7 +67,7 @@ const DashboardHome = () => {
           <hr />
           <h2 className="text-xl font-semibold my-4">Invoice Template</h2>
           {/* Tabs Navigation */}
-          <div className="mb-4  border-gray-200 dark:border-gray-700 flex flex-col justify-center items-center">
+          <div className="mb-4 border-gray-200 dark:border-gray-700 flex flex-col justify-center items-center">
             <ul
               className="flex flex-wrap -mb-px text-sm font-medium text-center"
               role="tablist"
@@ -125,6 +125,7 @@ const DashboardHome = () => {
               </li>
             </ul>
           </div>
+          {/* Save template button */}
           <div className="flex justify-center items-center my-4">
             <button
               onClick={() => handleClickedTemplate(activeTab)}

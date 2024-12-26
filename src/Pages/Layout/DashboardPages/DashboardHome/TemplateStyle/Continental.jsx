@@ -8,7 +8,7 @@ import TemplateHeader from "../TemplateComponents/TemplateHeader";
 import TemplateTable from "../TemplateComponents/TemplateTable";
 const Continental = () => {
   return (
-    <div className="max-w-4xl  h-auto  mx-auto border border-blue-300 rounded-lg shadow-lg overflow-hidden">
+    <div className="max-w-2xl  h-auto  mx-auto border border-blue-300 rounded-lg shadow-lg overflow-hidden">
       {/* Header Section */}
       <div className="bg-blue-600 p-6 text-white">
         <div className="flex justify-between items-center">

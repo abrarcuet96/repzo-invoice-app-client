@@ -9,15 +9,15 @@ import TemplateTable from "../TemplateComponents/TemplateTable";
 
 const Compact = () => {
   return (
-    <div className="max-w-4xl h-auto  mx-auto border border-blue-300 rounded-lg shadow-lg overflow-hidden">
+    <div className="max-w-2xl h-auto  mx-auto border border-blue-300 rounded-lg shadow-lg overflow-hidden">
       {/* Header Section */}
       <div className="bg-gradient-to-r from-blue-500 to-teal-500 p-6 text-white">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
+        <div className="flex justify-between items-center">
           <div>
             <TemplateHeader></TemplateHeader>
             <InvoiceIdAndIssueDate></InvoiceIdAndIssueDate>
           </div>
-          <div className="mt-4 md:mt-0 text-right">
+          <div className="text-right">
             <CompanyDetails></CompanyDetails>
           </div>
         </div>
@@ -25,7 +25,7 @@ const Compact = () => {
 
       {/* Bill To Section */}
       <div className="p-6 bg-blue-50">
-        <div className="flex flex-col md:flex-row justify-between">
+        <div className="flex justify-between">
           {/* Client Details */}
           <ClientDetails></ClientDetails>
           {/* Payment Details */}

@@ -55,7 +55,7 @@ const CustomerTemplateOne = ({ invoice, userData }) => {
     <div>
       <div
         ref={invoiceRef}
-        className="max-w-4xl mx-auto border overflow-hidden"
+        className="max-w-2xl mx-auto border overflow-hidden"
       >
         {/* Header Section */}
         <div className="bg-gradient-to-r from-blue-700 to-blue-500 p-6 text-white">
@@ -87,7 +87,9 @@ const CustomerTemplateOne = ({ invoice, userData }) => {
           <TemplateFooter />
         </div>
       </div>
-      <div className="text-center flex justify-end ">
+
+      {/* Download Button Section */}
+      <div className="text-center flex justify-end mt-4">
         <button
           onClick={handleGeneratePDF}
           className="my-4 inline-flex items-center px-5 py-2 bg-green-500 text-white font-medium text-sm rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition-all duration-200"
