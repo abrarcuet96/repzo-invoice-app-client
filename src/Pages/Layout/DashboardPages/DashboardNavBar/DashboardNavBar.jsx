@@ -17,7 +17,7 @@ const DashboardNavBar = ({ profileImage }) => {
 
   return (
     <div className="shadow-sm">
-      <div className=" py-1 flex justify-between items-center mx-14">
+      <div className=" py-1 flex justify-between items-center mx-6">
         {/* Left Section: Logo or Brand Name */}
         <div className="flex items-center space-x-2">
           <h1 className="text-2xl font-semibold text-[#0E86D4]">RepZo</h1>

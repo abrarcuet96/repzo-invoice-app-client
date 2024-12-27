@@ -34,12 +34,21 @@ const CustomerQuotesTable = ({ quote }) => {
   const handleAccept = (quoteId) => {
     Swal.fire({
       title:
-        "<h2 class='text-3xl font-semibold text-gray-800'>Are you sure?</h2>",
-      html: `<p class="text-sm text-red-600">You are going to accept the quote.</p>`,
+        "<h2 class='text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold text-gray-800'>Are you sure?</h2>",
+      html: `<p class="text-xs sm:text-sm md:text-base text-red-600">You are going to accept the quote.</p>`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Accept",
       cancelButtonText: "Cancel",
+      customClass: {
+        popup: "rounded-lg shadow-lg bg-white p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm md:max-w-md",
+        title: "text-gray-800 font-medium mb-4",
+        htmlContainer: "text-gray-600 mb-4 sm:mb-6",
+        confirmButton:
+          "bg-green-600 text-white px-3 py-2 sm:px-5 sm:py-2.5 rounded-md hover:bg-green-700 transition focus:outline-none font-medium",
+        cancelButton:
+          "bg-gray-300 text-gray-700 px-3 py-2 sm:px-4 sm:py-2 rounded-md hover:bg-gray-400 transition focus:outline-none font-medium",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         const quoteUpdateStatus = { status: "accepted", isAccepted: true };
@@ -49,16 +58,16 @@ const CustomerQuotesTable = ({ quote }) => {
             if (res.data.success) {
               Swal.fire({
                 title:
-                  "<h2 class='text-xl font-semibold text-gray-800'>Accepted!</h2>",
-                html: "<p class='text-sm text-gray-600'>Quote has been accepted successfully.</p>",
+                  "<h2 class='text-lg sm:text-xl md:text-2xl font-semibold text-gray-800'>Accepted!</h2>",
+                html: "<p class='text-xs sm:text-sm md:text-base text-gray-600'>Quote has been accepted successfully.</p>",
                 icon: "success",
                 buttonsStyling: false,
                 customClass: {
-                  popup: "rounded-lg shadow-lg bg-white p-6 max-w-md",
+                  popup: "rounded-lg shadow-lg bg-white p-4 sm:p-6 md:p-8 max-w-xs sm:max-w-sm md:max-w-md",
                   title: "text-gray-800 font-medium mb-4",
-                  htmlContainer: "text-gray-600 mb-6",
+                  htmlContainer: "text-gray-600 mb-4 sm:mb-6",
                   confirmButton:
-                    "bg-green-600 text-white px-5 py-2.5 rounded-md hover:bg-green-700 transition focus:outline-none font-medium",
+                    "bg-green-600 text-white px-3 py-2 sm:px-5 sm:py-2.5 rounded-md hover:bg-green-700 transition focus:outline-none font-medium",
                 },
                 confirmButtonText: "OK",
               }).then(() => {
@@ -76,6 +85,7 @@ const CustomerQuotesTable = ({ quote }) => {
       }
     });
   };
+  
 
   const handleDeclineSubmit = (quoteId) => {
     if (!declineMessage.trim()) {
@@ -143,7 +153,7 @@ const CustomerQuotesTable = ({ quote }) => {
               <FaEye className="mr-2" /> View
             </button>
           </td>
-          <td className="py-4 px-6 flex gap-3">
+          <td className="py-4 px-6">
             <button
               onClick={() => handleAccept(quote.quoteId)}
               className="flex items-center text-sm px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
@@ -151,7 +161,7 @@ const CustomerQuotesTable = ({ quote }) => {
               <MdDone className="mr-2" /> Accept
             </button>
           </td>
-          <td className="py-4 px-6 flex gap-3">
+          <td className="py-4 px-6">
             <button
               onClick={() => toggleDeclineModal(quote)}
               className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
@@ -165,40 +175,42 @@ const CustomerQuotesTable = ({ quote }) => {
       {/* Details Modal */}
       {isDetailsModalOpen && currentQuote && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-md p-8 w-full max-w-lg relative">
+          <div className="bg-white rounded-md p-4 sm:p-6 md:p-8 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl relative">
             <button
               onClick={() => toggleDetailsModal(null)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-red-600"
+              className="absolute top-2 sm:top-4 right-2 sm:right-4 text-gray-500 hover:text-red-600"
             >
-              <IoMdCloseCircle className="text-2xl" />
+              <IoMdCloseCircle className="text-xl sm:text-2xl" />
             </button>
-            <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 mb-4 sm:mb-6 text-center">
               Quote Details
             </h2>
             <div className="overflow-x-auto rounded-md">
-              <table className="min-w-full text-sm text-gray-700 mb-6">
+              <table className="min-w-full text-xs sm:text-sm text-gray-700 mb-4 sm:mb-6">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                    <th className="py-2 px-4 sm:py-3 sm:px-6 text-left text-gray-600 font-medium">
                       Field
                     </th>
-                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                    <th className="py-2 px-4 sm:py-3 sm:px-6 text-left text-gray-600 font-medium">
                       Details
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
+                    <td className="py-2 px-4 sm:py-3 sm:px-6 font-medium text-gray-600">
                       Quote ID
                     </td>
-                    <td className="py-3 px-6">{currentQuote.quoteId}</td>
+                    <td className="py-2 px-4 sm:py-3 sm:px-6">
+                      {currentQuote.quoteId}
+                    </td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
+                    <td className="py-2 px-4 sm:py-3 sm:px-6 font-medium text-gray-600">
                       Quote Date
                     </td>
-                    <td className="py-3 px-6">
+                    <td className="py-2 px-4 sm:py-3 sm:px-6">
                       {
                         currentQuote.quoteDate.match(
                           /\w{3} \w{3} \d{2} \d{4} \d{2}:\d{2}:\d{2}/
@@ -207,43 +219,51 @@ const CustomerQuotesTable = ({ quote }) => {
                     </td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
+                    <td className="py-2 px-4 sm:py-3 sm:px-6 font-medium text-gray-600">
                       Expiry Date
                     </td>
-                    <td className="py-3 px-6">{currentQuote.expiryDate}</td>
+                    <td className="py-2 px-4 sm:py-3 sm:px-6">
+                      {currentQuote.expiryDate}
+                    </td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
+                    <td className="py-2 px-4 sm:py-3 sm:px-6 font-medium text-gray-600">
                       Total Items
                     </td>
-                    <td className="py-3 px-6">{currentQuote.items.length}</td>
+                    <td className="py-2 px-4 sm:py-3 sm:px-6">
+                      {currentQuote.items.length}
+                    </td>
                   </tr>
                   <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
+                    <td className="py-2 px-4 sm:py-3 sm:px-6 font-medium text-gray-600">
                       Total
                     </td>
-                    <td className="py-3 px-6">{currentQuote.total}</td>
+                    <td className="py-2 px-4 sm:py-3 sm:px-6">
+                      {currentQuote.total}
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
             {/* Items Table */}
-            <h3 className="text-2xl font-semibold text-gray-800 mb-4">Items</h3>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-2 sm:mb-4">
+              Items
+            </h3>
             <div className="overflow-x-auto rounded-md">
-              <table className="min-w-full text-sm text-gray-700">
+              <table className="min-w-full text-xs sm:text-sm text-gray-700">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                    <th className="py-2 px-4 sm:py-3 sm:px-6 text-left text-gray-600 font-medium">
                       Item Name
                     </th>
-                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                    <th className="py-2 px-4 sm:py-3 sm:px-6 text-left text-gray-600 font-medium">
                       Quantity
                     </th>
-                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                    <th className="py-2 px-4 sm:py-3 sm:px-6 text-left text-gray-600 font-medium">
                       Price
                     </th>
-                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                    <th className="py-2 px-4 sm:py-3 sm:px-6 text-left text-gray-600 font-medium">
                       Subtotal
                     </th>
                   </tr>
@@ -254,12 +274,16 @@ const CustomerQuotesTable = ({ quote }) => {
                       key={index}
                       className="border-b hover:bg-gray-50 transition-colors"
                     >
-                      <td className="py-3 px-6 font-medium text-gray-600">
+                      <td className="py-2 px-4 sm:py-3 sm:px-6 font-medium text-gray-600">
                         {item.name}
                       </td>
-                      <td className="py-3 px-6">{item.quantity}</td>
-                      <td className="py-3 px-6">{item.price}</td>
-                      <td className="py-3 px-6">
+                      <td className="py-2 px-4 sm:py-3 sm:px-6">
+                        {item.quantity}
+                      </td>
+                      <td className="py-2 px-4 sm:py-3 sm:px-6">
+                        {item.price}
+                      </td>
+                      <td className="py-2 px-4 sm:py-3 sm:px-6">
                         {item.quantity * item.price}
                       </td>
                     </tr>
@@ -274,26 +298,26 @@ const CustomerQuotesTable = ({ quote }) => {
       {/* Decline Modal */}
       {isDeclineModalOpen && currentQuote && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-md p-8 w-full max-w-md relative">
+          <div className="bg-white rounded-md p-4 sm:p-6 md:p-8 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg relative">
             <button
               onClick={() => toggleDeclineModal(null)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-red-600"
+              className="absolute top-2 sm:top-4 right-2 sm:right-4 text-gray-500 hover:text-red-600"
             >
-              <IoMdCloseCircle className="text-2xl" />
+              <IoMdCloseCircle className="text-xl sm:text-2xl" />
             </button>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 sm:mb-4 text-center">
               Decline Quote
             </h2>
             <textarea
               value={declineMessage}
               onChange={(e) => setDeclineMessage(e.target.value)}
-              className="w-full p-3 border rounded-md"
+              className="w-full p-2 sm:p-3 border rounded-md text-sm sm:text-base"
               placeholder="Enter decline message"
             />
-            <div className="mt-4 flex justify-end">
+            <div className="mt-3 sm:mt-4 flex justify-end">
               <button
                 onClick={() => handleDeclineSubmit(currentQuote.quoteId)}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm sm:text-base"
               >
                 Submit
               </button>

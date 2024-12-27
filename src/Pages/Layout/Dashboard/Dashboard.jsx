@@ -125,7 +125,7 @@ const Dashboard = () => {
         {/* Page content here */}
         <label
           htmlFor="my-drawer-2"
-          className=" flex items-center justify-start p-2 text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
+          className=" flex items-center justify-start px-6 py-4 text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 lg:hidden"
         >
           <GiHamburgerMenu className="w-6 h-6" />
         </label>

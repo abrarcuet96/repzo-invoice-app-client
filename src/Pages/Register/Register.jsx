@@ -61,18 +61,21 @@ const Register = () => {
       <div className="absolute inset-0 bg-black opacity-40"></div>
 
       {/* Form Container */}
-      <div className="relative w-full max-w-md bg-white p-8 shadow-xl z-10 space-y-6">
-        <h2 className="text-2xl font-semibold text-center text-gray-800">
+      <div className=" md:p-10 6 h-full sm:h-auto relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl bg-white p-6 sm:p-8 shadow-lg space-y-6 z-10">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-center text-gray-800">
           Create Your Account
         </h2>
-        <p className="text-center text-gray-600 mt-2">
+        <p className="text-sm sm:text-base md:text-lg lg:text-xl text-center text-gray-600 mt-2">
           Sign up and get started today.
         </p>
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-6">
           {/* Name */}
           <div className="relative">
-            <label htmlFor="name" className="block text-gray-700 font-medium">
+            <label
+              htmlFor="name"
+              className="block text-gray-700 font-medium text-sm sm:text-base"
+            >
               Full Name
             </label>
             <div className="flex items-center border-2 rounded-md border-gray-300 focus-within:ring-2 focus-within:ring-[#0E86D4]">
@@ -92,7 +95,10 @@ const Register = () => {
 
           {/* Photo */}
           <div className="relative">
-            <label htmlFor="photo" className="block text-gray-700 font-medium">
+            <label
+              htmlFor="photo"
+              className="block text-gray-700 font-medium text-sm sm:text-base"
+            >
               Profile Photo URL
             </label>
             <div className="flex items-center border-2 rounded-md border-gray-300 focus-within:ring-2 focus-within:ring-[#0E86D4]">
@@ -112,7 +118,10 @@ const Register = () => {
 
           {/* Email */}
           <div className="relative">
-            <label htmlFor="email" className="block text-gray-700 font-medium">
+            <label
+              htmlFor="email"
+              className="block text-gray-700 font-medium text-sm sm:text-base"
+            >
               Email
             </label>
             <div className="flex items-center border-2 rounded-md border-gray-300 focus-within:ring-2 focus-within:ring-[#0E86D4]">
@@ -140,7 +149,7 @@ const Register = () => {
           <div className="relative">
             <label
               htmlFor="password"
-              className="block text-gray-700 font-medium"
+              className="block text-gray-700 font-medium text-sm sm:text-base"
             >
               Password
             </label>
@@ -168,7 +177,10 @@ const Register = () => {
 
           {/* Role Selection */}
           <div className="relative">
-            <label htmlFor="role" className="block text-gray-700 font-medium">
+            <label
+              htmlFor="role"
+              className="block text-gray-700 font-medium text-sm sm:text-base"
+            >
               Select how you want to use RepZo?
             </label>
             <div className="flex items-center border-2 rounded-md border-gray-300 focus-within:ring-2 focus-within:ring-[#0E86D4]">
@@ -198,7 +210,7 @@ const Register = () => {
         </form>
 
         {/* Login Link */}
-        <p className="text-center text-gray-600 mt-4">
+        <p className="text-center text-gray-600 mt-4 text-sm sm:text-base">
           Already have an account?{" "}
           <Link
             to="/login"
@@ -210,7 +222,7 @@ const Register = () => {
 
         {/* Back to Home Link */}
         <div className="mx-auto border-2 w-[200px] mt-4 p-1 rounded-lg">
-          <p className="text-center text-gray-600">
+          <p className="text-center text-gray-600 text-sm sm:text-base">
             Back to{" "}
             <Link to="/" className="text-[#055c9d] font-medium hover:underline">
               Home

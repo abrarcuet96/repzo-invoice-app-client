@@ -3,7 +3,7 @@ import React from "react";
 const CancelPayment = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-lg w-full text-center">
+      <div className="bg-white rounded-lg shadow-lg p-6 sm:p-8 max-w-lg w-full text-center">
         <div className="flex justify-center items-center mb-4">
           <div className="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center">
             <svg
@@ -22,10 +22,10 @@ const CancelPayment = () => {
             </svg>
           </div>
         </div>
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">
           Payment Cancelled
         </h2>
-        <p className="text-gray-600 mb-6">
+        <p className="text-sm sm:text-base text-gray-600 mb-6">
           Your payment process has been cancelled. If you need assistance or
           wish to retry, please contact support or try again.
         </p>

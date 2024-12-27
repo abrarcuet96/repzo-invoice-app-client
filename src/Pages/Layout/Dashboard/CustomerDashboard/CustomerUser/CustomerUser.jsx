@@ -17,29 +17,31 @@ const CustomerUser = () => {
     <div className="min-h-screen py-10 flex justify-center items-start">
       <div className="w-full max-w-4xl rounded-md overflow-hidden">
         {/* Profile Header */}
-        <div className="bg-gray-100 p-8 rounded-md flex items-center space-x-6">
+        <div className="bg-gray-100 p-6 sm:p-8 rounded-md flex flex-col sm:flex-row items-center space-x-0 sm:space-x-6">
           <img
             src={profileImage}
             alt="Profile"
-            className="w-28 h-28 rounded-full border-4 border-white shadow-lg transform transition-transform duration-300 hover:scale-105"
+            className="w-28 h-28 rounded-full border-4 border-white shadow-lg transform transition-transform duration-300 hover:scale-105 mb-4 sm:mb-0"
           />
-          <div>
-            <h1 className="text-3xl font-semibold text-gray-800">{name}</h1>
-            <p className="text-base text-gray-600 mt-1">{email}</p>
-            <p className="text-base text-gray-600 mt-1">
+          <div className="text-center sm:text-left">
+            <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800">
+              {name}
+            </h1>
+            <p className="text-sm sm:text-base text-gray-600 mt-1">{email}</p>
+            <p className="text-sm sm:text-base text-gray-600 mt-1">
               {profile.companyName} - {profile.industryName}
             </p>
           </div>
         </div>
 
         {/* Main Content: Profile Details */}
-        <div className="p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
+        <div className="p-6 sm:p-8">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4">
             Personal Information
           </h2>
 
           <div className="overflow-x-auto">
-            <table className="min-w-full table-auto text-sm text-left text-gray-600">
+            <table className="min-w-full table-auto text-xs sm:text-sm text-left text-gray-600">
               <thead>
                 <tr className="border-b">
                   <th className="py-3 px-4 font-medium text-gray-700">Field</th>

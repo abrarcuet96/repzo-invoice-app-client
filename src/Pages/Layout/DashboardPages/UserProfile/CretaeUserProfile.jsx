@@ -60,15 +60,15 @@ const CreateUserProfile = () => {
   };
 
   return (
-    <div className="min-h-screen flex">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl">
+    <div className="min-h-screen flex justify-center items-center">
+      <div className="bg-white rounded-lg w-full max-w-3xl">
         <h2 className="text-3xl font-semibold text-gray-800 mb-8 border-b pb-4">
           Create Profile
         </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-          <div className="flex w-full gap-2">
+          <div className="flex flex-col sm:flex-row sm:gap-4 w-full">
             {/* Company Name */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Company Name
               </label>
@@ -90,7 +90,7 @@ const CreateUserProfile = () => {
             </div>
 
             {/* Industry Name */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Industry Name
               </label>
@@ -111,9 +111,10 @@ const CreateUserProfile = () => {
               )}
             </div>
           </div>
-          <div className="flex w-full gap-2">
+
+          <div className="flex flex-col sm:flex-row sm:gap-4 w-full">
             {/* Currency */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Currency
               </label>
@@ -133,7 +134,7 @@ const CreateUserProfile = () => {
             </div>
 
             {/* Time Zone */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Time Zone
               </label>
@@ -152,9 +153,10 @@ const CreateUserProfile = () => {
               )}
             </div>
           </div>
-          <div className="flex w-full gap-2">
+
+          <div className="flex flex-col sm:flex-row sm:gap-4 w-full">
             {/* Phone */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Phone
               </label>
@@ -174,7 +176,7 @@ const CreateUserProfile = () => {
             </div>
 
             {/* Company */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Company
               </label>
@@ -193,9 +195,10 @@ const CreateUserProfile = () => {
               )}
             </div>
           </div>
-          <div className="flex w-full gap-2">
+
+          <div className="flex flex-col sm:flex-row sm:gap-4 w-full">
             {/* Address - Street */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Street
               </label>
@@ -217,7 +220,7 @@ const CreateUserProfile = () => {
             </div>
 
             {/* Address - City */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 City
               </label>
@@ -236,9 +239,10 @@ const CreateUserProfile = () => {
               )}
             </div>
           </div>
-          <div className="flex w-full gap-2">
+
+          <div className="flex flex-col sm:flex-row sm:gap-4 w-full">
             {/* Address - State */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 State
               </label>
@@ -260,7 +264,7 @@ const CreateUserProfile = () => {
             </div>
 
             {/* Address - Country */}
-            <div className="w-1/2">
+            <div className="w-full sm:w-1/2">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Country
               </label>
@@ -305,7 +309,7 @@ const CreateUserProfile = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="flex items-center justify-start space-x-4">
+          <div className="flex items-center justify-start space-x-4 mt-6">
             <button
               type="submit"
               disabled={loading}

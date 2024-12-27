@@ -50,7 +50,7 @@ const Login = () => {
       <div className="absolute inset-0 bg-black opacity-40"></div>
 
       {/* Form Container */}
-      <div className="relative w-full max-w-md bg-white p-8 shadow-lg space-y-6 z-10">
+      <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl bg-white p-6 sm:p-8 shadow-lg space-y-6 z-10">
         <h2 className="text-2xl font-semibold text-center text-gray-800">
           Log In
         </h2>

@@ -30,7 +30,7 @@ const Customers = () => {
   );
 
   return (
-    <div className="flex flex-col space-y-8 mx-8 my-8">
+    <div className="flex flex-col space-y-8 my-8">
       {/* Add New Customer Button */}
       <div className="flex justify-end items-center">
         {loading ? (
@@ -71,10 +71,10 @@ const Customers = () => {
               <div className="text-center mb-6">
                 <LuFileWarning className="text-7xl text-yellow-500 animate-pulse" />
               </div>
-              <h1 className="text-3xl font-semibold text-gray-800 mb-6">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 mb-6">
                 No Customers Found
               </h1>
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="text-base sm:text-lg text-gray-600 mb-6">
                 Please add a new customer to get started.
               </p>
               <NavLink
@@ -93,7 +93,7 @@ const Customers = () => {
             </div>
           ) : (
             <>
-              <div className="overflow-x-auto  rounded-lg">
+              <div className="overflow-x-auto rounded-lg">
                 <table className="min-w-full text-sm text-left text-gray-700">
                   {/* Table Head */}
                   <thead className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold">
@@ -104,7 +104,8 @@ const Customers = () => {
                       <th className="py-3 px-6">Email</th>
                       <th className="py-3 px-6">Phone</th>
                       <th className="py-3 px-6">Details</th>
-                      <th className="py-3 px-6">Actions</th>
+                      <th className="py-3 px-6">Edit</th>
+                      <th className="py-3 px-6">Delete</th>
                     </tr>
                   </thead>
 
@@ -122,18 +123,18 @@ const Customers = () => {
                 </table>
               </div>
               {/* Pagination Controls */}
-              <div className="flex justify-center items-center mt-6 space-x-6">
+              <div className="flex justify-center items-center mt-6 space-x-4 sm:space-x-6">
                 {/* Previous Button */}
                 <button
                   onClick={handlePrevPage}
-                  className="px-5 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 sm:px-5 sm:py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={currentPage === 1}
                 >
-                  <HiOutlineChevronLeft className="text-lg" />
+                  <HiOutlineChevronLeft className="text-lg sm:text-xl" />
                 </button>
 
                 {/* Page Numbers */}
-                <div className="flex space-x-2 items-center text-sm text-gray-600">
+                <div className="flex space-x-1 sm:space-x-2 items-center text-xs sm:text-sm text-gray-600">
                   <span>{currentPage}</span>
                   <span>/</span>
                   <span>{totalPages}</span>
@@ -142,10 +143,10 @@ const Customers = () => {
                 {/* Next Button */}
                 <button
                   onClick={handleNextPage}
-                  className="px-5 py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2 sm:px-5 sm:py-2 bg-gray-200 text-gray-700 rounded-full hover:bg-blue-500 hover:text-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={currentPage === totalPages}
                 >
-                  <HiOutlineChevronRight className="text-lg" />
+                  <HiOutlineChevronRight className="text-lg sm:text-xl" />
                 </button>
               </div>
             </>

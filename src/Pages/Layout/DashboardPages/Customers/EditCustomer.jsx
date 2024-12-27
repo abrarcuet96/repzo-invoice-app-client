@@ -63,8 +63,8 @@ const EditCustomer = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-start px-4 py-8">
-      <div className="w-full max-w-3xl flex flex-col gap-8 bg-white rounded-lg p-3">
+    <div className="min-h-screen flex items-start py-8">
+      <div className="w-full max-w-3xl flex flex-col gap-8 bg-white rounded-lg">
         {/* Form Section */}
         <div className="space-y-6">
           <GoBackButton

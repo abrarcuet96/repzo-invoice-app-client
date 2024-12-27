@@ -22,20 +22,19 @@ const CustomersTable = ({ customer, serial }) => {
     Swal.fire({
       title:
         "<h2 class='text-3xl font-semibold text-gray-800'>Are you sure?</h2>",
-      html: `<p class="text-sm text-red-600">
-          You won't be able to revert this action.
-        </p>`,
+      html: `<p class="text-sm text-red-600">You won't be able to revert this action.</p>`,
       icon: "warning",
       showCancelButton: true,
       buttonsStyling: false,
       customClass: {
-        popup: "rounded-lg shadow-lg bg-white p-6 max-w-md",
+        popup:
+          "rounded-lg shadow-lg bg-white p-6 sm:p-8 w-full max-w-sm sm:max-w-md",
         title: "text-gray-800 font-medium mb-2",
         htmlContainer: "text-gray-600 mb-6",
         confirmButton:
-          "bg-red-600 text-white px-5 py-2.5 rounded-md hover:bg-red-700 transition focus:outline-none  font-medium mx-4",
+          "bg-red-600 text-white px-5 py-2.5 rounded-md hover:bg-red-700 transition focus:outline-none font-medium mx-4",
         cancelButton:
-          "bg-gray-100 text-gray-800 px-5 py-2.5 rounded-md hover:bg-gray-200 transition focus:outline-none  font-medium",
+          "bg-gray-100 text-gray-800 px-5 py-2.5 rounded-md hover:bg-gray-200 transition focus:outline-none font-medium",
       },
       confirmButtonText: "Delete",
       cancelButtonText: "Cancel",
@@ -53,7 +52,8 @@ const CustomersTable = ({ customer, serial }) => {
                 icon: "success",
                 buttonsStyling: false,
                 customClass: {
-                  popup: "rounded-lg shadow-lg bg-white p-6 max-w-md",
+                  popup:
+                    "rounded-lg shadow-lg bg-white p-6 sm:p-8 w-full max-w-sm sm:max-w-md",
                   title: "text-gray-800 font-medium mb-4",
                   htmlContainer: "text-gray-600 mb-6",
                   confirmButton:
@@ -72,7 +72,8 @@ const CustomersTable = ({ customer, serial }) => {
               icon: "error",
               buttonsStyling: false,
               customClass: {
-                popup: "rounded-lg shadow-lg bg-white p-6 max-w-md",
+                popup:
+                  "rounded-lg shadow-lg bg-white p-6 sm:p-8 w-full max-w-sm sm:max-w-md",
                 title: "text-red-600 font-medium mb-4",
                 htmlContainer: "text-gray-600 mb-6",
                 confirmButton:
@@ -107,7 +108,7 @@ const CustomersTable = ({ customer, serial }) => {
             View
           </button>
         </td>
-        <td className="py-4 px-6 flex gap-3 justify-start">
+        <td className="py-4 px-6 flex">
           <NavLink
             to={`/dashboard/editCustomerDetails/${customer.customerId}`}
             className="flex items-center text-sm px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transform hover:scale-105 transition-all duration-200"
@@ -115,6 +116,8 @@ const CustomersTable = ({ customer, serial }) => {
             <FaRegEdit className="mr-2" />
             Edit
           </NavLink>
+        </td>
+        <td className="py-4 px-6">
           <button
             onClick={() => handleDelete(customer.customerId)}
             className="flex items-center text-sm px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transform hover:scale-105 transition-all duration-200"
@@ -128,89 +131,62 @@ const CustomersTable = ({ customer, serial }) => {
       {/* Modal */}
       {isModalOpen && currentCustomer && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-md p-8 w-full max-w-lg relative transform transition-all duration-300">
+          <div className="bg-white rounded-md p-4 sm:p-6 md:p-8 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl relative">
             <button
               onClick={() => toggleModal(null)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-red-600 transition-colors"
+              className="absolute top-2 sm:top-4 right-2 sm:right-4 text-gray-500 hover:text-red-600"
             >
-              <IoMdCloseCircle className="text-2xl" />
+              <IoMdCloseCircle className="text-xl sm:text-2xl" />
             </button>
 
-            <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 mb-4 sm:mb-6 text-center">
               Customer Details
             </h2>
 
             <div className="overflow-x-auto rounded-md">
-              <table className="min-w-full text-sm text-gray-700">
+              <table className="min-w-full text-xs sm:text-sm text-gray-700 mb-4 sm:mb-6">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                    <th className="py-2 px-4 sm:py-3 sm:px-6 text-left text-gray-600 font-medium">
                       Field
                     </th>
-                    <th className="py-3 px-6 text-left text-gray-600 font-medium">
+                    <th className="py-2 px-4 sm:py-3 sm:px-6 text-left text-gray-600 font-medium">
                       Details
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Customer ID
-                    </td>
-                    <td className="py-3 px-6">{currentCustomer.customerId}</td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Customer No
-                    </td>
-                    <td className="py-3 px-6">{currentCustomer.customerNo}</td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Name
-                    </td>
-                    <td className="py-3 px-6">{currentCustomer.name}</td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Email
-                    </td>
-                    <td className="py-3 px-6">{currentCustomer.email}</td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Phone
-                    </td>
-                    <td className="py-3 px-6">{currentCustomer.phone}</td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Address
-                    </td>
-                    <td className="py-3 px-6">
-                      {`${currentCustomer.address.street}, ${currentCustomer.address.city}`}
-                    </td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Created at
-                    </td>
-                    <td className="py-3 px-6">{currentCustomer.createdAt}</td>
-                  </tr>
-                  <tr className="border-b hover:bg-gray-50 transition-colors">
-                    <td className="py-3 px-6 font-medium text-gray-600">
-                      Updated at
-                    </td>
-                    <td className="py-3 px-6">{currentCustomer.updatedAt}</td>
-                  </tr>
+                  {[
+                    { label: "Customer ID", value: currentCustomer.customerId },
+                    { label: "Customer No", value: currentCustomer.customerNo },
+                    { label: "Name", value: currentCustomer.name },
+                    { label: "Email", value: currentCustomer.email },
+                    { label: "Phone", value: currentCustomer.phone },
+                    {
+                      label: "Address",
+                      value: `${currentCustomer.address.street}, ${currentCustomer.address.city}`,
+                    },
+                    { label: "Created at", value: currentCustomer.createdAt },
+                    { label: "Updated at", value: currentCustomer.updatedAt },
+                  ].map((row, index) => (
+                    <tr
+                      key={index}
+                      className="border-b hover:bg-gray-50 transition-colors"
+                    >
+                      <td className="py-2 px-4 sm:py-3 sm:px-6 font-medium text-gray-600">
+                        {row.label}
+                      </td>
+                      <td className="py-2 px-4 sm:py-3 sm:px-6">{row.value}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
 
-            <div className="mt-6 flex justify-center">
+            <div className="mt-4 sm:mt-6 flex justify-center">
               <NavLink
                 to={`/dashboard/editCustomerDetails/${currentCustomer.customerId}`}
-                className="px-6 py-3 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-all duration-200"
+                className="px-6 py-2 sm:px-6 sm:py-3 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition-all duration-200"
               >
                 Edit Customer
               </NavLink>
